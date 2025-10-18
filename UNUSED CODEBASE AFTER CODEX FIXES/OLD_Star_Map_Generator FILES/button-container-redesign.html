@@ -1,0 +1,97 @@
+<!-- START OF CODE - Cline - 2025-05-13 22:17 File: button-container-redesign.html -->
+
+<!-- 
+This file contains the redesigned buttons container for the Settings + Preview + Download section.
+Copy and paste this code into the appropriate section of Star_Map_Generator.html.
+-->
+
+<!-- Settings + Preview + Download Section with Redesigned Button Container -->
+<fieldset class="form-section settings-preview-download-section">
+    <legend>Settings + Preview + Download</legend>
+    
+    <!-- Settings Buttons Row -->
+    <div class="settings-buttons-row">
+        <button id="loadSettingsBtn" class="action-button settings-button">
+            <i class="fas fa-upload button-icon"></i> Load Settings
+        </button>
+        <button id="saveSettingsBtn" class="action-button settings-button">
+            <i class="fas fa-save button-icon"></i> Save Settings
+        </button>
+    </div>
+    
+    <!-- Main Buttons Container with View and Download Columns -->
+    <div class="main-buttons-container">
+        <!-- View Options Column -->
+        <div class="view-buttons-column">
+            <div class="column-header">View Options</div>
+            <div class="button-list">
+                <button id="view-star-map-btn" class="action-button view-button">
+                    <i class="fas fa-star button-icon"></i> Star Map
+                </button>
+                <button id="view-street-map-btn" class="action-button view-button">
+                    <i class="fas fa-map-marker-alt button-icon"></i> Street Map
+                </button>
+                <button id="view-star-map-canvas-btn" class="action-button view-button">
+                    <i class="fas fa-image button-icon"></i> Canvas Layout
+                </button>
+                <button id="view-star-street-landscape-btn" class="action-button view-button">
+                    <i class="fas fa-desktop button-icon"></i> Combined (Landscape)
+                </button>
+                <button id="view-star-street-portrait-btn" class="action-button view-button">
+                    <i class="fas fa-mobile-alt button-icon"></i> Combined (Portrait)
+                </button>
+            </div>
+        </div>
+        
+        <!-- Download Options Column -->
+        <div class="download-buttons-column">
+            <div class="column-header">Download Options</div>
+            <div class="button-list">
+                <button id="download-star-map-btn" class="action-button download-button">
+                    <i class="fas fa-star button-icon"></i> Star Map
+                </button>
+                <button id="download-street-map-btn" class="action-button download-button">
+                    <i class="fas fa-map-marker-alt button-icon"></i> Street Map
+                </button>
+                <button id="download-star-map-canvas-btn" class="action-button download-button">
+                    <i class="fas fa-image button-icon"></i> Canvas Layout
+                </button>
+                <button id="download-star-street-landscape-btn" class="action-button download-button">
+                    <i class="fas fa-desktop button-icon"></i> Combined (Landscape)
+                </button>
+                <button id="download-star-street-portrait-btn" class="action-button download-button">
+                    <i class="fas fa-mobile-alt button-icon"></i> Combined (Portrait)
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Image Format Options -->
+    <div class="settings-row" style="margin-top: 15px; border-top: 1px solid #ddd; padding-top: 15px;">
+        <label style="font-weight: 600;">Image Format:</label>
+        <div class="radio-group">
+            <label><input type="radio" name="image-format" value="png" checked> PNG</label>
+            <label><input type="radio" name="image-format" value="jpg"> JPG</label>
+            <label><input type="radio" name="image-format" value="svg"> SVG</label>
+        </div>
+        <label id="png-transparency-label" for="png-transparency">
+            <input type="checkbox" id="png-transparency" checked> Transparent Background (PNG only)
+        </label>
+    </div>
+    
+    <!-- Canvas Preview -->
+    <div class="canvas-container" style="margin-top: 20px; text-align: center;">
+        <canvas id="star-map-canvas" width="800" height="800" style="max-width: 100%; height: auto; border: 1px solid #ddd; background-color: #F5F5DC;"></canvas>
+    </div>
+    
+    <!-- Zoom Controls -->
+    <div class="zoom-section">
+        <div class="zoom-container">
+            <span>Zoom:</span>
+            <input type="range" min="50" max="200" value="100" class="zoom-slider" id="zoom-slider">
+            <span id="zoom-value">100%</span>
+        </div>
+    </div>
+</fieldset>
+
+<!-- END OF CODE - Cline - 2025-05-13 22:17 File: button-container-redesign.html -->

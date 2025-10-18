@@ -1,0 +1,20 @@
+/* Minimal stub to ensure combined view layout rules are applied without 404s.
+   Adjust as needed if more specific positioning is required. */
+
+/* Center any combined-view options containers if present */
+.combined-view-options,
+.combined-view-container {
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Ensure overlap/map order rows align nicely */
+.combined-view-options .row,
+.combined-view-container .row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+

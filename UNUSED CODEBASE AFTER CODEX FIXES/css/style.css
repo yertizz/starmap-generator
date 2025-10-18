@@ -1,0 +1,201 @@
+/* General Styling */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f8f8;
+}
+
+.container {
+    width: 90%;
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Labels and Input Fields */
+label {
+    font-weight: bold;
+    display: block;
+    margin-top: 10px;
+}
+
+input, select, button {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Dropdown List */
+select {
+    width: auto;
+    min-width: 35%;
+}
+
+/* Map Section */
+#map-container {
+    position: relative;
+    height: 350px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+#map {
+    width: 100%;
+    height: 100%;
+}
+
+/* Crosshairs Overlay */
+#crosshairs {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    background: url("../assets/images/crosshairs.png") center center no-repeat;
+    background-size: cover;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    opacity: 0.4;
+}
+
+/* Map Location Label */
+#map-location-label {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+/* LocationTag PNG Icons */
+.icon-selection {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.icon-button img {
+    width: 30px;
+    height: auto;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+}
+
+.icon-button.selected img {
+    transform: scale(1.2);
+}
+
+/* Manual Coordinates Input */
+.manual-coordinates {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.manual-coordinates input {
+    width: 30%;
+    text-align: center;
+}
+
+/* Customizable Text Fields */
+#text-layer-container {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.text-entry {
+    width: 80%;
+    display: inline-block;
+}
+
+.char-count {
+   /*  display: inline-block; */
+    display: outside;
+    margin-left: 5px;
+    font-size: 0.9em;
+    color: gray;
+}
+
+/* Image Type Section */
+.image-options {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+#export-transparency {
+    margin-left: 10px;
+}
+
+/* Background Color Picker */
+.input-section #background-color {
+    width: auto;
+    height: 30px;
+    cursor: pointer;
+}
+
+.input-section > label {
+    display: block;
+}
+
+/* Color Picker Styling */
+#color-picker {
+    margin: 10px auto;
+    width: 100%;
+    text-align: center;
+}
+
+.input-section label[for="background-color"] {
+    text-align: center;
+    display: block;
+    margin-bottom: 10px;
+}
+
+/* Generate Button */
+#generateBtn {
+    width: 100%;
+    background-color: gray;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: not-allowed;
+    margin-top: 15px;
+}
+
+#generateBtn.enabled {
+    background-color: green;
+    cursor: pointer;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 600px) {
+    .manual-coordinates {
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .manual-coordinates input {
+        width: 100%;
+    }
+
+    .icon-selection {
+        flex-wrap: wrap;
+    }
+
+    .text-entry {
+        width: 100%;
+    }
+}
+
+h1 {
+    text-align: center;
+}

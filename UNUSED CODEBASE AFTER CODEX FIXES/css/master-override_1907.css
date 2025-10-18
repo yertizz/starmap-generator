@@ -1,0 +1,22 @@
+/* Event Dropdown Layout Fix - Force no wrapping in Event Details section */
+/* Added 2025-06-30 18:59 - Fix wrapping issue - SAFE VERSION */
+
+/* Force Event dropdown to be smaller to prevent wrapping - ONLY TARGET THE DROPDOWN */
+#occasion {
+    width: 280px !important;
+    min-width: 250px !important;
+    max-width: 280px !important;
+}
+
+/* Ensure Date/Time inputs stay small - ONLY TARGET THE INPUTS */
+#date {
+    width: 110px !important;
+    min-width: 110px !important;
+    max-width: 110px !important;
+}
+
+#time {
+    width: 100px !important;
+    min-width: 100px !important;
+    max-width: 100px !important;
+}

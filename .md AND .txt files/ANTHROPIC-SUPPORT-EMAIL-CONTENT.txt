@@ -1,0 +1,54 @@
+Subject: Request for Credit/Refund - AI Assistant Damaged My Application and Continued Charging Despite Commitment Not To
+
+Dear Anthropic Support Team,
+
+I am writing to request a credit or refund for charges incurred during sessions where your AI assistant (Cline) damaged my application and then continued to charge me while attempting to assess and repair the damage it caused.
+
+BACKGROUND:
+I have been working on a Star Map Generator application for over 4 months, investing more than $1,000 in development costs through your platform. On July 1st-3rd, 2025, while I asked Cline to work on event dropdown functionality, the AI assistant broke multiple critical features of my application.
+
+THE DAMAGE INCIDENT:
+The AI assistant broke 10+ major functionalities including:
+- All VIEW buttons (Star Map, Street Map, Landscape, Portrait views)
+- Date synchronization (showing dates 1 day earlier than correct)
+- Text Placements section (completely removed from UI)
+- Canvas rendering and circle display
+- Zoom slider functionality
+- Combined view options and alignment
+- Paper size dimension display
+- And several other critical features
+
+CHARGING ISSUE:
+After breaking my application, the AI assistant committed multiple times to work "without charge" to repair the damage it caused. However, charges continued to accumulate:
+- July 8th session: Charges continued despite "no charge" commitment
+- July 13th session: $15.07 reduced to $13.57 ($1.50 in charges) during damage assessment
+- The AI assistant acknowledged it could not control the billing system
+
+DOCUMENTATION PROVIDED:
+I have comprehensive documentation (attached) showing:
+- Complete damage assessment created by the AI assistant itself
+- Acknowledgment of responsibility for breaking the application
+- Multiple commitments to work without charge
+- Evidence that charges continued despite these commitments
+
+REQUEST:
+I am requesting a credit/refund for:
+1. Charges incurred during damage assessment sessions (minimum $1.50 from July 13th session)
+2. Any charges related to repair work needed to restore functionality the AI assistant broke
+3. Consideration for a goodwill credit given the significant disruption to my 4+ month project
+
+This is not a request to avoid paying for legitimate development work, but rather a request for fair treatment when your AI assistant damaged my application and then continued charging while attempting to repair its own mistakes.
+
+The attached documentation provides complete details of the incident, damage assessment, and the AI assistant's own acknowledgment of responsibility.
+
+I would appreciate your reconsideration of this matter and look forward to your response.
+
+Thank you for your time and consideration.
+
+Best regards,
+[Your Name]
+[Your Account Information]
+
+---
+
+ATTACHMENT: COMPREHENSIVE-DAMAGE-ASSESSMENT-AND-RECOVERY-PLAN_20250713.md

@@ -1,0 +1,817 @@
+{
+  "timestamp": "2025-05-31T23:24:46.241Z",
+  "events": [
+    {
+      "time": 0,
+      "type": "info",
+      "message": "Initializing Combined View Diagnostic Tool"
+    },
+    {
+      "time": 0,
+      "type": "info",
+      "message": "Setting up canvas monitoring"
+    },
+    {
+      "time": 175,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 175,
+      "type": "success",
+      "message": "Canvas property monitoring set up"
+    },
+    {
+      "time": 175,
+      "type": "info",
+      "message": "Setting up image loading interception"
+    },
+    {
+      "time": 175,
+      "type": "success",
+      "message": "Image loading interception set up"
+    },
+    {
+      "time": 175,
+      "type": "info",
+      "message": "Setting up canvas context method interception"
+    },
+    {
+      "time": 177,
+      "type": "success",
+      "message": "Canvas context method interception set up"
+    },
+    {
+      "time": 177,
+      "type": "info",
+      "message": "Setting up combined view button interception"
+    },
+    {
+      "time": 177,
+      "type": "info",
+      "message": "Intercepted Combined View (Landscape) button"
+    },
+    {
+      "time": 177,
+      "type": "info",
+      "message": "Intercepted Combined View (Portrait) button"
+    },
+    {
+      "time": 177,
+      "type": "success",
+      "message": "Combined view button interception set up"
+    },
+    {
+      "time": 177,
+      "type": "info",
+      "message": "Setting up DOM change monitoring"
+    },
+    {
+      "time": 177,
+      "type": "info",
+      "message": "Now monitoring canvas for attribute changes"
+    },
+    {
+      "time": 177,
+      "type": "info",
+      "message": "Now monitoring canvas container for changes"
+    },
+    {
+      "time": 177,
+      "type": "success",
+      "message": "DOM change monitoring set up"
+    },
+    {
+      "time": 328,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 331,
+      "type": "success",
+      "message": "Diagnostic panel added"
+    },
+    {
+      "time": 331,
+      "type": "success",
+      "message": "Combined View Diagnostic Tool initialized"
+    },
+    {
+      "time": 770,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 1268,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 1752,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 2244,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 2752,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 3258,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 3781,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 4257,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 4770,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 5266,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 5786,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 6282,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 6769,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 7264,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 7751,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 8248,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 8761,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 9247,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 9746,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 10288,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 10780,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 11257,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 11759,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 12269,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 12765,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 13287,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 13776,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 14251,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 14739,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 15257,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 15787,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 16248,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 16752,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 17245,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 17751,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 18257,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 18758,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 19259,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 19765,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 20261,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 20793,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 21259,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 21747,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 22258,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 22773,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 23245,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 23754,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 24258,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 24766,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 25236,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 25760,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 26250,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 26763,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 27256,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 27778,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 28253,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 28761,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 29258,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 29758,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 30255,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 30753,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 31258,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 31756,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 32261,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 32757,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 33253,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 33752,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 34257,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 34760,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 35251,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 35753,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 36253,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 36752,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 37260,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 37760,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 38258,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 38760,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 39260,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 39753,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 40257,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 40752,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 41258,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 41756,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 42249,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 42757,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 43252,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 43752,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 44255,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 44757,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 45252,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 45750,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 46252,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 46752,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 47256,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 47758,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 48255,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 48753,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 49262,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 49745,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 50261,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 50758,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 51246,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 51755,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 52252,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 52756,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 53252,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 53755,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 54259,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 54752,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 55256,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 55753,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 56262,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 56745,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 57256,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 57750,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 58258,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 58754,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 59247,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 59761,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 59866,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 60236,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 60746,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 61264,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 61752,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 62257,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 62746,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 63248,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 63761,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 64264,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 64756,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 65271,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 65744,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 66258,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 66737,
+      "type": "info",
+      "message": "Canvas snapshot taken: 2550x3300"
+    },
+    {
+      "time": 66891,
+      "type": "info",
+      "message": "Generating diagnostic report..."
+    }
+  ],
+  "canvasSnapshots": 136,
+  "imageData": {
+    "starMap": "Not captured",
+    "streetMap": "Not captured"
+  },
+  "canvasDimensions": {
+    "width": 2550,
+    "height": 3300,
+    "styleWidth": "auto",
+    "styleHeight": "auto",
+    "styleMaxWidth": "100%",
+    "styleMaxHeight": "70vh",
+    "offsetWidth": 868,
+    "offsetHeight": 640,
+    "clientWidth": 866,
+    "clientHeight": 638
+  },
+  "canvasContainerStyle": {
+    "height": "auto",
+    "minHeight": "auto",
+    "maxHeight": "80vh",
+    "overflow": "hidden",
+    "backgroundColor": "",
+    "display": "flex",
+    "flexDirection": "column",
+    "alignItems": "center",
+    "justifyContent": "center",
+    "offsetHeight": 741,
+    "clientHeight": 741,
+    "scrollHeight": 741
+  },
+  "scriptInteractions": {
+    "allScripts": 38,
+    "relevantScripts": [
+      "https://anythingpod.com/star-map/js/perfect-circle-calculator.js",
+      "https://anythingpod.com/star-map/js/canvas-drawing-utils.js",
+      "https://anythingpod.com/star-map/js/star-map-circle-fix.js",
+      "https://anythingpod.com/star-map/js/combined-views-fix.js",
+      "https://anythingpod.com/star-map/js/absolute-final-fix.js",
+      "https://anythingpod.com/star-map/js/circle-fix-direct.js"
+    ]
+  }
+}

@@ -1,0 +1,312 @@
+CMU +
+I HAVE UNCOVERED SOME OTHER ISSUES ON SOME DATA CONTAINERS (MISSING ITEMS, ITEMS NOT RETAINED OR SAVED ETC). WHICH I WOULD LIKE TO ADDRESS LATER AND ONCE WE HAVE THE "VIEW BUTTONS" CALCULATIONS FIXED AND - ZOOM SLIDER INTERACTIVITY FIXED *BEFORE* I TURN BACK TO CONTAINER ISSUES.
+UNDERSTOOD?
+
+THIS IS GOING TO BE DIFFICULT TO EXPLAIN BU HERE GOES.
+
+SUMMARY:
+A. WHEN THE PAGE IS LOADED FROM SCRACTH, AND DATE AND COORDINATES ARE SET, THE "FIRST" TIME I USE THE "STARMAP" VIEW BUTTON IT WORKS:
+SETTINGS WERE:
+DIMS: 2550 X 3300
+DPI: 3O0
+
+COMBINED VIEW OPTIONS:
+CIRCLE OVERLAP: 30%
+MAP ODER: STREET MAP FIRST
+
+
+
+1.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+- Event
+- Date
+- Time
+- Time toggle position (ON/OFF)
+- Latitude and Longitude Coordinates of user selected coordinates (whatever they have set as the center or destination coordinates)
+- Zip/Postal
+- Address
+- Customizable text entry #1
+- Customizable text entry #2
+- Customizable text entry #3
+- Customizable text entry #4
+- Fixed-Layer Date
+- Fixed-Layer Lat/Long coordinates formatted
+- All related font-family, font-size, Bold, Italic, Color attributes for their respective entries/fields
+- Paper Auto-Size setting (if selected)
+- Star Map Canvas dimensions width (px) and height (px)
+- DPI setting
+- Aspect Ratio SET/checked or NOT SET
+- Canvas background color
+- Circle overlap (default 10%)
+- Map Order
+- Star Map Image settings - Map Style
+- Star Map Image settings - Radius % (default 80%)
+- Star Map Image settings - Border (px)
+- Star Map Image settings - Border Color (#hex) 
+- Text Placement Content Entry #1 - Order - Above or Below Map
+- Text Placement Content Entry #2 - Order - Above or Below Map
+- Text Placement Content Entry #3 - Order - Above or Below Map
+- Text Placement Content Entry #4 - Order - Above or Below Map
+- Text Placement Date - Order - Above or Below Map
+- Text Placement Coordinates - Order - Above or Below Map
+- Image format type selected - Transparency if PNG checked
+- Canvas Zoom Level - default 100%
+- 
+- 
+- 
+- 
+- 
+- 
+- 
+- 
+- 
+- 
+- 
+- 
+- 
+- 
+
+
+CMU +
+
+COMMENT: 1. AT LAST. MY STYLING IS COMPLETE ~ FOR NOW!
+***NOTE THE FOLLOWING EXCEPTIONS:
+a. WE HAVE NOT YET ADDRESSED THE "ADVANCED OPTIONS" BUTTON IN THE "Star Map Image Settings" CONTAINER!
+b. WE HAVE NOT YET ADDRESSED THE "PDF" DOWNLOAD CAPABILITY IN THE "Settings + Preview + Download" CONTAINER!
+c. WE HAVE YET TO TEST THAT "ALL" SETTINGS ARE SAVED AND LOADED SUCCESSFULLY. WE WILL DO THIS ONCE WE HAVE RESOLVED "ALL" OUR REMAINING ISSUES (SEE BELOW)
+d. WE HAVE YET ADDRESS THE FIREBASE INTEGRATION BEYOND AUTHENTICATION.
+
+/--
+OUR NEXT CHALLENGE IS AS FOLLOWS:
+--------------------------------
+*** FORMATTING AND STYLING OF THE STAR MAP IMAGE CANVAS AND ITS VARIOUS STYLING OPTIONS VIA "VIEW" & "DOWNLOAD" BUTTON FUNCTIONS ***
+
+*******************
+I HAVE PROVIDED EXTENSIVE AND DETAILES DESCRIPTIONS ON WHAT THESE FUNCTIONS ARE USED FOR AND
+AM INCLUDING 5 SCREEN SHOTS WITH REFERENCE TO THE NUMBERED PARAPGRAPHS OF EAHC BUTTON FUNCTION
+WITH ITS INCORRECT OUTPUTS FOR YOU TO WITNESS THE ISSUES WE ARE EXPEREINCING WITH THESE FUNCTIONS.
+*******************
+
+
+TASK OVERVIEW:
+-------------
+*** THE END OBJECTIVES AND RESULTANT OUTPUT(s)OF THE PROJECT ARE:
+- PRODUCE A STAR MAP IMAGE ON THE "STAR MAP CANVAS" AS WELL AS THE GOOGLE MAP AND COMBINATIONS THEREOF:
+
+THE FEATURES ALLOW THE USER TO VIEW THE STYLED AND GENERATED STAR MAP or GGOLE STREET MAP et al IMAGE(s) USING THE "View Options" AND "Download Options" BUTTONS IN THE "Settings + Preview + Download" CONTAINER.
+
+*** NOTE: THIS APPLIES FOR BOTH "VIEW[Gold Buttons]" and "DOWNLOAD[Green buttons]".
+*** NOTE: THESE BUTTON FUNCTIONS ARE ENABLERS OR ACTIONS TO PERFORM THEIR RESPECTIVE FUNCTIONS.
+
+~ VIEW OPTIONS:		Street Map  Canvas Layout  Combined (Landscape)  Combined (Portrait)
+~ DOWNLOAD OPTIONS:	Street Map  Canvas Layout  Combined (Landscape)  Combined (Portrait)
+
+B. THE PROJECT MUST USE THE VARIOUS DIMS AND ATTRIBUTE SETTINGS OF VARIOUS FUNCTIONS TO ACCURATELY CALCULATE AND THEN "STYLE" AN AESTHETICALLY CORRECT STAR MAP CANVAS IMAGE:
+B1. MY BELIEF IS (YOU MUST CHECK ME ON THIS!), THAT THE KINDS OF PARAMETERS AND VALUES USED ARE:
+IN THE "Star Map Canvas + Image Settings": Size: (using paper auto-size connected to the resultant width & height dimesions in conjunction with the DPI setting; Circle Radius %; Border width(px); Border Color; AND THE IMAGE RETURNED/FETCHED FROM THE STAR MAP API.
+
+
+OUTPUTS CREATED FROM THEIR RESPECTIVE BUTTON FUNCTIONS ARE AS FOLLOWS:
+---------------------------------------------------------------------
+1. PRIMARY: ["Canvas Layout" BUTTON(s)]: This involves inserting the "Star Map" image clipped inside the configured as follows:
+a. Star Map image clipped inside the radiused circle c/w selected BG color[or transparency]/border width
+b. Any Customizable Text Entries (max 4)
+c. BOTH Fixed-Layer values of "Date/Time" and "Lat/Long coordinates - c/w font family & sizing & color attributes set by the user
+d. In the "Text Placements On Star Map Canvas" container, the user has the power to decide what order they appear on the star map canvas including the choice of their item appearing above or below the star map image.
+*** NOTE THAT THERE IS A MAXIMUM OF "6" ITEMS/TEXT LAYERS THAT CAN BE PLACE ON THE STAR MAP CANVAS:
+e. Customizable text entries 1 thru 4, Date/Time, and Lat/Long coordinates as formatted in the FIXED-LAYERS CONTAINER.
+*** Remember, the user has the means to decide what order they appear on the star map canvas including the choice of their item appearing above or below the star map image.
+
+
+2. ["Star Map" BUTTON(s)]
+a. This involves ONLY the Star Map image clipped inside the radiused circle c/w selected BG color[or transparency]/border width
+b. This function allows the user to view and download the Star Map image by itself for use elsewhere.
+c. NO text layers are displayed using this function - image only!
+** This function allows the user to view and download the Star Map image by itself for use elsewhere.
+
+
+3. ["Street Map" BUTTON(s)]
+a. This involves ONLY the Google "Street Map image clipped inside the radiused circle c/w selected BG color[or transparency]/border width
+b. This function allows the user to view and download the Google Street Map image by itself for use elsewhere.
+c. NO text layers are displayed using this function - image only!
+** This function allows the user to view and download the Google Street Map image by itself for use elsewhere.
+
+
+4. [Canvas Layout" BUTTON(s)]
+a. This involves displaying the "Star Map" image ONLY as follows:
+b. "Star Map" image is styled clipped inside its radiused circle(s) c/w selected BG color[or transparency]/border width(px) and border color
+c. This is where the "Text Placements On Star Map Canvas" features are used to place the max. 6 FIXED-LAYERS onto the Star Map Canvas" container.
+*** Remember, the user has the means to decide what order they appear on the star map canvas including the choice of their item appearing above or below the star map image.
+
+
+5. ["Combined (Landscape)"  BUTTON(s)]
+a. This involves a "LANDSCAPED/HORIZONTALLY" styled output where *BOTH* the "Google "Street Map image" AND the "Star Map" image displayed with intersecting/clipped overlapping circles as follows:
+b. BOTH the "Google "Street Map image" AND the "Star Map" are styled clipped inside each of their independent "OVERLAPPING" radiused circle(s) c/w selected BG color[or transparency]/border width(px) and border color
+c. This is where the "Text Placements On Star Map Canvas" features are used to place the max. 6 FIXED-LAYERS onto the Star Map Canvas" container.
+*** Remember, the user has the means to decide what order they appear on the star map canvas including the choice of their item appearing above or below the star map image.
+ 
+
+6. ["Combined (Portrait)"  BUTTON(s)]
+a. This involves a "PORTRAIT/VERTICALLY" styled output where *BOTH* the "Google "Street Map image" AND the "Star Map" image displayed with intersecting/clipped overlapping circles as follows:
+b. BOTH the "Google "Street Map image" AND the "Star Map" are styled clipped inside each of their independent "OVERLAPPING" radiused circle(s) c/w selected BG color[or transparency]/border width(px) and border color
+c. This is where the "Text Placements On Star Map Canvas" features are used to place the max. 6 FIXED-LAYERS onto the Star Map Canvas" container.
+*** Remember, the user has the means to decide what order they appear on the star map canvas including the choice of their item appearing above or below the star map image.
+
+OUTSTANDING ISSUES WITH BUTTON FUNCTIONS:
+---------------------------------------- 
+*** REFERENCING THE ABOVE NUMBERED DESCRIPTIONS OF BUTTON FUNCTIONS:
+SETTINGS USED:
+Paper Auto-Size: 11 x 17" 
+DPI: (300 Hi-Res)
+Width(px: 3300 x Height(px) 5100
+Map Style: Default
+Radius: 60% (default)
+Border(px): 15
+Border Color: #FFD700
+Image Format: PNG (Transparency Checked)
+
+1. SST 1:  
+2. SST 2: 
+3. SST 3: 
+4. SST 4: 
+5. SST 5: 
+
+
+
+
+
+
+
+
+
+
+
+
+REQUESTED SCREENSHOTS WITH CURRENT STANDING AND MOCKUPS AND DATA SOURCE EXPLANATIONS:
+------------------------------------------------------------------------------------
+
+1.
+SST 1: CURRENT STATE OF THE "FIXED-LAYERS" SECTION:xxx
+SST 2: *PRECISE MOCKUP* OF THE "FIXED-LAYERS" SECTION:xxx
+NOTES:
+A. THE "Date:" *** VALUE *** IS MISSING!!
+CAPTURED/ECHOED/COPIED FROM THE DATE ENTRY FIELD IN THE "EVENTS-DETAILS" CONTAINER #1.
+**** THIS FIELD IS ONLY ECHOED TO THIS ROW AND THE USER "NEVER" HAS ACCESS. 
+CONFIRM YOU UNDERSTAND.
+
+B. THE "Lat/long:" *** VALUE ***" IS MISSING!!
+CAPTURED/ECHOED/COPIED FROM THE COMBINED LAT/LONG COORDINATE VALUES IN THEIR RESPECTIVE FIELDS WITHIN THE "MAP- LOCATION" CONTAINER #2
+**** THIS FIELD IS ONLY ECHOED TO THIS ROW AND THE USER "NEVER" HAS ACCESS. 
+CONFIRM YOU UNDERSTAND.
+
+C. SEE SST#3xxx FOR THE MOCKUP OF STYLING OF THESE "FIXED-LAYERS" VALUES AS THEY EXACTLY THE SAME AS IN THE "TEXT PLACEMENT" CONTINER #5
+CONFIRM YOU UNDERSTAND.
+
+2. 
+SST 4: CURRENT STATE OF THE "Star Map Canvas + Image Settings" SECTION:xxx
+SST 5: *PRECISE MOCKUP* OF THE "Star Map Canvas + Image Settings" SECTION:xxx
+NOTES:
+A. THE "Paper Auto-Size:" ROW IS DUPLICATED. THE SECOND ROW IS TO BE COMPLETELY REMOVED FROM CODE. DO *NOT* BAND-AID OR COVER UP OR HIDE IT!!
+CAPTURED/ECHOED/COPIED FROM THE DATE ENTRY FIELD IN THE "EVENTS-DETAILS" CONTAINER #1. CONFIRM YOU UNDERSTAND.
+
+B. SST 6: CURRENT STATE OF THE "Star Map Image Settings" SECTION:xxx
+THE "Star Map Style" DROP-DOWN LIST IS TOO WIDE CAUSING THE ROW TO WRAP THE COLOR-PICK ONTO THE NEXT ROW.
+NOTE: THERE ARE CURRENTLY ONLY "4" LIST ITEMS IN THIS DROP DOWN: "Default, Inverted, Navy, and Red" WHICH ARE ALL VERY SHORT IN LENGTH!
+REDUCE THE WIDTH OF THIS FILED SUBSTANTIALLY AND ALLOW THE COLOR-PICKER TO REMAIN ON ITS CORRECT ROW.
+
+
+3.
+SST 7:xxx CURRENT STATE OF THE "Text Placements On Star Map Canvas CONTAINER #5
+SST 8:xxx *PRECISE MOCKUP* OF THE "Text Placements On Star Map Canvas" CONTAINER #5
+NOTES:
+A. THE "Date:" *** VALUE *** IS INCORRECT!!
+CAPTURED/ECHOED/COPIED FROM THE DATE ENTRY FIELD IN THE "EVENTS-DETAILS" CONTAINER #1. CONFIRM YOU UNDERSTAND.
+
+B. 
+SST 9:xxx CURRENT STATE OF THE "Lat/long:" *** VALUES ***" IS INCORRECT!!
+SST 10:xxx *PRECISE MOCKUP* OF THE "Lat/long:" *** VALUES ***"!!
+CAPTURED/ECHOED/COPIED FROM THE COMBINED LAT/LONG COORDINATE VALUES IN THEIR RESPECTIVE FIELDS WITHIN THE "MAP- LOCATION" CONTAINER #2
+STYLED AS "FOR EXAMPLE" ONLY: N39° 49.99800′ | W98° 35.13000′ 
+THESE ARE THE LATITUDE AND LONGITUDE OF THE *** CURRENT *** MAP CENTER COORDINATES AS SET BY THE USEWR USING THE MAP-LOCATION CONTINER SETTINGS.
+**** THIS FIELD IS ONLY ECHOED TO THIS ROW AND THE USER "NEVER" HAS ACCESS. 
+CONFIRM YOU UNDERSTAND.
+
+RSVP!
+
+
+
+------------------------------------
+©YERTIZZ.COM 2025  All Rights Reserved.
+010E79-60C176-2CDE58
+https://apps.google.com/supportwidget/helphome?product_name=Cloud%20Platform&product_context=billing%2Fchat&hl=en_US&article_url&trigger_context&host_url=https%3A%2F%2Fconsole.cloud.google.com%2Fsupport%2Fchat%3Finv%3D1%26invt%3DAbx5Xg%26project%3Dstar-map-459112&session_id=59ACB8E8-F302-4C40-A5A8-8AA3DC12F70E&product_data&project_id=star-map-459112&origin=https%3A%2F%2Fconsole.cloud.google.com&render_mode=1
+
+You are using the AIzaSyCpvv1IJYxwGVMh24MLFDH6LmupseApSZU apikey from the star-map-459112 project
+lease confirm that you have shut down your project. You can learn more on how to do it here: https://cloud.google.com/resource-manager/docs/creating-managing-projects#shutting_down_projects
+
+https://www.facebook.com/PersonalGiftsStore/
++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+CMU +:
+
+EXPLANATIONS AND INSTRUCTIONS FOR YOU TO ACTION:
+
+I HAVE VARIOUS ISSUES YOU HAVE BEEN UNABLE TO RESOLVE:
+
+A. FUNCTIONAL ISSUES:
+A1. DATE: THE DATE VARIABLE CHOSEN BY THE USER by way of the "Date/Time:" field in the EVENT DETAILS Container ~ [Container +1], has a critical "master-truth" role to play in the correct operation of the Star-Map project itself.
+The VALUES of the selected entry in the Event Details field for Date & Time, is used in several places thoughout the project and it is VITAL and CRITICAL that this function works 100%. The value from this field is used in the following 2 functions:
+
+A1a. The FIXED-LAYERS 'Section' of the "Customizable Text Layers + Fixed Layers" container ~ [Container +3], has it's "Date:" field "populated or copied/echoed" directly from the "master-truth" "Date/Time:" field in the EVENT DETAILS Container ~ [Container +1]
+
+A1b. The "Text Placements On Star Map Canvas" container ~ [Container +6], *ALSO* has it's "Date:" field "populated or copied/echoed" directly from the "master-truth" "Date/Time:" field in the EVENT DETAILS Container ~ [Container +1]
+
+
+B. "LATITUDE AND LONGITUDE: THE "Lat/Long" VALUES are CHOSEN or "SET" by the user by way of the "MAP CONTAINER [Container +2]. These dynamic-map coordinates are set by the user using the Address, Zip/Postal entry fields or by simply moving the map itself. These "dynamic" coordinates are displayed within the map-container row of "Latitude:", Longitude:" at the bottom section of the "MAP CONTAINER [Container +2] and again, these user-set values play a most critical "master-truth" role in the correct operation of the Star-Map project itself.
+The VALUES within the map-container row of "Latitude:", Longitude:" at the bottom section of the "MAP CONTAINER [Container +2], are used to be correctly formatted and "populated or copied/echoed" throughout the project for various display and calculation reasons. It is VITAL and CRITICAL that this function works 100%. The value from this field is used in the following 3 functions:
+
+B1a. In the FIXED-LAYERS 'Section' of the "Customizable Text Layers + Fixed Layers" container ~ [Container +3], it is the FINAL row of "Lat/Long" and is "populated or copied/echoed" directly from the "master-truth" ""Latitude and Longitude Map values" within the "MAP CONTAINER [Container +2]. For example: [N40° 41.85040′ | W73° 58.77036′]. This is the combined coordinate formatting of the "Lat & Long" values as displayed directly underneath the Google Map Display itself in BOLD large font and RED!
+
+For reference, throughout the project, we have been calling these the "MAP DISPLAY COMBINED-FORMATTED COORDINATES".
+It's primary use here, is for the user to style the star-map-image output using font-family selection, font-size, bold or italic, and color using the color-picker object.
+
+
+B1b. In the TEXT-PLACEMENTS FIXED-LAYERS 'Section' of the "Customizable Text Layers + Fixed Layers" container ~ [Container +5], in the FINAL row of "Lat/Long" and is "populated or copied/echoed" directly from the "master-truth" "Latitude and Longitude Map values" within the "MAP CONTAINER [Container +2]. For example: [N40° 41.85040′ | W73° 58.77036′].
+
+This is the combined coordinate formatting of the "Lat & Long" values as displayed directly underneath the Google Map Display itself in BOLD large font and RED! For reference, throughout the project, we have been calling these the "MAP DISPLAY COMBINED-FORMATTED COORDINATES".
+It's primary use here in the TEXT PLACEMENTS CONTAINER, is to for the user to set the order of the star-map-image text layers as well as above or below the actual API derived/fetched, star-map "image"!
+
+B1c. 
+PROJECT CRITICAL: Both B1a and B1c above, are the principle or "prime" values the star map project's API needs in order to derive a star-map image for that specficic date and time and place (coordinates).
+
+*** IT IS OF VITAL AND CRITICAL IMPORTANCE - INDEED, "IMPERATIVE" THAT THESE FUNCTIONS PERFORM 100% AS THE PROJECT CANNOT FUNCTION WITHOUT THE CORRECT DATE & TIME AND COORDINATE VALUSE "MATCHING 100%" IN ALL PLACES!!
+
+DO YOU UNDERSTAND NOW??
+
+YOU NEED TO ENSURE THAT THE ABOVE ARE TRACED INSIDE THE CODE AND ENSURE THAT THE ABOVE FUNCTIONS PERFORM 100% AS OPPOSED TO THROWING UNPROFESSIONAL, BAND-AID, OR HARD-CODED FIXES LIMITING FOCUS ON ONE OR TWO CSS OR JS FILES.
+
+*** DEEPLY ANALYZE THESE ABOVE DETAILED EXPLANATIONS ON HOW THE PROJECT IS SUPPOSED TO WORK AND RESOLVE "ALL" MATTERS.
+
+
+

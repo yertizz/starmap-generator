@@ -1,0 +1,51 @@
+/* Combined View Positioning CSS - 2025-06-01 9:13 PM */
+
+/**
+ * This CSS file fixes the positioning of circles in combined views.
+ * It works alongside dimensions-fix-v2.js to ensure both dimensions
+ * and positioning are correct.
+ */
+
+/* Center circles in combined views */
+#star-map-canvas {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    position: relative !important;
+}
+
+/* Landscape view */
+.landscape-view #star-map-canvas,
+body.landscape-view #star-map-canvas {
+    flex-direction: row !important;
+}
+
+/* Portrait view */
+.portrait-view #star-map-canvas,
+body.portrait-view #star-map-canvas {
+    flex-direction: column !important;
+}
+
+/* Circle elements */
+#star-map-canvas > * {
+    margin: auto !important;
+    position: relative !important;
+}
+
+/* Force circles to be centered */
+#star-map-canvas > div {
+    margin: auto !important;
+}
+
+/* Ensure canvas has proper dimensions */
+.landscape-view #star-map-canvas {
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: auto !important;
+}
+
+.portrait-view #star-map-canvas {
+    width: auto !important;
+    height: 100% !important;
+    aspect-ratio: auto !important;
+}

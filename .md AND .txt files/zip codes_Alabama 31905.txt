@@ -1,0 +1,49 @@
+sk-ant-ncc1701-alfie-47vwxyzAlabama	31905
+Arkansas 38041
+California 89010
+Colorado 81699
+Connecticut 06999
+Delaware 19999
+WADC 20599
+Florida	32001
+Georgia	30001
+Hawaii	96371
+Idaho	59847
+Illinois 52761
+Indiana	46001
+Iowa	50001
+Kansas	66001
+Kentucky 38079
+Louisiana 70000
+Maine 03901
+Maryland 20331
+Massachusetts 01001
+	21 Michigan 48001
+Minnesota 51360
+Mississippi 38160
+Missouri 51630
+Montana	57724
+Nebraska 51557
+Nevada 84034
+New Hampshire 00210
+New Jersey 07001
+New Mexico 79837
+New York 14999
+North Carolina 27001
+North Dakota 56701
+Ohio 43001
+Oklahoma 67950
+Oregon 89421
+Pennsylvania 15001
+Rhode Island 02801
+South Carolina 29001
+South Dakota 51001
+Tennessee 31788
+Texas 73301
+Utah 81324
+Vermont	05001
+Virginia 20101
+Washington 98001
+West Virginia 24604
+Wisconsin 52820
+Wyoming	57717

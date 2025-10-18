@@ -1,0 +1,142 @@
+<!-- Section 7: Settings + Preview + Download Section -->
+<!-- Settings + Preview + Download Section with Redesigned Button Container -->
+<fieldset class="form-section settings-preview-download-section">
+    <legend>Settings + Preview + Download</legend>
+    
+    <!-- Settings Buttons Row -->
+    <div class="settings-buttons-row">
+        <button id="loadSettingsBtn" class="action-button settings-button">
+            <i class="fas fa-upload button-icon"></i> Load Settings
+        </button>
+        <button id="saveSettingsBtn" class="action-button settings-button">
+            <i class="fas fa-save button-icon"></i> Save Settings
+        </button>
+    </div>
+    
+    <!-- Main Buttons Container with View and Download Columns -->
+    <div class="main-buttons-container">
+        <!-- View Options Column -->
+        <div class="view-buttons-column">
+            <div class="column-header">View Options</div>
+            <div class="button-list">
+                <button id="view-star-map-btn" class="action-button view-button">
+                    <i class="fas fa-star button-icon"></i> Star Map
+                </button>
+                <button id="view-street-map-btn" class="action-button view-button">
+                    <i class="fas fa-map-marker-alt button-icon"></i> Street Map
+                </button>
+                <button id="view-star-map-canvas-btn" class="action-button view-button">
+                    <i class="fas fa-image button-icon"></i> Canvas Layout
+                </button>
+                <button id="view-star-street-landscape-btn" class="action-button view-button">
+                    <i class="fas fa-desktop button-icon"></i> Combined (Landscape)
+                </button>
+                <button id="view-star-street-portrait-btn" class="action-button view-button">
+                    <i class="fas fa-mobile-alt button-icon"></i> Combined (Portrait)
+                </button>
+            </div>
+        </div>
+        
+        <!-- Download Options Column -->
+        <div class="download-buttons-column">
+            <div class="column-header">Download Options</div>
+            <div class="button-list">
+                <button id="download-star-map-btn" class="action-button download-button">
+                    <i class="fas fa-star button-icon"></i> Star Map
+                </button>
+                <button id="download-street-map-btn" class="action-button download-button">
+                    <i class="fas fa-map-marker-alt button-icon"></i> Street Map
+                </button>
+                <button id="download-star-map-canvas-btn" class="action-button download-button">
+                    <i class="fas fa-image button-icon"></i> Canvas Layout
+                </button>
+                <button id="download-star-street-landscape-btn" class="action-button download-button">
+                    <i class="fas fa-desktop button-icon"></i> Combined (Landscape)
+                </button>
+                <button id="download-star-street-portrait-btn" class="action-button download-button">
+                    <i class="fas fa-mobile-alt button-icon"></i> Combined (Portrait)
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Image Format Options -->
+<div class="settings-row" style="margin-top: 15px; border-top: 1px solid #ddd; padding-top: 15px; display: flex; align-items: center; justify-content: center; gap: 20px;">
+    <span style="font-weight: 600;">Image Format:</span>
+    <input type="radio" name="image-format" value="png" id="png-format" checked> <label for="png-format" style="margin-right: 5px;">PNG</label>
+    <input type="checkbox" id="png-transparency"> <label for="png-transparency" style="margin-right: 20px;">Transparency</label>
+    <input type="radio" name="image-format" value="jpg" id="jpg-format"> <label for="jpg-format" style="margin-right: 20px;">JPG</label>
+    <input type="radio" name="image-format" value="svg" id="svg-format"> <label for="svg-format" style="margin-right: 20px;">SVG</label>
+    <input type="radio" name="image-format" value="pdf" id="pdf-format"> <label for="pdf-format">PDF</label>
+</div>
+    
+    <!-- Canvas Preview -->
+    <div class="canvas-container" style="margin-top: 20px; text-align: center;">
+        <canvas id="star-map-canvas" width="800" height="800" style="max-width: 100%; height: auto; border: 1px solid #ddd; background-color: #F5F5DC;"></canvas>
+    </div>
+    
+    <!-- Zoom Controls -->
+    <div class="zoom-section">
+        <div class="zoom-container">
+            <span>Zoom:</span>
+            <input type="range" min="50" max="200" value="100" class="zoom-slider" id="zoom-slider">
+            <span id="zoom-value">100%</span>
+        </div>
+    </div>
+</fieldset>
+
+    </form>
+
+    <!-- Loading Indicator -->
+    <div id="loading-indicator">
+        <div class="spinner"></div>
+        <div style="color: white; margin-top: 20px; font-weight: bold;">Generating Star Map...</div>
+    </div>
+
+    <!-- External Libraries -->
+    <!-- Add Custom HEX Picker JS -->
+    <script src="js/color-picker.js?v=1.1"></script>
+
+    <!-- Modular Scripts (Order Matters!) -->
+    <script src="js/utils.js?v=1.2"></script> <!-- Cache bust -->
+    <script src="js/advanced_options.js?v=1.1"></script>
+    <script src="js/history.js?v=1.2"></script> <!-- Updated version -->
+    <script src="js/settings.js?v=1.1"></script>
+    <script src="js/picker_init.js?v=1.2"></script> <!-- Cache bust -->
+    <script src="js/svg_export.js?v=1.1"></script>
+    <script src="js/download.js?v=1.2"></script> <!-- Cache bust -->
+    <script src="js/map.js?v=1.1"></script> <!-- Load map logic first -->
+    <script src="js/main_app.js?v=1.3"></script> <!-- Cache bust -->
+    <script src="js/settings-preview-download.js?v=1.0"></script> <!-- New script for Settings + Preview + Download section -->
+    <script src="js/custom-alerts.js?v=1.0"></script> <!-- Custom centered alerts -->
+    
+    
+    <!-- Initialize history system -->
+    <script>
+        // Initialize history system when the DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set up history for all inputs
+            if (typeof setupAllHistories === 'function') {
+                console.log("Setting up history system...");
+                setupAllHistories();
+            } else {
+                console.error("History system not found");
+            }
+        });
+    </script>
+
+    <!-- Google Maps API -->
+    <!-- REMOVED old script tag and callback -->
+    <!-- Google Maps API will be loaded via JS API Loader in main_app.js or map.js -->
+
+<!-- Load Google Maps JS API Loader -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCpvv1IJYxwGVMh24MLFDH6LmupseApSZU&libraries=places,geometry&loader=js" async defer></script>
+<script src="js/master-override.js?v=1.0"></script>
+<script src="js/image-format-fix.js"></script>
+<script src="js/paper-size-dimensions.js?v=1.0"></script>
+<script src="js/ui-improvements.js?v=1.0"></script>
+<script src="js/container-reorganization-v2.js?v=1.1"></script>
+<script src="js/direct-image-format-fix.js"></script>
+</body>
+</html>
+<!-- END OF CODE - Cline - 2025-05-15 23:59 File: Star_Map_Generator.html -->

@@ -1,0 +1,265 @@
+/* START OF CODE - Cline - 2025-05-14 00:24:15 File: css/master-override.css */
+
+/**
+ * Master Override CSS for Star Map Generator
+ * 
+ * This file contains CSS rules to ensure proper UI layout and functionality:
+ * 1. Force Event Details container to be a single row
+ * 2. Fix vertical alignment of Load and Save Settings buttons
+ * 3. Hide zoom slider completely
+ * 4. Fix canvas obfuscation issue
+ * 5. Center-align Image Format row
+ */
+
+/* Force Event Details container to be a single row */
+#event-details-fieldset {
+    padding: 10px 5px 5px 5px !important; /* Reduced bottom padding */
+    min-height: 50px !important; /* Further reduced height */
+    max-height: none !important; /* Remove max height restriction */
+    overflow: visible !important;
+    margin-bottom: 10px !important; /* Reduced bottom margin */
+}
+
+/* Reduce white space after the Event Details container */
+#event-details-fieldset + .form-section {
+    margin-top: 10px !important; /* Reduced top margin of next section */
+}
+
+#event-details-fieldset > div {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    justify-content: flex-start !important; /* Align to start */
+    gap: 10px !important; /* Reduced gap */
+    width: 100% !important;
+    max-width: 100% !important;
+    min-height: 40px !important; /* Reduced minimum height */
+    max-height: none !important; /* Remove max height restriction */
+}
+
+#event-details-fieldset .input-group {
+    flex: 0 0 auto !important; /* Don't shrink */
+    width: auto !important;
+    margin: 0 !important;
+    max-width: none !important; /* Remove max width */
+}
+
+/* Rename Event/Occasion label to save space */
+label[for="occasion"] {
+    font-size: 0.95em !important;
+    width: 50px !important; /* Fixed width */
+    min-width: 50px !important;
+    text-align: right !important;
+}
+
+#occasion {
+    width: 200px !important;
+    min-width: 180px !important;
+    max-width: 200px !important;
+}
+
+/* Fix Date/Time label */
+label[for="date"] {
+    width: 80px !important; /* Fixed width */
+    min-width: 80px !important;
+    text-align: right !important;
+}
+
+/* Make time input not required when toggle is off */
+#time:not(:required) {
+    border-color: #ccc !important;
+}
+
+/* Hide "Please fill out this field" message for time input when toggle is off */
+.time-toggle-container:has(input:not(:checked)) + .validation-message {
+    display: none !important;
+}
+
+/* Fix PNG transparency checkbox logic - More aggressive approach */
+/* When PNG is selected */
+input[name="image-format"][value="png"]:checked ~ label[for="png-transparency"],
+input[name="image-format"][value="png"]:checked ~ label[for="png-transparency"] input,
+input[name="image-format"][value="png"]:checked + label + label[for="png-transparency"],
+input[name="image-format"][value="png"]:checked + label + label[for="png-transparency"] input {
+    opacity: 1 !important;
+    cursor: pointer !important;
+    pointer-events: auto !important;
+}
+
+/* When PNG is NOT selected */
+input[name="image-format"]:not([value="png"]):checked ~ label[for="png-transparency"],
+input[name="image-format"]:not([value="png"]):checked ~ label[for="png-transparency"] input,
+input[name="image-format"]:not([value="png"]):checked + label + label[for="png-transparency"],
+input[name="image-format"]:not([value="png"]):checked + label + label[for="png-transparency"] input {
+    opacity: 0.5 !important;
+    cursor: not-allowed !important;
+    pointer-events: none !important;
+}
+
+/* Direct style for PNG transparency checkbox */
+#png-transparency {
+    pointer-events: auto !important;
+}
+
+/* Force PNG transparency checkbox to be disabled when JPG or SVG is selected */
+input[name="image-format"][value="jpg"]:checked ~ #png-transparency,
+input[name="image-format"][value="svg"]:checked ~ #png-transparency {
+    pointer-events: none !important;
+    opacity: 0.5 !important;
+    cursor: not-allowed !important;
+}
+
+/* Force PNG transparency checkbox to be enabled when PNG is selected */
+input[name="image-format"][value="png"]:checked ~ #png-transparency {
+    pointer-events: auto !important;
+    opacity: 1 !important;
+    cursor: pointer !important;
+}
+
+/* Improve tooltip styling */
+.info-icon[title],
+.text-placement-title .info-icon,
+.text-placement-header .info-icon {
+    position: relative !important;
+    cursor: help !important;
+}
+
+.info-icon[title]::after,
+.text-placement-title .info-icon::after,
+.text-placement-header .info-icon::after {
+    content: attr(title) !important;
+    position: absolute !important;
+    top: -10px !important;
+    left: 50% !important;
+    transform: translateX(-50%) translateY(-100%) !important;
+    background-color: #333 !important;
+    color: white !important;
+    padding: 10px !important;
+    border-radius: 5px !important;
+    font-size: 14px !important;
+    font-weight: normal !important;
+    white-space: normal !important;
+    width: 250px !important;
+    max-width: 250px !important;
+    text-align: left !important;
+    line-height: 1.4 !important;
+    z-index: 1000 !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    transition: opacity 0.3s, visibility 0.3s !important;
+    pointer-events: none !important;
+}
+
+.info-icon[title]:hover::after,
+.text-placement-title .info-icon:hover::after,
+.text-placement-header .info-icon:hover::after {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+.info-icon[title]::before,
+.text-placement-title .info-icon::before,
+.text-placement-header .info-icon::before {
+    content: "" !important;
+    position: absolute !important;
+    top: -10px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    border-width: 5px !important;
+    border-style: solid !important;
+    border-color: #333 transparent transparent transparent !important;
+    z-index: 1001 !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    transition: opacity 0.3s, visibility 0.3s !important;
+}
+
+.info-icon[title]:hover::before,
+.text-placement-title .info-icon:hover::before,
+.text-placement-header .info-icon:hover::before {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+/* Vertically center-align Load and Save Settings buttons */
+.settings-buttons-row {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 30px !important;
+    margin: 0 !important; /* No margin */
+    padding: 0 !important; /* No padding */
+    height: 40px !important; /* Fixed height */
+    border: none !important;
+    background: transparent !important;
+}
+
+.settings-buttons-row .action-button,
+.settings-buttons-row button {
+    margin: 0 !important;
+    vertical-align: middle !important;
+}
+
+/* Center-align Image Format row */
+.settings-row {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+    justify-content: center !important; /* Center-align */
+    text-align: center !important;
+    gap: 10px 15px !important;
+    margin-bottom: 15px !important;
+    padding: 5px 0 !important;
+    width: 100% !important;
+}
+
+.settings-row > * {
+    display: inline-block !important;
+    text-align: center !important;
+}
+
+.radio-group {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 10px !important;
+}
+
+/* Hide zoom slider completely */
+.zoom-section,
+.zoom-container,
+.zoom-slider,
+*[id*="zoom"],
+*[class*="zoom"] {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    height: 0 !important;
+    width: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    overflow: hidden !important;
+    position: absolute !important;
+    top: -9999px !important;
+    left: -9999px !important;
+}
+
+/* Fix canvas obfuscation issue */
+.form-section:last-child,
+.form-section:last-child canvas,
+canvas:not(#star-map-canvas),
+.form-section:last-child canvas:not(#star-map-canvas) {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    height: 0 !important;
+    width: 0 !important;
+    position: absolute !important;
+    top: -9999px !important;
+    left: -9999px !important;
+}
+
+/* END OF CODE - Cline - 2025-05-14 00:24:15 File: css/master-override.css */

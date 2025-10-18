@@ -1,0 +1,71 @@
+/* Star Map Canvas Container */
+.star-map-container {
+    width: 100%;
+    max-width: 600px; /* This container can still constrain overall size */
+    margin: 0 auto;
+    position: relative;
+    padding-bottom: 20px;
+}
+
+/* START OF CODE - Cline - 2025-04-19 17:00 - css/starmap-canvas.css */
+/* Star Map Canvas */
+#star-map-canvas {
+    /* width: 100%; /* REMOVED - Let canvas attributes define size */
+    max-width: 100%; /* ADDED - Prevent overflow if attributes are huge */
+    /* aspect-ratio: 1/1.3; /* Portrait aspect ratio - Removed by Cline 2025-04-09 19:15 to fix oval shape */
+    margin: 0 auto;
+    display: block;
+    background-color: #D3D3D3; /* Light grey background for star map canvas - Changed by Cline 2025-04-09 19:16 */
+    /* Ensure height is determined by attribute, not CSS default */
+    height: auto;
+}
+/* END OF CODE - Cline - 2025-04-19 17:00 - css/starmap-canvas.css */
+
+/* Circular mask for the star field - NOTE: This class seems unused for the actual canvas */
+.star-field {
+    width: 80%;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    margin: 20px auto;
+    overflow: hidden;
+    position: relative;
+    background-color: #0a0e1a; /* Dark blue background for stars */
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.1); /* Subtle glow */
+}
+
+/* Border shading effect - NOTE: This class seems unused for the actual canvas */
+.star-field::after {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    border-radius: 50%;
+    box-shadow: inset 0 0 20px 5px rgba(255, 255, 255, 0.1);
+    pointer-events: none;
+}
+
+/* Text layout for the star map - NOTE: Text is drawn on canvas, this might be unused */
+.star-map-text {
+    text-align: center;
+    width: 100%;
+    padding: 20px 0;
+}
+
+/* Decorative line - NOTE: This might be unused */
+.decorative-line {
+    width: 60%;
+    height: 1px;
+    background-color: #fff;
+    margin: 10px auto;
+}
+
+/* Make the canvas responsive - NOTE: .star-field seems unused */
+@media (max-width: 600px) {
+    .star-field {
+        width: 90%;
+    }
+    /* Consider adding responsive styles for #star-map-canvas if needed,
+       but rely on max-width: 100% for now */
+}

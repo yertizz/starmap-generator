@@ -1,0 +1,175 @@
+/* Combined View Positioning CSS - 2025-06-01 9:13 PM */
+
+/**
+ * This CSS file fixes the positioning of circles in combined views.
+ * It works alongside dimensions-fix-v2.js to ensure both dimensions
+ * and positioning are correct.
+ */
+
+/* Center circles in combined views */
+#star-map-canvas {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    position: relative !important;
+}
+
+/* Landscape view */
+.landscape-view #star-map-canvas,
+body.landscape-view #star-map-canvas {
+    flex-direction: row !important;
+}
+
+/* Portrait view */
+.portrait-view #star-map-canvas,
+body.portrait-view #star-map-canvas {
+    flex-direction: column !important;
+}
+
+/* Circle elements */
+#star-map-canvas > * {
+    margin: auto !important;
+    position: relative !important;
+}
+
+/* Force circles to be centered */
+#star-map-canvas > div {
+    margin: auto !important;
+}
+
+/* Ensure canvas has proper dimensions */
+.landscape-view #star-map-canvas {
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: auto !important;
+}
+
+.portrait-view #star-map-canvas {
+    width: auto !important;
+    height: 100% !important;
+    aspect-ratio: auto !important;
+}
+
+/* Combined View Options - PURE CSS SOLUTION - 2025-06-16 */
+/* No JavaScript required - works with existing HTML structure */
+
+/* AGGRESSIVE BORDER CUTOFF FIX */
+* {
+    box-sizing: border-box !important;
+}
+
+body, html {
+    overflow-x: visible !important;
+}
+
+/* Fix ALL containers that might cut off borders */
+div, .settings-row, .grouped-sections-container {
+    overflow: visible !important;
+    width: auto !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+/* AGGRESSIVE SPACING FIXES */
+/* Target the gray Combined View container */
+div[style*="background-color: #f8f9fa"] {
+    padding: 2px 8px !important;
+    margin: 0px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    overflow: visible !important;
+}
+
+/* Target the title */
+div[style*="background-color: #f8f9fa"] div[style*="font-weight: bold"] {
+    margin: 0px !important;
+    padding: 0px !important;
+    line-height: 1.2 !important;
+}
+
+/* Target ALL flex divs inside the gray container */
+div[style*="background-color: #f8f9fa"] div[style*="display: flex"] {
+    margin: 0px !important;
+    padding: 0px !important;
+    line-height: 1 !important;
+}
+
+/* Target the note text at bottom */
+div[style*="background-color: #f8f9fa"] div[style*="font-size: 11px"] {
+    margin: 2px 0px 0px 0px !important;
+    padding: 0px !important;
+}
+
+/* COMPLETE SLIDER REDESIGN - PURE CSS */
+#circle-overlap-percent {
+    -webkit-appearance: none !important;
+    appearance: none !important;
+    height: 8px !important;
+    border-radius: 4px !important;
+    outline: none !important;
+    background: #ddd !important;
+    position: relative !important;
+    width: 100% !important;
+}
+
+/* Custom slider track for WebKit browsers */
+#circle-overlap-percent::-webkit-slider-track {
+    height: 8px !important;
+    border-radius: 4px !important;
+    background: #ddd !important;
+}
+
+/* Custom slider thumb for WebKit browsers */
+#circle-overlap-percent::-webkit-slider-thumb {
+    -webkit-appearance: none !important;
+    appearance: none !important;
+    width: 24px !important;
+    height: 24px !important;
+    border-radius: 50% !important;
+    background: #007bff !important;
+    cursor: pointer !important;
+    border: 3px solid #fff !important;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3) !important;
+    margin-top: -8px !important;
+}
+
+/* Custom slider thumb for Firefox */
+#circle-overlap-percent::-moz-range-thumb {
+    width: 24px !important;
+    height: 24px !important;
+    border-radius: 50% !important;
+    background: #007bff !important;
+    cursor: pointer !important;
+    border: 3px solid #fff !important;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3) !important;
+    -moz-appearance: none !important;
+}
+
+/* Custom slider track for Firefox */
+#circle-overlap-percent::-moz-range-track {
+    height: 8px !important;
+    border-radius: 4px !important;
+    background: #ddd !important;
+    border: none !important;
+}
+
+/* ZERO OUT ALL MARGINS AND PADDING */
+.settings-row {
+    margin: 0px !important;
+    padding: 0px !important;
+}
+
+/* Force minimal spacing everywhere */
+div[style*="margin-top: 0px"] {
+    margin-top: 0px !important;
+    padding-top: 0px !important;
+}
+
+div[style*="margin-bottom: 5px"] {
+    margin-bottom: 0px !important;
+    padding-bottom: 0px !important;
+}
+
+div[style*="margin-top: 15px"] {
+    margin-top: 2px !important;
+}

@@ -1,0 +1,101 @@
+/* START OF CODE - Cline - 2025-05-10 17:44 File: css/coordinate-fields.css */
+/* Styling for coordinate input fields */
+
+/* Make the coordinate input fields bold and larger */
+.manual-coordinates input[type="text"] {
+    font-weight: bold;
+    font-size: 16px; /* Increased from default */
+    padding: 8px 10px; /* Reduced padding from 30px to 10px */
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    color: #0056b3 !important; /* Force blue text color */
+}
+
+/* Style for the coordinates display */
+#latLongDisplay {
+    font-weight: 900 !important; /* Extra bold */
+    font-size: 1.3em !important; /* Increased from 1.1em to 1.3em */
+    color: #ff0000 !important;
+    margin: 10px 0;
+}
+
+/* Specific widths for each field to prevent wrapping */
+.manual-coordinates input#latitude,
+.manual-coordinates input#longitude {
+    width: 180px !important; /* Fixed width */
+    min-width: 180px !important; /* Fixed minimum width */
+    max-width: 180px !important; /* Fixed maximum width */
+}
+
+.manual-coordinates input#zip-code {
+    width: 120px !important; /* Fixed width */
+    min-width: 120px !important; /* Fixed minimum width */
+    max-width: 120px !important; /* Fixed maximum width */
+}
+
+/* Address input field styling - for when it's inside manual-coordinates */
+.manual-coordinates input#address {
+    /* ADJUSTABLE WIDTH: Modify these percentages to align with ZIP field's right edge */
+    width: 95.5% !important; /* Adjusted from 90% to align with ZIP field */
+    min-width: 95% !important; /* Adjusted from 89% */
+    max-width: 96% !important; /* Adjusted from 90% */
+    flex-grow: 1 !important;
+    box-sizing: border-box;
+    /* FINE-TUNING: For precise alignment, adjust the width percentage above */
+}
+
+/* NEW: Address input field styling - for when it's outside manual-coordinates */
+input#address {
+    /* ADJUSTABLE WIDTH: Modify this width to align with ZIP field's right edge */
+    width: 820px !important; /* Set to match the width of the container above */
+    min-width: 820px !important;
+    max-width: 820px !important;
+    font-weight: bold;
+    font-size: 16px;
+    padding: 8px 10px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    color: #0056b3 !important;
+    /* FINE-TUNING: For precise alignment, adjust the width value above */
+}
+
+/* Address row styling */
+.manual-coordinates .input-group[style*="width: 100%"] {
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: row !important;
+    margin-top: 10px !important;
+    box-sizing: border-box;
+    padding-right: 0;
+}
+
+/* Layout for the manual coordinates section */
+.manual-coordinates {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+}
+
+.manual-coordinates label {
+    margin-right: 5px;
+}
+
+.manual-coordinates input[type="text"]:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+    outline: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .manual-coordinates input[type="text"] {
+        font-size: 14px;
+        padding: 6px 10px;
+    }
+}
+/* END OF CODE - Cline - 2025-05-10 17:44 File: css/coordinate-fields.css */

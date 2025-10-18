@@ -1,0 +1,772 @@
+<!-- START  OF CODE - Cline - 2025-05-09 10:00 File: Star_Map_Generator.html --> <!-- Updated timestamp -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Star Map Generator</title>
+<!-- Link all necessary CSS files with cache busting -->
+<link rel="stylesheet" href="css/general.css?v=1.3">
+<link rel="stylesheet" href="css/map.css?v=1.1">
+<link rel="stylesheet" href="css/text-layers.css?v=1.2">
+<link rel="stylesheet" href="css/generate-button.css?v=1.1">
+<link rel="stylesheet" href="css/responsive.css?v=1.1">
+<link rel="stylesheet" href="css/starmap-canvas.css?v=1.1">
+<link rel="stylesheet" href="css/settings-button.css?v=1.1">
+<link rel="stylesheet" href="css/zip-code-history.css?v=1.1">
+<link rel="stylesheet" href="css/text-entry-history.css?v=1.1">
+<link rel="stylesheet" href="css/coordinate-fields.css?v=1.6">
+<!-- Add any other required CSS -->
+<link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Anton&family=Bebas+Neue&family=Black+Ops+One&family=Caveat&family=Dancing+Script&family=Great+Vibes&family=Indie+Flower&family=Libre+Baskerville&family=Lilita+One&family=Lora&family=Merriweather&family=Montserrat&family=Noto+Serif&family=Nunito&family=Open+Sans&family=Oswald&family=Pacifico&family=Permanent+Marker&family=Pinyon+Script&family=Playfair+Display&family=Quicksand&family=Raleway&family=Roboto&family=Roboto+Slab&family=Satisfy&family=Shadows+Into+Light&family=Tangerine&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<!-- Add Custom HEX Picker CSS -->
+<link rel="stylesheet" href="css/color-picker.css?v=1.1">
+<style>
+/* Force all form sections to stay within container width */
+.form-section {
+    max-width: 900px !important; /* WAS 100% */
+    width: 900px !important;  /* WAS 100% */
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+/* START OF COMPLETE STYLE BLOCK - Cline - 2025-04-15 09:39 */
+    /* Basic styles */
+    body { font-family: 'Open Sans', sans-serif; margin: 0; padding: 20px; background-color: #f8f9fa; }
+    .container { max-width: 900px; margin: auto; background-color: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+    h1 { text-align: center; color: #0056b3; margin-bottom: 30px; }
+    /* UPDATED .form-section styles */
+    .form-section {
+        margin-bottom: 15px; /* User Adjusted */
+        padding: 10px; /* User Adjusted */
+        padding-top: 15px; /* User Adjusted */
+        border: 2px solid #cccccc; /* Thicker border */
+        border-radius: 8px;
+        background-color: #f5f5f5; /* Light grey background */
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Slightly stronger shadow */
+        position: relative;
+        clear: both; /* Added to prevent overlap issues */
+    }
+    /* UPDATED legend style */
+    .form-section legend {
+        font-weight: bold;
+        font-size: 1.15em; /* Slightly larger */
+        color: #0056b3; /* Blue color */
+        border: none; /* Remove border */
+        border-bottom: 1px solid #eee; /* Add separator */
+        padding: 0 15px 10px 15px; /* Padding L/R/B */
+        margin-bottom: -15px; /* User Adjusted */
+        width: auto; /* Fit content */
+        max-width: calc(100% - 30px); /* Prevent overflow */
+        text-align: center; /* Center align */
+        display: block; /* Make it a block to center */
+        margin-left: auto;
+        margin-right: auto;
+        float: none; /* Override default legend float */
+     }
+     .section-title { /* Keep style for advanced options title */
+        font-weight: bold; font-size: 1.1em; color: #333; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 5px;
+     }
+    .input-group { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 15px; position: relative; /* Added for suggestion positioning */ }
+    .input-group label { min-width: auto; font-weight: 600; color: #555; margin-right: 5px; } /* Adjusted label */
+    .input-group input[type="text"],
+    .input-group input[type="date"],
+    .input-group input[type="number"],
+    .input-group select { flex-grow: 0; padding: 8px 10px; border: 1px solid #ccc; border-radius: 4px; min-width: auto; } /* Adjusted input */
+
+     /* Specific widths for Event Details - USER ADJUSTED */
+     #event-details-fieldset .input-group label[for="occasion"],
+     #event-details-fieldset .input-group label[for="date"] {
+          min-width: auto; width: auto; margin-right: 5px;
+     }
+      #occasion { width: 400px !important; min-width: 325px !important; } /* User width */
+      #date { width: 100px !important; min-width: 90px !important; } /* User width - Corrected typo */
+      /* Arrange Event Details inputs in a row */
+      #event-details-fieldset .input-group { justify-content: flex-start; margin-bottom: 0; }
+      #event-details-fieldset > div { display: flex; flex-wrap: wrap; align-items: center; gap: 15px 25px; justify-content: center; } /* Center the groups */
+
+    /* Manual Coordinates Layout - FIXED */
+    .manual-coordinates {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px 20px; /* Row gap, Column gap */
+        justify-content: space-between; /* Distribute space */
+    }
+    .manual-coordinates .input-group {
+        flex: 1 1 30%; /* Allow shrinking but prefer 3 per row */
+        min-width: 265px; /* Minimum width before wrapping - was 250px ***PH */
+        margin-bottom: 0; /* Remove bottom margin from individual groups */
+        padding-right: 0;
+        position: relative; /* Added for suggestion box */
+    }
+     .manual-coordinates .input-group label {
+         min-width: 80px; /* was 80px ***PH Align labels */
+         text-align: right;
+         flex-shrink: 0; /* Prevent label shrinking */
+     }
+     .manual-coordinates .input-group input {
+        flex-grow: 1;/* Allow input to take remaining space */
+        min-width: 270px; /* Add this line to set minimum width for inputs */
+        width: 270px; /* Add this line to set a specific width */
+     }
+     
+     /* Add new style for address input */
+      .manual-coordinates .input-group.full-width {
+        width: 750px;
+        min-width: 700px; /* was min-width: 100%; ***PH */
+        margin-top: 7px;         
+        /* width: 100%; /* was FLEX 1 1 100%; ***PH */
+        /* min-width: 100%; /* was min-width: 100%; ***PH */
+        }
+
+        .manual-coordinates .input-group.full-width input {
+        width: 900px;
+        }
+
+/* --- Text Entry Row Layout - Post Reorder FINAL Adjustments --- */
+.text-entry-wrapper {
+    display: flex;
+    flex-wrap: nowrap; /* Prevent wrapping */
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 8px 10px; /* Slightly reduced padding */
+    border: 1px solid #eee; border-radius: 4px; background-color: #ffffff;
+    position: relative;
+    gap: 5px; /* Keep small gap */
+}
+.text-entry-wrapper label:first-child { /* The # Label */
+    min-width: auto; /* Allow shrinking */
+    margin-right: 5px; /* Keep small margin */
+    padding-left: 2px; /* Reduce padding before label */
+    flex-shrink: 0;
+    font-weight: bold;
+}
+.text-entry-wrapper .text-entry {
+    flex-grow: 1; /* Allows the input to grow and take available space */
+    flex-basis: 400px; /* Sets an initial base width before growing/shrinking  - WAS 280 PRE-PH MOD */
+    min-width: 390px; /* Prevents it from becoming too small  - WAS 200 PRE-PH MOD */
+}
+.char-count { /* Character Count */
+    min-width: 15px; /*  WAS 20 PRE-PH MOD */
+    text-align: left; /*  WAS right  PRE-PH MOD */
+    color: #ff0000;
+    font-size: 0.9em;
+    margin-left: 1px; /* Space after input */
+    margin-right: 10px; /* Space before font controls  - WAS 10 PRE-PH MOD */ /* Corrected extra comment */
+    line-height: 24px;
+    flex-shrink: 0;
+}
+.text-entry-wrapper .font-controls { /* Container for right-side controls */
+    display: flex;
+    flex-wrap: nowrap; /* Keep controls on one line */
+    align-items: center;
+    gap: 10px; /* Increased gap between control groups */
+    margin-left: auto; /* Push this whole block to the right */
+    flex-shrink: 0; /* Prevent this block from shrinking */
+}
+.font-controls select.font-family-select {
+    min-width: 120px;
+    width: 150px;
+}
+.font-controls select.font-size-select {
+    min-width: 60px;
+    width: 70px;
+}
+.font-controls .style-options { /* Container for Bold/Italic */
+    display: flex;
+    align-items: center;
+    gap: 35px; /* Space between Bold and Italic labels - WAS 10PX PRE PH MOD */
+}
+ .font-controls .style-options label {
+     margin-right: 0;
+     font-weight: normal;
+     min-width: auto;
+     display: inline-flex;
+     align-items: center;
+ }
+.font-controls button.color-swatch {
+    margin: 0 0 0 15px !important; /* Space before swatch- WAS 10PX PRE PH MOD */
+    vertical-align: middle;
+}
+
+    /* Adjustments for Fixed Text Styling Section */
+    #fixed-text-styling-fieldset .input-group {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        margin-bottom: 10px;
+        gap: 10px;
+    }
+    #fixed-text-styling-fieldset .input-group:last-child { margin-bottom: 0; }
+    #fixed-text-styling-fieldset .input-group > label {
+        width: 120px; min-width: 120px; text-align: right; margin-right: 10px; font-weight: 600;
+    }
+    #fixed-text-styling-fieldset .input-group select.font-family-select { width: 180px; min-width: 150px; flex-grow: 0; }
+    #fixed-text-styling-fieldset .input-group select.font-size-select { width: 70px; min-width: 60px; flex-grow: 0; }
+    #fixed-text-styling-fieldset .input-group .style-options { display: flex; align-items: center; gap: 5px; margin-left: 15px; }
+    #fixed-text-styling-fieldset .input-group .style-options label { margin-right: 10px; font-weight: normal; min-width: auto; }
+    #fixed-text-styling-fieldset .input-group .style-options input[type="checkbox"] { vertical-align: middle; margin-right: 3px; }
+    #fixed-text-styling-fieldset .input-group button.color-swatch { margin-left: auto; }
+
+    /* Styles for the Canvas Settings section */
+    #canvas-settings legend { /* Already styled above */ }
+    .settings-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px 15px; margin-bottom: 15px; padding: 5px 0; }
+    .settings-row:last-child { margin-bottom: 0; }
+    .settings-row label { margin-bottom: 0; font-weight: normal; white-space: nowrap; margin-right: 5px; color: #555; line-height: 30px; }
+    .settings-row label[for="output-width"], .settings-row label[for="output-height"], .settings-row label[for="maintain-aspect-ratio"], .settings-row label[for="bg-color-canvas"] { font-weight: 600; }
+    .settings-row .radio-group > label, .settings-row label:has(> input[type="checkbox"]) { margin-right: 10px; font-weight: normal; }
+    label[for="maintain-aspect-ratio"] { margin-right: 15px; }
+    label[for="bg-color-canvas"] { margin-left: 10px; }
+    .settings-row input[type="number"] { width: 70px; min-width: 60px; flex-grow: 0; margin-right: 10px; height: 30px; padding: 5px 8px; }
+    .settings-row input[type="checkbox"] { width: auto; margin-right: 5px; vertical-align: middle; }
+    .settings-row .radio-group { display: inline-flex; align-items: center; gap: 10px; margin-left: 10px; }
+    .settings-row button.color-swatch { margin: 0 10px 0 0 !important; vertical-align: middle; }
+    /* Removed styles for star-map-style and advanced-options-toggle as they are moved */
+    input[type="text"][style*="display:none"] { display: none !important; }
+    label[for="png-transparency"].disabled-option { opacity: 0.5; cursor: not-allowed; }
+    label[for="png-transparency"].disabled-option input[type="checkbox"] { cursor: not-allowed; }
+
+    /* Styles for NEW Star Map Image Settings section */
+    #image-settings .settings-row { justify-content: space-around; } /* Distribute space */
+    #image-settings label { font-weight: 600; }
+    #image-settings input[type="number"] { width: 60px; } /* Slightly smaller number inputs */
+    #image-settings #star-map-style { min-width: 100px; flex-grow: 0; height: 30px; padding: 5px 8px; }
+    #image-settings #advanced-options-toggle { height: 30px; padding: 5px 15px; margin-left: 15px; } /* Style for moved button */
+
+
+    /* Styles for Text Placements section */
+    .text-placement-section { margin-top: 20px; padding-top: 15px; border-top: 1px solid #ddd; }
+    .text-placement-title { font-weight: bold; font-size: 1.1em; color: #333; margin-bottom: 15px; text-align: center; /* Removed cursor:help */ }
+    .text-placement-title .info-icon { margin-left: 8px; color: #007bff; cursor: help; } /* Style for info icon */
+    .text-placement-grid { display: grid; grid-template-columns: auto 1fr auto auto auto; gap: 10px 15px; align-items: center; }
+    .text-placement-grid label { font-weight: 600; text-align: right; }
+    .text-placement-grid span { background-color: #eee; padding: 5px 8px; border-radius: 3px; font-size: 0.95em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 200px; }
+    .text-placement-grid select { width: 80px; padding: 5px; }
+    .text-placement-grid input[type="radio"] { margin: 0 5px 0 15px; }
+    .text-placement-header { font-weight: bold; text-align: center; padding-bottom: 5px; }
+    .text-placement-header .info-icon { margin-left: 5px; color: #007bff; cursor: help; } /* Style for info icon on header */
+    /* REMOVED: Style for instructional text paragraph */
+    /* .text-placement-instruction { font-size: 0.9em; font-style: italic; color: #666; text-align: center; margin-bottom: 10px; grid-column: 1 / -1; } */
+
+
+    /* Restore zoom slider styling */
+    .zoom-section { text-align: center; margin-top: 15px; }
+    .zoom-container { display: inline-flex; align-items: center; gap: 10px; }
+    .zoom-slider { width: 400px; /* MODIFIED - Increased width for Task J */ cursor: pointer; height: 8px; background: #ddd; border-radius: 5px; outline: none; opacity: 0.7; transition: opacity .2s; -webkit-appearance: none; appearance: none; }
+    .zoom-slider:hover { opacity: 1; }
+    .zoom-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 15px; height: 15px; background: #007bff; border-radius: 50%; cursor: pointer; }
+    .zoom-slider::-moz-range-thumb { width: 15px; height: 15px; background: #007bff; border-radius: 50%; cursor: pointer; border: none; }
+
+    /* Ensure advanced options panel is initially closed */
+    #advanced-options-panel { display: none; margin-top: 15px; padding: 20px; border: 1px solid #ddd; border-radius: 5px; background-color: #f9f9f9; }
+    #advanced-options-panel.active { display: block; }
+
+    /* --- Custom History Dropdown Styles --- */
+    .history-suggestions {
+        position: absolute;
+        background-color: white;
+        border: 1px solid #ccc;
+        border-top: none;
+        max-height: 160px;
+        overflow-y: auto;
+        z-index: 1001;
+        width: auto;
+        min-width: 250px;
+        max-width: 550px; /* Increased */
+        box-sizing: border-box;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+        display: none;
+        left: 0;
+        top: 100%;
+        font-size: 0.9em;
+    }
+    /* Specific alignment for ZIP */
+    .manual-coordinates .input-group .history-suggestions {
+        left: 90px;
+        width: auto;
+        min-width: 200px;
+        max-width: 500px;
+    }
+    /* Specific alignment for Text Entries */
+    .text-entry-wrapper .history-suggestions {
+         left: 35px;
+         width: auto;
+         min-width: 200px;
+         max-width: 450px;
+         top: calc(100% - 10px);
+    }
+    .suggestion-item {
+        padding: 6px 10px;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #eee;
+    }
+     .suggestion-item:last-child {
+         border-bottom: none;
+     }
+    .suggestion-item:hover {
+        background-color: #e9ecef;
+    }
+    .suggestion-item span {
+        flex-grow: 1;
+        margin-right: 10px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .delete-suggestion {
+        background: none;
+        border: none;
+        color: #dc3545;
+        cursor: pointer;
+        font-size: 1.2em;
+        font-weight: bold;
+        padding: 0 3px;
+        line-height: 1;
+        flex-shrink: 0;
+        opacity: 0.6;
+    }
+    .delete-suggestion:hover {
+        color: #a71d2a;
+        opacity: 1;
+    }
+    /* --- End Custom History Dropdown Styles --- */
+
+    /* --- Dropdown Arrow --- */
+    /* Style ONLY the ZIP parent container to hold the arrow */
+    .manual-coordinates .input-group:has(#zip-code) {
+        position: relative;
+    }
+    /* Style ONLY the ZIP input to have space */
+    #zip-code {
+        padding-right: 25px !important;
+    }
+    /* Create the arrow using ::after ONLY on the ZIP parent */
+    .manual-coordinates .input-group:has(#zip-code)::after {
+        content: '▼';
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 0.8em;
+        color: #888;
+        pointer-events: none;
+        z-index: 1;
+    }
+    /* Ensure text inputs DO NOT have the extra padding */
+     #text-entry-1, #text-entry-2, #text-entry-3 {
+         padding-right: 8px !important; /* Revert to default/original padding */
+     }
+    /* --- End Dropdown Arrow --- */
+
+    /* --- Fix Layout Overlap --- */
+    /* Add ID="customizable-text-fieldset" to the fieldset in HTML if not present */
+    #customizable-text-fieldset {
+        clear: both; /* Try clearing floats from section above */
+        margin-top: 15px; /* Ensure some margin */
+    }
+    /* --- End Fix Layout Overlap --- */
+/* END OF COMPLETE STYLE BLOCK - Cline - 2025-04-15 09:39 */
+</style>
+</head>
+<body>
+<div class="container" style="max-width: 900px !important; width: 900px !important; margin: 0 auto !important;">
+    <h1>Create Your Star Map</h1>
+    <form id="customizationForm" onsubmit="event.preventDefault();">
+
+        <!-- Section 1: Event Details -->
+        <fieldset class="form-section" id="event-details-fieldset">
+            <legend>Event Details</legend>
+            <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 15px 25px; justify-content: center;">
+                <div class="input-group" style="margin-bottom: 0; flex-grow: 0; width: auto;">
+                    <label for="occasion">Design/Event/Occasion:</label>
+                    <select id="occasion" name="occasion" style="width: 400px; min-width: 350px;"> <!-- USER ADJUSTED Width -->
+                        <option value="">Select an option</option>
+                        <option value="custom">Add Your Own...</option>
+                        <option value="mothers_day">Mother's Day</option>
+                        <option value="fathers_day">Father's Day</option>
+                        <option value="birthday">Birthday</option>
+                        <option value="day_we_met">Day We Met</option>
+                        <option value="our_anniversary">Our Wedding Day</option>
+                        <option value="engagement_day">Day We Were Engaged</option>
+                        <option value="sweet_16_birthday">Sweet 16 Birthday</option>
+                        <option value="21st_birthday">21st Birthday</option>
+                        <option value="graduation_day">Graduation Day</option>
+                        <option value="retirement">Finally Retired</option>
+                    </select>
+                    <input type="text" id="custom-occasion" placeholder="Enter Custom Occasion" style="display: none; flex-grow: 2;">
+                </div>
+                <div class="input-group" style="margin-bottom: 0; flex-grow: 0; width: auto;">
+                    <label for="date">Input Date:</label>
+                    <input type="date" id="date" required style="width: 110x; min-width: 110px;"> <!-- USER ADJUSTED Width -->
+                </div>
+            </div>
+        </fieldset>
+
+        <!-- Section 2: Map Location -->
+        <fieldset class="form-section">
+            <legend>Map Location</legend>
+             <div id="map-container">
+                 <div id="map"></div>
+                 <div id="crosshairs"></div>
+             </div>
+             <p id="latLongDisplay" style="font-weight: bold; font-size: 1.1em; color: #ff0000;">Lat: ... | Long: ...</p>
+             <div class="manual-coordinates">
+                 <div class="input-group"> <!-- Lat -->
+                    <label for="latitude">Latitude:</label>
+                    <input type="text" id="latitude" placeholder="e.g., N32° 56.88113" required style="color: #0056b3;">
+                 </div>
+                 <div class="input-group"> <!-- Lng -->
+                    <label for="longitude">Longitude:</label>
+                    <input type="text" id="longitude" placeholder="e.g., W80° 7.22460" required style="color: #0056b3;">
+                 </div>
+                 <div class="input-group"> <!-- Zip -->
+                    <label for="zip-code">Zip/Postal:</label>
+                    <input type="text" id="zip-code" placeholder="Enter Code" style="color: #0056b3;"> <!-- REMOVED list attribute -->
+                    <!-- ADDED suggestions container -->
+                    <div id="zip-suggestions" class="history-suggestions" style="display: none;"></div>
+                 </div>
+             </div>
+             <div class="input-group" style="display: flex; flex-direction: row; align-items: center; margin-top: 10px;">
+                <label for="address" style="min-width: 80px; text-align: right; margin-right: 5px;">By Address:</label>
+                <input type="text" id="address" placeholder="Enter street address, city, state/province, country" style="width: 745px; color: #0056b3; font-weight: normal; font-size: 16px;">
+             </div>
+             </div>
+        </fieldset>
+
+        <!-- Section 3: Customizable Text Layers -->
+        <fieldset class="form-section" id="customizable-text-fieldset"> <!-- ADDED ID -->
+            <legend>Customizable Text Layers (Max 50 Chars)</legend>
+            <div id="text-layer-container">
+                <!-- Text Layer 1 -->
+                <div class="text-entry-wrapper">
+                    <label for="text-entry-1">1</label> <!-- MODIFIED LABEL -->
+                    <input type="text" class="text-entry" id="text-entry-1" placeholder="Main Title" maxlength="50" required>
+                    <!-- MOVED char-count span -->
+                    <span class="char-count" id="char-count-1">50</span>
+                    <div class="font-controls">
+                        <select id="font-family-1" class="font-family-select"></select>
+                        <select id="font-size-1" class="font-size-select"></select>
+                        <!-- REMOVED char-count span from here -->
+                        <div class="style-options">
+                            <label><input type="checkbox" id="text-bold-1"> Bold</label>
+                            <label><input type="checkbox" id="text-italic-1"> Italic</label>
+                        </div>
+                        <input type="text" id="font-color-1" value="#FFFFFF" style="display:none;">
+                        <button type="button" class="color-swatch" data-target="font-color-1" aria-label="Font Color 1"></button>
+                    </div>
+                     <!-- ADDED suggestions container -->
+                    <div id="text-entry-1-suggestions" class="history-suggestions" style="display: none;"></div>
+                </div>
+                <!-- Text Layer 2 -->
+                 <div class="text-entry-wrapper">
+                     <label for="text-entry-2">2</label> <!-- MODIFIED LABEL -->
+                     <input type="text" class="text-entry" id="text-entry-2" placeholder="Subtitle" maxlength="50" required>
+                     <!-- MOVED char-count span -->
+                     <span class="char-count" id="char-count-2">50</span>
+                     <div class="font-controls">
+                         <select id="font-family-2" class="font-family-select"></select>
+                         <select id="font-size-2" class="font-size-select"></select>
+                         <!-- REMOVED char-count span from here -->
+                         <div class="style-options">
+                             <label><input type="checkbox" id="text-bold-2"> Bold</label>
+                             <label><input type="checkbox" id="text-italic-2"> Italic</label>
+                         </div>
+                         <input type="text" id="font-color-2" value="#FFFFFF" style="display:none;">
+                         <button type="button" class="color-swatch" data-target="font-color-2" aria-label="Font Color 2"></button>
+                     </div>
+                      <!-- ADDED suggestions container -->
+                     <div id="text-entry-2-suggestions" class="history-suggestions" style="display: none;"></div>
+                 </div>
+                <!-- Text Layer 3 -->
+                 <div class="text-entry-wrapper">
+                     <label for="text-entry-3">3</label> <!-- MODIFIED LABEL -->
+                     <input type="text" class="text-entry" id="text-entry-3" placeholder="Additional text" maxlength="50" required>
+                     <!-- MOVED char-count span -->
+                     <span class="char-count" id="char-count-3">50</span>
+                     <div class="font-controls">
+                         <select id="font-family-3" class="font-family-select"></select>
+                         <select id="font-size-3" class="font-size-select"></select>
+                         <!-- REMOVED char-count span from here -->
+                         <div class="style-options">
+                             <label><input type="checkbox" id="text-bold-3"> Bold</label>
+                             <label><input type="checkbox" id="text-italic-3"> Italic</label>
+                         </div>
+                         <input type="text" id="font-color-3" value="#FFFFFF" style="display:none;">
+                         <button type="button" class="color-swatch" data-target="font-color-3" aria-label="Font Color 3"></button>
+                     </div>
+                      <!-- ADDED suggestions container -->
+                     <div id="text-entry-3-suggestions" class="history-suggestions" style="display: none;"></div>
+                 </div>
+                 <!-- Text Layer 4 (Place Name) - ADDED for Task M -->
+                 <div class="text-entry-wrapper">
+                     <label for="text-entry-4">4</label>
+                     <input type="text" class="text-entry" id="text-entry-4" placeholder="Enter City/Town/event site, State/County, Country etc" maxlength="50">
+                     <span class="char-count" id="char-count-4">50</span>
+                     <div class="font-controls">
+                         <select id="font-family-4" class="font-family-select"></select>
+                         <select id="font-size-4" class="font-size-select"></select>
+                         <div class="style-options">
+                             <label><input type="checkbox" id="text-bold-4"> Bold</label>
+                             <label><input type="checkbox" id="text-italic-4"> Italic</label>
+                         </div>
+                         <input type="text" id="font-color-4" value="#FFFFFF" style="display:none;">
+                         <button type="button" class="color-swatch" data-target="font-color-4" aria-label="Font Color 4"></button>
+                     </div>
+                     <div id="text-entry-4-suggestions" class="history-suggestions" style="display: none;"></div>
+                 </div>
+            </div>
+        </fieldset>
+
+        <!-- Section 4: Fixed Text Styling -->
+        <fieldset class="form-section" id="fixed-text-styling-fieldset">
+            <legend>Fixed Text Styling</legend>
+                <div class="input-group">
+                    <label>Date Text:</label>
+                    <select id="fixed-font-family-date" class="font-family-select"></select>
+                    <select id="fixed-font-size-date" class="font-size-select"></select>
+                    <div class="style-options">
+                        <label><input type="checkbox" id="fixed-text-bold-date"> Bold</label>
+                        <label><input type="checkbox" id="fixed-text-italic-date"> Italic</label>
+                    </div>
+                    <input type="text" id="fixed-font-color-date" value="#FFFFFF" style="display:none;">
+                    <button type="button" class="color-swatch" data-target="fixed-font-color-date" aria-label="Fixed Date Font Color"></button>
+                </div>
+                <div class="input-group">
+                    <label>Coordinates Text:</label>
+                    <select id="fixed-font-family-coords" class="font-family-select"></select>
+                    <select id="fixed-font-size-coords" class="font-size-select"></select>
+                    <div class="style-options">
+                        <label><input type="checkbox" id="fixed-text-bold-coords"> Bold</label>
+                        <label><input type="checkbox" id="fixed-text-italic-coords"> Italic</label>
+                    </div>
+                    <input type="text" id="fixed-font-color-coords" value="#FFFFFF" style="display:none;">
+                    <button type="button" class="color-swatch" data-target="fixed-font-color-coords" aria-label="Fixed Coordinates Font Color"></button>
+                </div>
+                <!-- ADDED Place Text Styling Row -->
+                <div class="input-group">
+                    <label>Place Text:</label>
+                    <select id="fixed-font-family-place" class="font-family-select"></select>
+                    <select id="fixed-font-size-place" class="font-size-select"></select>
+                    <div class="style-options">
+                        <label><input type="checkbox" id="fixed-text-bold-place"> Bold</label>
+                        <label><input type="checkbox" id="fixed-text-italic-place"> Italic</label>
+                    </div>
+                    <input type="text" id="fixed-font-color-place" value="#FFFFFF" style="display:none;">
+                    <button type="button" class="color-swatch" data-target="fixed-font-color-place" aria-label="Fixed Place Font Color"></button>
+                </div>
+        </fieldset>
+
+        <!-- Section 5: MODIFIED Canvas Settings -->
+        <fieldset class="form-section" id="canvas-settings">
+            <legend>Star Map Canvas Settings</legend>
+            <div class="settings-row"> <!-- Row 1 -->
+                <label for="output-width">Width (px):</label>
+                <input type="number" id="output-width" value="1000" min="100">
+                <label for="output-height">Height (px):</label>
+                <input type="number" id="output-height" value="1000" min="100">
+                <label for="maintain-aspect-ratio"><input type="checkbox" id="maintain-aspect-ratio"> Aspect Ratio</label>
+                <label for="bg-color-canvas">Canvas Bg:</label>
+                <input type="text" id="bg-color-canvas" value="#F5F5DC" style="display:none;">
+                <button type="button" class="color-swatch" data-target="bg-color-canvas" aria-label="Star Map Canvas Background Color"></button>
+                <!-- REMOVED DPI Radio Group as it's redundant for exact pixel output -->
+            </div>
+            <div class="settings-row"> <!-- Row 2: Image Format -->
+                 <label>Image Format:</label>
+                 <div class="radio-group">
+                     <label><input type="radio" name="image-format" value="png" checked> PNG</label>
+                     <label for="png-transparency"><input type="checkbox" id="png-transparency"> Transparency</label>
+                     <label><input type="radio" name="image-format" value="jpg"> JPG</label>
+                     <label><input type="radio" name="image-format" value="svg"> SVG</label>
+                 </div>
+            </div>
+             <!-- REMOVED Star Map Style and Advanced Options Button Row -->
+
+             <!-- ADDED Text Placements Section (Structure Only) -->
+             <div class="text-placement-section">
+                 <div class="text-placement-title">Text Placements On Canvas <i class="fas fa-info-circle info-icon" title="Note: Select a unique Order (First-Sixth) for each item to avoid overlap on the canvas."></i></div> <!-- MODIFIED tooltip text -->
+                 <div class="text-placement-grid">
+                     <!-- Headers -->
+                     <div></div> <!-- Empty corner -->
+                     <div class="text-placement-header">Text Content</div>
+                     <div class="text-placement-header">Order <i class="fas fa-info-circle info-icon" title="Note: Select a unique Order (First-Sixth) for each item to avoid overlap on the canvas."></i></div> <!-- MODIFIED tooltip text -->
+                     <div class="text-placement-header">Above Map</div>
+                     <div class="text-placement-header">Below Map</div>
+
+                     <!-- Entry 1 -->
+                     <label for="text-placement-order-1">Entry#1</label>
+                     <span id="text-placement-content-1"></span> <!-- JS will populate this -->
+                     <select id="text-placement-order-1" name="text-placement-order-1">
+                         <option value="1">First</option><option value="2">Second</option><option value="3">Third</option><option value="4">Fourth</option><option value="5">Fifth</option><option value="6">Sixth</option> <!-- Added Sixth -->
+                     </select>
+                     <input type="radio" id="text-placement-pos-1-above" name="text-placement-pos-1" value="above">
+                     <input type="radio" id="text-placement-pos-1-below" name="text-placement-pos-1" value="below" checked>
+
+                     <!-- Entry 2 -->
+                     <label for="text-placement-order-2">Entry#2</label>
+                     <span id="text-placement-content-2"></span>
+                     <select id="text-placement-order-2" name="text-placement-order-2">
+                         <option value="1">First</option><option value="2" selected>Second</option><option value="3">Third</option><option value="4">Fourth</option><option value="5">Fifth</option><option value="6">Sixth</option> <!-- Added Sixth -->
+                     </select>
+                     <input type="radio" id="text-placement-pos-2-above" name="text-placement-pos-2" value="above">
+                     <input type="radio" id="text-placement-pos-2-below" name="text-placement-pos-2" value="below" checked>
+
+                     <!-- Entry 3 -->
+                     <label for="text-placement-order-3">Entry#3</label>
+                     <span id="text-placement-content-3"></span>
+                     <select id="text-placement-order-3" name="text-placement-order-3">
+                         <option value="1">First</option><option value="2">Second</option><option value="3" selected>Third</option><option value="4">Fourth</option><option value="5">Fifth</option><option value="6">Sixth</option> <!-- Added Sixth -->
+                     </select>
+                     <input type="radio" id="text-placement-pos-3-above" name="text-placement-pos-3" value="above">
+                     <input type="radio" id="text-placement-pos-3-below" name="text-placement-pos-3" value="below" checked>
+
+                     <!-- Entry 4 (Place Name) - ADDED for Task M -->
+                     <label for="text-placement-order-4">Entry#4</label>
+                     <span id="text-placement-content-4"></span> <!-- JS will populate this -->
+                     <select id="text-placement-order-4" name="text-placement-order-4">
+                         <option value="1">First</option><option value="2">Second</option><option value="3">Third</option><option value="4" selected>Fourth</option><option value="5">Fifth</option><option value="6">Sixth</option> <!-- Added Sixth -->
+                     </select>
+                     <input type="radio" id="text-placement-pos-4-above" name="text-placement-pos-4" value="above">
+                     <input type="radio" id="text-placement-pos-4-below" name="text-placement-pos-4" value="below" checked>
+
+                     <!-- Date -->
+                     <label for="text-placement-order-date">Date</label>
+                     <span id="text-placement-content-date"></span>
+                     <select id="text-placement-order-date" name="text-placement-order-date">
+                         <option value="1">First</option><option value="2">Second</option><option value="3">Third</option><option value="4">Fourth</option><option value="5" selected>Fifth</option><option value="6">Sixth</option> <!-- Added Sixth -->
+                     </select>
+                     <input type="radio" id="text-placement-pos-date-above" name="text-placement-pos-date" value="above">
+                     <input type="radio" id="text-placement-pos-date-below" name="text-placement-pos-date" value="below" checked>
+
+                     <!-- Coordinates -->
+                     <label for="text-placement-order-coords">Coordinates</label>
+                     <span id="text-placement-content-coords"></span>
+                     <select id="text-placement-order-coords" name="text-placement-order-coords">
+                         <option value="1">First</option><option value="2">Second</option><option value="3">Third</option><option value="4">Fourth</option><option value="5">Fifth</option><option value="6" selected>Sixth</option> <!-- Added Sixth, default to 6th -->
+                     </select>
+                     <input type="radio" id="text-placement-pos-coords-above" name="text-placement-pos-coords" value="above">
+                     <input type="radio" id="text-placement-pos-coords-below" name="text-placement-pos-coords" value="below" checked>
+                 </div>
+             </div>
+             <!-- END Text Placements Section -->
+
+             <!-- Advanced Options Panel (Keep separate, but button removed from here) -->
+             <div id="advanced-options-panel">
+                 <div class="section-title">Advanced Star Map Options</div>
+                 <div class="advanced-options-grid">
+                     <fieldset class="advanced-options-quadrant">
+                         <legend>Features</legend>
+                         <label><input type="checkbox" id="adv-show-milky-way" data-api-param="showMilkyWay" checked> Milky Way</label>
+                         <label><input type="checkbox" id="adv-show-constellation-lines" data-api-param="showConstellationLines" checked> Constellation Lines</label>
+                         <label><input type="checkbox" id="adv-show-stars-glow" data-api-param="showStarsGlow"> Stars Glow</label>
+                     </fieldset>
+                     <fieldset class="advanced-options-quadrant">
+                         <legend>Celestial Bodies</legend>
+                         <label><input type="checkbox" id="adv-show-moon" data-api-param="showMoon"> Moon</label>
+                         <label><input type="checkbox" id="adv-show-sun" data-api-param="showSun"> Sun</label>
+                         <label><input type="checkbox" id="adv-show-planets" data-api-param="showPlanets" checked> Planets</label>
+                         <label><input type="checkbox" id="adv-show-ecliptic-path" data-api-param="showEclipticPath"> Ecliptic Path</label>
+                     </fieldset>
+                     <fieldset class="advanced-options-quadrant">
+                         <legend>Labels</legend>
+                         <label><input type="checkbox" id="adv-show-planet-labels" data-api-param="showPlanetLabels" checked> Planet Labels</label>
+                         <label><input type="checkbox" id="adv-show-constellation-labels" data-api-param="showConstellationLabels"> Constellation Labels</label>
+                     </fieldset>
+                     <fieldset class="advanced-options-quadrant">
+                         <legend>Star Settings</legend>
+                         <label for="adv-star-size">Star Size: <span id="adv-star-size-value">1.0</span></label>
+                         <input type="range" id="adv-star-size" data-api-param="starSize" min="0.1" max="5" step="0.1" value="1.0">
+                         <label for="adv-star-number">Star Number: <span id="adv-star-number-value">2000</span></label>
+                         <input type="range" id="adv-star-number" data-api-param="starNumber" min="500" max="10000" step="100" value="2000">
+                         <label for="adv-const-line-width">Const. Line Width: <span id="adv-const-line-width-value">1.0</span></label>
+                         <input type="range" id="adv-const-line-width" data-api-param="constellationLineWidth" min="0.1" max="3" step="0.1" value="1.0">
+                     </fieldset>
+                 </div>
+                 <div class="advanced-options-buttons">
+                     <button type="button" id="apply-advanced-options" class="apply-button">Apply & Close</button>
+                     <button type="button" id="cancel-advanced-options" class="cancel-button">Cancel</button>
+                 </div>
+             </div>
+        </fieldset>
+
+        <!-- Section 6: NEW Star Map Image Settings -->
+        <fieldset class="form-section" id="image-settings">
+            <legend>Star Map Image Settings</legend>
+            <div class="settings-row">
+                 <label for="star-map-style">Star Map Style:</label>
+                 <select id="star-map-style">
+                     <option value="default" selected>Default</option>
+                     <option value="inverted">Inverted</option>
+                     <option value="navy">Navy</option>
+                     <option value="red">Red</option>
+                 </select>
+                 <label for="circle-radius-percent">Circle Radius %:</label>
+                 <input type="number" id="circle-radius-percent" value="60" min="10" max="100" step="1"> <!-- Default changed to 60 -->
+                 <label for="border-width">Border Width (px):</label>
+                 <input type="number" id="border-width" value="1" min="0" step="1">
+                 <label for="border-color">Border Color:</label>
+                 <input type="text" id="border-color" value="#FFFFFF" style="display:none;">
+                 <button type="button" class="color-swatch" data-target="border-color" aria-label="Circle Border Color"></button>
+                 <!-- Re-add Advanced Options toggle here -->
+                 <button type="button" id="advanced-options-toggle">Advanced Options <i class="fas fa-chevron-down"></i></button>
+            </div>
+        </fieldset>
+
+
+        <!-- Section 7: Action Buttons -->
+        <div class="button-container">
+            <button id="loadSettingsBtn" type="button" class="settings-button load-button">LOAD SETTINGS</button>
+            <button id="saveSettingsBtn" type="button" class="settings-button save-button">SAVE SETTINGS</button>
+            <button type="button" id="generateBtn" disabled>PREVIEW MY STAR MAP</button>
+            <button type="button" id="downloadBtn" disabled>DOWNLOAD MY STAR MAP</button>
+        </div>
+
+        <!-- Section 8: Star Map Canvas & Zoom -->
+        <div class="form-section">
+            <div class="zoom-section">
+                <div class="zoom-container">
+                    <label for="zoom-slider">Zoom:</label>
+                    <input type="range" id="zoom-slider" min="50" max="200" value="100" class="zoom-slider">
+                    <span id="zoom-value">100</span>%
+                </div>
+            </div>
+            <canvas id="star-map-canvas" width="800" height="800"></canvas>
+        </div>
+
+    </form>
+
+    <!-- Loading Indicator -->
+    <div id="loading-indicator">
+        <div class="spinner"></div>
+        <div style="color: white; margin-top: 20px; font-weight: bold;">Generating Star Map...</div>
+    </div>
+
+    <!-- External Libraries -->
+    <!-- Add Custom HEX Picker JS -->
+    <script src="js/color-picker.js?v=1.1"></script>
+
+    <!-- Modular Scripts (Order Matters!) -->
+    <script src="js/utils.js?v=1.2"></script> <!-- Cache bust -->
+    <script src="js/advanced_options.js?v=1.1"></script>
+    <script src="js/history.js?v=1.1"></script>
+    <script src="js/settings.js?v=1.1"></script>
+    <script src="js/picker_init.js?v=1.2"></script> <!-- Cache bust -->
+    <script src="js/svg_export.js?v=1.1"></script>
+    <script src="js/download.js?v=1.2"></script> <!-- Cache bust -->
+    <script src="js/map.js?v=1.1"></script> <!-- Load map logic first -->
+    <script src="js/main_app.js?v=1.3"></script> <!-- Cache bust -->
+
+    <!-- Google Maps API -->
+    <!-- REMOVED old script tag and callback -->
+    <!-- Google Maps API will be loaded via JS API Loader in main_app.js or map.js -->
+
+<!-- Load Google Maps JS API Loader -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCpvv1IJYxwGVMh24MLFDH6LmupseApSZU&libraries=places,geometry&loader=js" async defer></script>
+</body>
+</html>
+<!-- END OF CODE - Cline - 2025-05-09 10:00 File: Star_Map_Generator.html --> <!-- Updated timestamp -->

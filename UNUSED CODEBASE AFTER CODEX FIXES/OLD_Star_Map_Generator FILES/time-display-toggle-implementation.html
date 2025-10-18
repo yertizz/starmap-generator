@@ -1,0 +1,207 @@
+<!-- START OF CODE - Cline - 2025-05-13 22:32 File: time-display-toggle-implementation.html -->
+
+<!-- 
+This file contains the implementation for the time display toggle feature.
+Copy and paste this code into the appropriate section of Star_Map_Generator.html.
+-->
+
+<!-- 1. Add this CSS to the <style> section in the head -->
+<style>
+/* Time Display Toggle Styles */
+.time-toggle-container {
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+    position: relative;
+}
+
+.time-toggle-label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+}
+
+.time-toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 20px;
+    margin-right: 5px;
+}
+
+.time-toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.time-toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 20px;
+}
+
+.time-toggle-slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .time-toggle-slider {
+    background-color: #1D99EF;
+}
+
+input:focus + .time-toggle-slider {
+    box-shadow: 0 0 1px #1D99EF;
+}
+
+input:checked + .time-toggle-slider:before {
+    transform: translateX(20px);
+}
+
+.time-toggle-icon {
+    color: #555;
+    font-size: 16px;
+    margin-right: 5px;
+}
+
+.time-toggle-tooltip {
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #333;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+    z-index: 1000;
+}
+
+.time-toggle-container:hover .time-toggle-tooltip {
+    opacity: 1;
+    visibility: visible;
+}
+
+.time-toggle-tooltip:after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #333 transparent transparent transparent;
+}
+</style>
+
+<!-- 2. Replace the time input in the Event Details section with this code -->
+<div class="input-group" style="margin-bottom: 0; flex-grow: 0; width: auto;">
+    <label for="date">Date/Time:</label>
+    <input type="date" id="date" required style="width: 110px; min-width: 110px;">
+    <input type="time" id="time" required style="width: 100px; min-width: 100px;">
+    
+    <!-- Time Display Toggle -->
+    <div class="time-toggle-container">
+        <label class="time-toggle-label">
+            <span class="time-toggle-tooltip">Show/hide time on star map</span>
+            <i class="fas fa-clock time-toggle-icon"></i>
+            <span class="time-toggle-switch">
+                <input type="checkbox" id="show-time-toggle" checked>
+                <span class="time-toggle-slider"></span>
+            </span>
+        </label>
+    </div>
+</div>
+
+<!-- 3. Add this JavaScript to handle the time toggle functionality -->
+<script>
+// Time Display Toggle Functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const showTimeToggle = document.getElementById('show-time-toggle');
+    
+    // Initialize the toggle state from localStorage or default to true
+    const showTimeInStarMap = localStorage.getItem('showTimeInStarMap') !== 'false';
+    showTimeToggle.checked = showTimeInStarMap;
+    
+    // Update the toggle state when changed
+    showTimeToggle.addEventListener('change', function() {
+        localStorage.setItem('showTimeInStarMap', this.checked);
+        updateDateTimeDisplay();
+    });
+    
+    // Function to update the date/time display in the preview
+    function updateDateTimeDisplay() {
+        // This will be called when generating the star map
+        const dateInput = document.getElementById('date');
+        const timeInput = document.getElementById('time');
+        const showTime = showTimeToggle.checked;
+        
+        // Update the date display in the text placement section
+        const dateDisplaySpan = document.getElementById('text-placement-content-date');
+        if (dateDisplaySpan) {
+            const dateValue = dateInput.value;
+            const timeValue = timeInput.value;
+            
+            if (dateValue) {
+                const formattedDate = new Date(dateValue).toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+                
+                if (showTime && timeValue) {
+                    // Format time in 12-hour format
+                    const timeParts = timeValue.split(':');
+                    let hours = parseInt(timeParts[0]);
+                    const minutes = timeParts[1];
+                    const ampm = hours >= 12 ? 'PM' : 'AM';
+                    hours = hours % 12;
+                    hours = hours ? hours : 12; // Convert 0 to 12
+                    const formattedTime = `${hours}:${minutes} ${ampm}`;
+                    
+                    dateDisplaySpan.textContent = `${formattedDate}, ${formattedTime}`;
+                } else {
+                    dateDisplaySpan.textContent = formattedDate;
+                }
+            } else {
+                dateDisplaySpan.textContent = '';
+            }
+        }
+    }
+    
+    // Add event listeners to update the display when date or time changes
+    const dateInput = document.getElementById('date');
+    const timeInput = document.getElementById('time');
+    
+    if (dateInput) {
+        dateInput.addEventListener('change', updateDateTimeDisplay);
+    }
+    
+    if (timeInput) {
+        timeInput.addEventListener('change', updateDateTimeDisplay);
+    }
+    
+    // Initial update
+    updateDateTimeDisplay();
+});
+</script>
+
+<!-- END OF CODE - Cline - 2025-05-13 22:32 File: time-display-toggle-implementation.html -->

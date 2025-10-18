@@ -1,0 +1,444 @@
+UNUSED file manifest generated on 2025-09-05 18:25:15
+Total files: 441
+
+css\adjustments.css
+css\circle-overlap-fix.css
+css\combined-view-final-fix_XXX.css
+css\combined-view-final-fix_ZZZ.css
+css\combined-view-positioning_bak_20250616_1647.css
+css\combined-view-positioning_bak_20250617_1508.css
+css\combined-view-positioning_XXX_XXX.css
+css\combined-view-positioning_XXX.css
+css\container-reorganization_bak_20250514_2114.css
+css\container-reorganization_bak_20250514_2123.css
+css\container-reorganization_bak_20250515_0740.css
+css\container-reorganization_bak_20250515_0840.css
+css\container-reorganization_bak_20250515_0855.css
+css\container-reorganization_bak_20250515_0859.css
+css\container-reorganization_bak_20250515_0911.css
+css\container-reorganization_bak_20250515_0929.css
+css\container-reorganization_bak_20250515_0942.css
+css\container-reorganization_bak_20250515_0946.css
+css\container-reorganization_bak_20250515_0948.css
+css\container-reorganization_bak_20250515_1044.css
+css\container-reorganization_bak_20250515_1102.css
+css\container-reorganization_bak_20250515_1123.css
+css\container-reorganization_bak_20250515_2250.css
+css\container-reorganization_bak_20250515_2257.css
+css\container-reorganization_bak_20250515_2308.css
+css\container-reorganization_bak_20250516_0054_26.css
+css\container-reorganization_bak_20250517_1156_45.css
+css\container-reorganization_bak_20250517_1210_44.css
+css\container-reorganization_bak_20250518_1953.css
+css\container-reorganization_bak_20250518_2015.css
+css\container-reorganization_bak_20250520_0921.css
+css\container-reorganization_bak_20250520_0946.css
+css\container-reorganization_bak_20250520_1000.css
+css\container-reorganization_bak_20250630_1154.css
+css\container-reorganization_bak_20250630_1158.css
+css\coordinate-fields_bak_20250509_1300_27.css
+css\coordinate-fields_bak_20250509_1308_51.css
+css\coordinate-fields_bak_20250509_1316_03.css
+css\coordinate-fields_bak_20250509_1320_10.css
+css\coordinate-fields_bak_20250509_1322_52.css
+css\coordinate-fields_bak_20250510_1003_29.css
+css\coordinate-fields_bak_20250510_1742_57.css
+css\coordinate-fields_bak_20250510_1749.css
+css\final-fix.css
+css\fixes.css
+css\general_bak_20250510_0920_45.css
+css\image-format-fix.css
+css\image-options.css
+css\inline-styles.css
+css\master-override_1907.css
+css\master-override_bak_20250514_0111.css
+css\master-override_bak_20250514_1623.css
+css\master-override_bak_20250523_1510.css
+css\master-override_bak_20250629_1117.css
+css\master-override_bak_20250629_1131.css
+css\master-override_bak_20250629_1136.css
+css\master-override_bak_20250629_2000.css
+css\master-override_bak_20250629_2006.css
+css\master-override_bak_20250629_2017.css
+css\master-override_bak_20250629_2029.css
+css\master-override_bak_20250630_1042.css
+css\master-override_bak_20250630_1049.css
+css\master-override_bak_20250630_1051.css
+css\master-override_bak_20250630_1102.css
+css\master-override_bak_20250630_1112.css
+css\master-override_bak_20250630_1139.css
+css\master-override_bak_20250630_1150.css
+css\master-override_CORRUPTED_JULY2.css
+css\master-override_uploaded_at_0630_1859.css
+css\master-override_XXX.css
+css\not_working_container-reorganization.css
+css\settings-preview-download_bak_20250512_0739.css
+css\settings-preview-download_bak_20250513_2210.css
+css\star-map-style.css
+css\starmap-canvas_04192025-5-00PM.css
+css\style.css
+css\time-display-toggle.css
+css\ui-adjustments_bak_20250514_0000.css
+css\ui-adjustments_bak_20250514_0007.css
+css\ui-fixes.css
+css\xxxcontainer-reorganization.css
+css\zoom-slider-visibility-fix.css
+js\aaaaabsolute-final-fix.js
+js\absolute-final-fix_BACKUP_NOT_WORKING.js
+js\absolute-final-fix_bak_20250526_0928.js
+js\absolute-final-fix_bak_20250526_1913.js
+js\absolute-final-fix_bak_20250526_1935.js
+js\absolute-final-fix_bak_20250528_1728_00.js
+js\absolute-final-fix_bak_20250529_2010.js
+js\absolute-final-fix_bak_20250602_1538.js
+js\absolute-final-fix_bak_20250621_1015.js
+js\absolute-final-fix_bak_20250622_1651.js
+js\absolute-final-fix_bak_20250624_1211.js
+js\absolute-final-fix_bak_20250624_1230.js
+js\absolute-final-fix_bak_20250624_1310.js
+js\absolute-final-fix_bak_20250624_1342_21.js
+js\absolute-final-fix_bak_20250624_1402_53.js
+js\absolute-final-fix_bak_20250624_1426_25.js
+js\absolute-final-fix_bak_20250624_1437_45.js
+js\absolute-final-fix_bak_20250624_1443_24.js
+js\absolute-final-fix_bak_20250624_1453_16.js
+js\absolute-final-fix_bak_20250624_1509_06.js
+js\absolute-final-fix_bak_20250624_1519_45.js
+js\absolute-final-fix_bak_20250624_1540_35.js
+js\absolute-final-fix_bak_20250629_1117.js
+js\absolute-final-fix_bak_20250630_1222.js
+js\absolute-final-fix_bak_20250630_1932.js
+js\absolute-final-fix_bak_20250701_1123.js
+js\absolute-final-fix_bak_20250701_1140.js
+js\absolute-final-fix_bak_20250703_1411_INFINITE_LOOP.js
+js\absolute-final-fix_BROKEN_20250701_1432.js
+js\absolute-final-fix_CORRUPTED.js
+js\absolute-final-fix_EMPTY_062425_1221pm.js
+js\absolute-final-fix_JULY1ST_LAST_WORKING_RETRIEVED.js
+js\absolute-final-fix_JUNE24TH_AFTERNOON_RETRIEVED.js
+js\absolute-final-fix_JUNE30TH_EVENING_RETRIEVED.js
+js\absolute-final-fix_PRE RECOVERY FROM LATEST TRUTH_0703_AM.js
+js\absolute-final-fix_SUSPICIUOS.js
+js\absolute-final-fixes.js
+js\advanced-options-fix-v2.js
+js\advanced-options-fix.js
+js\advanced-star-map-styles.js
+js\app_v0.js
+js\app_v1.js
+js\app_v2.js
+js\app.js
+js\canvas-attribute-fix.js
+js\canvas-orientation-fix.js
+js\canvas-zoom-slider.js
+js\circle-overlap-fix.js
+js\circular-starmap.js
+js\clean-fix.js
+js\color_picker_fix.js
+js\color-picker-fix.js
+js\color-picker-hex-fix.js
+js\combined-view-diagnostic.js
+js\combined-view-exact-match_bak_20250603_1858.js
+js\combined-view-exact-match_bak_20250603_1916.js
+js\combined-view-exact-match_bak_20250603_1927.js
+js\combined-view-exact-match_bak_20250603_1932.js
+js\combined-view-exact-match_bak_20250603_1939.js
+js\combined-view-exact-match_bak_20250603_1958.js
+js\combined-view-exact-match.js
+js\combined-view-final-solution_bak_20250616_1559.js
+js\combined-view-final-solution_bak_20250616_1604.js
+js\combined-view-final-solution_bak_20250616_1616.js
+js\combined-view-final-solution_bak_20250616_1622.js
+js\combined-view-final-solution_bak_20250616_1628.js
+js\combined-view-final-solution_bak_20250616_1631.js
+js\combined-view-final-solution_bak_20250616_1635.js
+js\combined-view-final-solution_bak_20250616_1638.js
+js\combined-view-final-solution_bak_20250616_1641.js
+js\combined-view-final-solution_bak_20250616_1742.js
+js\combined-view-final-solution_bak_20250622_1609.js
+js\combined-view-final-solution_MAP ISSUE.js
+js\combined-view-final-solution_ZZZ.js
+js\combined-view-final-solution.js
+js\combined-view-fix-minimal.js
+js\compare-cline main_app.js
+js\complete-fix.js
+js\container-reorganization_bak_20250515_0740.js
+js\container-reorganization_bak_20250515_0830.js
+js\container-reorganization_bak_20250515_0840.js
+js\container-reorganization_bak_20250515_0859.js
+js\container-reorganization_bak_20250515_1648.js
+js\container-reorganization_bak_20250515_1701.js
+js\container-reorganization_bak_20250515_1712.js
+js\container-reorganization_bak_20250515_1733.js
+js\container-reorganization_bak_20250515_1748.js
+js\container-reorganization-v2_bak_20250515_1953.js
+js\container-reorganization-v2_bak_20250515_2000.js
+js\container-reorganization-v2_bak_20250515_2006.js
+js\container-reorganization-v2_bak_20250515_2021.js
+js\container-reorganization-v2_bak_20250515_2236.js
+js\container-reorganization-v2_bak_20250515_2247.js
+js\container-reorganization-v2_bak_20250515_2252.js
+js\container-reorganization-v2_bak_20250515_2258.js
+js\container-reorganization-v2_bak_20250515_2319.js
+js\container-reorganization-v2_bak_20250515_2332.js
+js\container-reorganization-v2_bak_20250516_0056_08.js
+js\container-reorganization-v2_bak_20250517_1211_24.js
+js\container-reorganization-v2_bak_20250518_1954.js
+js\container-reorganization-v2_bak_20250518_2015.js
+js\container-reorganization-v2_bak_20250520_0947.js
+js\container-reorganization-v2_bak_20250520_1001.js
+js\container-reorganization-v2.js
+js\container-reorganization.js
+js\critical-fixes.js
+js\custom-occasion.js
+js\data-sync_bak_20250523_1514.js
+js\date-coordinate-sync-fix_bak_20250625_1430.js
+js\date-coordinate-sync-fix_bak_20250629_0929.js
+js\date-coordinate-sync-fix.js
+js\dimensions-fix-v2_bak_20250602_1128.js
+js\dimensions-fix-v2_bak_20250619_1312.js
+js\dimensions-fix-v2_bak_20250620_1130.js
+js\dimensions-fix-v2_bak_20250620_1209.js
+js\dimensions-fix-v2_bak_20250620_1253.js
+js\dimensions-fix-v2_bak_20250622_1622.js
+js\dimensions-fix-v2_bak_20250622_1714.js
+js\dimensions-fix-v2_bak_20250622_1749.js
+js\direct-star-generator.js
+js\disable-problematic-scripts.js
+js\emergency-fix.js
+js\emergency-preview-fix.js
+js\event-dropdown-conflict-fix.js
+js\event-dropdown-fixes_bak_20250630_1923.js
+js\event-dropdown-fixes_bak_20250703_1144.js
+js\event-dropdown-fixes_bak_20250703_1203.js
+js\event-dropdown-fixes.js
+js\event-dropdown-history.js
+js\final-complete-fix.js
+js\final-emergency-fix-v2.js
+js\final-emergency-fix.js
+js\final-fix.js
+js\final-text-fix.js
+js\final-working-fix.js
+js\fix-all-issues.js
+js\fix-history-issues.js
+js\fix-preview-button-v2.js
+js\fix-preview-button.js
+js\fixed-layers-fix_2.js
+js\fixed-layers-fix_3.js
+js\fixed-layers-fix_4.js
+js\fixed-layers-fix-exact_bak_20250520_1829.js
+js\fixed-layers-fix-exact_bak_20250520_1907.js
+js\fixed-layers-fix-exact_bak_20250520_1924.js
+js\fixed-layers-fix-exact_bak_20250520_1940.js
+js\fixed-layers-fix-exact_bak_20250522_1006.js
+js\fixed-layers-fix-exact_bak_20250522_1011.js
+js\fixed-layers-fix-exact_bak_20250523_0651.js
+js\fixed-layers-fix-exact_bak_20250523_0705.js
+js\fixed-layers-fix-exact_bak_20250523_1512.js
+js\fixed-layers-fix-exact_bak_20250523_1517.js
+js\fixed-layers-fix-exact_bak_20250523_1519.js
+js\fixed-layers-fix-exact_bak_20250523_1529.js
+js\fixed-layers-fix-exact_bak_20250523_1534.js
+js\fixed-layers-fix-exact.js
+js\fixed-layers-fix-final-v2.js
+js\fixed-layers-fix-final.js
+js\fixed-layers-fix-minimal.js
+js\fixed-layers-fix.js
+js\generate-star-map.js
+js\history_bak_20250510_1837.js
+js\history_bak_20250510_1935.js
+js\history_bak_20250511_1051.js
+js\history_bak_20250512_1144.js
+js\history_bak_20250701_1023.js
+js\history_bak_20250701_1331.js
+js\history_bak_20250701_1413.js
+js\history_bak_20250701_1420.js
+js\history_PROBLEMS-SAVING HISTOR-JS 3-46 PM.js
+js\history_WORKING_20250701_1552.js
+js\image-format-fix_bak_20250515_1132.js
+js\load-all-fixes.js
+js\main_app_1457.js
+js\main_app_bak_20250522_0923.js
+js\main_app_bak_20250522_0931.js
+js\main_app_bak_20250617_1614.js
+js\main_app_bak_20250701_1405.js
+js\main_app_bak_20250702_0954.js
+js\main_app_bak_20250702_1047.js
+js\main_app_bak_20250702_1659.js
+js\main_app_BEFORE APP BROKEN PM 702.js
+js\main_app_NEW_04081237 pm.js
+js\main_app_ph_0406-18-56.js
+js\main_app_ph_09-59.js
+js\main_app_PRE SIMPLIFIED 1947.js
+js\main_app_PRE_0412_SAVE SETTINGS MODS.js
+js\main_app_XXX.js
+js\main_app-PRE widget TEST.js
+js\main.js
+js\map_bak_20250508_1710_33.js
+js\map_bak_20250508_1715_21.js
+js\map_bak_20250509_1253_43.js
+js\map_bak_20250510_1844.js
+js\map_bak_20250510_1949.js
+js\map_bak_20250512_1210.js
+js\map_bak_20250522_1003.js
+js\map_POST_0413_SAVE SETTINGS MODS.js
+js\map_PRE_0617_17-51.js
+js\map-order-fix.js
+js\master-override_bak_20250514_1626.js
+js\master-ui-fix.js
+js\minimal-fix.js
+js\not_working_container-reorganization-v2.js
+js\paper-size-dimensions_bak_20250515_1816.js
+js\paper-size-dimensions_bak_20250515_1827.js
+js\paper-size-dimensions_bak_20250523_1545.js
+js\perfect-circle-fix.js
+js\performance-fix.js
+js\preview-button-fix.js
+js\proper-zoom-fix.js
+js\save-settings.js
+js\settings_bak_20250512_0851.js
+js\settings_bak_20250515_1647.js
+js\settings_bak_20250701_1056.js
+js\settings_bak_20250702_1024.js
+js\settings_BEFORE APP BROKEN PM 702.js
+js\settings_PRE_0412_SAVE SETTINGS MODS.js
+js\settings_PRE_1529.js
+js\settings_PRE_TEST SAVINGS.js
+js\settings-manager.js
+js\settings-preview-download_bak_20250512_0800.js
+js\settings-preview-download_bak_20250512_0831.js
+js\settings-preview-download_bak_20250512_0853.js
+js\settings-preview-download_bak_20250512_0934.js
+js\settings-preview-download_bak_20250512_1010.js
+js\settings-preview-download_bak_20250512_1153.js
+js\settings-preview-download_bak_20250512_1204.js
+js\settings-preview-download_bak_20250512_1208.js
+js\settings-preview-download_bak_20250512_1211.js
+js\settings-preview-download_bak_20250512_1219.js
+js\settings-preview-download_bak_20250512_1641.js
+js\settings-preview-download_bak_20250513_2211.js
+js\settings-preview-download_bak_20250620_1217.js
+js\settings-preview-download_bak_20250620_1238.js
+js\settings-preview-download_bak_20250621_1034.js
+js\settings-preview-download_bak_20250622_1345.js
+js\settings-preview-download_bak_20250622_1355.js
+js\settings-preview-download_bak_20250622_1410.js
+js\settings-preview-download_bak_20250622_1551.js
+js\settings-preview-download_bak_20250624_1015.js
+js\settings-preview-download_bak_20250624_1026.js
+js\settings-preview-download_bak_20250624_1126.js
+js\settings-preview-download-core_bak_20250624_1059.js
+js\settings-preview-download-core_bak_20250624_1315.js
+js\settings-preview-download-core.js
+js\settings-preview-download-helpers_bak_20250624_1125.js
+js\settings-preview-download-helpers.js
+js\sst1-ui-fixes_to_be_deleted_0624-1242pm.js
+js\star-map-complete.js
+js\star-map-style-fix.js
+js\star-map-styles.js
+js\starmap_styles.js
+js\svg-generator.js
+js\text-entry-history.js
+js\text-scaling-fix.js
+js\time-display-fix_bak_20250514_0014.js
+js\time-display-fix.js
+js\time-display-toggle.js
+js\ui-complete-solution.js
+js\ui-final-resolution.js
+js\ui-improvements.js
+js\ui-synchronization.js
+js\ultimate-critical-fixes.js
+js\utils_bak_20250522_0931.js
+js\utils_bak_20250522_1002.js
+js\utils_NEW.js
+js\utils_PRE_DAY RESCONSTRUCT.js
+js\utils-bak.js
+js\view-button-fix_bak_20250528_1702_00.js
+js\xxxcontainer-reorganization-v2_bak_20250517_1157_50.js
+js\zip-code-history.js
+js\zoom-console-fix.js
+js\zoom-diagnostic-test.js
+js\zoom-nuclear-option.js
+js\zoom-slider-console-code.js
+js\zoom-slider-direct.js
+js\zoom-slider-fix-final.js
+js\zoom-slider-force-show.js
+js\zoom-slider-permanent-fix.js
+js\zoom-slider-solution.js
+OLD_Star_Map_Generator FILES\button-container-redesign.html
+OLD_Star_Map_Generator FILES\canvas-zoom-implementation.html
+OLD_Star_Map_Generator FILES\clean-index.html
+OLD_Star_Map_Generator FILES\combined-view-diagnostic-test.html
+OLD_Star_Map_Generator FILES\combined-view-settings-with-context.html
+OLD_Star_Map_Generator FILES\combined-view-settings-YOUR-CODE.html
+OLD_Star_Map_Generator FILES\complete-circle-fix-implementation.html
+OLD_Star_Map_Generator FILES\firebase_test.html
+OLD_Star_Map_Generator FILES\history_manual_test.html
+OLD_Star_Map_Generator FILES\history_test.html
+OLD_Star_Map_Generator FILES\login_bak_20250510_1950.html
+OLD_Star_Map_Generator FILES\login_bak_20250510_2026.html
+OLD_Star_Map_Generator FILES\login.html
+OLD_Star_Map_Generator FILES\sandbox-maps.code-workspace_04112025_1049AM.code-workspace
+OLD_Star_Map_Generator FILES\sandbox-maps.code-workspace_04162025_1127AM.code-workspace
+OLD_Star_Map_Generator FILES\Star_Map_Generator_04152025 4-39.html
+OLD_Star_Map_Generator FILES\Star_Map_Generator_1.html
+OLD_Star_Map_Generator FILES\Star_Map_Generator_BACKUP.html
+OLD_Star_Map_Generator FILES\Star_Map_Generator_bak_20250508_1713_52.html
+OLD_Star_Map_Generator FILES\Star_Map_Generator_bak_20250509_0934_15.html
+OLD_Star_Map_Generator FILES\Star_Map_Generator_bak_20250509_1234_00.html
+OLD_Star_Map_Generator FILES\Star_Map_Generator_bak_20250509_1245_05.html
+OLD_Star_Map_Generator FILES\Star_Map_Generator_bak_20250509_1345_59.html
+OLD_Star_Map_Generator FILES\Star_Map_Generator_bak_20250509_1354_00.html
+OLD_Star_Map_Generator FILES\Star_Map_Generator_bak_20250509_1411_35.html
+OLD_Star_Map_Generator FILES\Star_Map_Generator_bak_20250509_1420_52.html
+OLD_Star_Map_Generator FILES\Star_Map_Generator_bak_20250509_1432_05.html
+OLD_Star_Map_Generator FILES\Star_Map_Generator_bak_20250510_0913_30.html
+OLD_Star_Map_Generator FILES\Star_Map_Generator_bak_20250510_1010_06.html
+OLD_Star_Map_Generator FILES\Star_Map_Generator_bak_20250510_1012_00.html
+OLD_Star_Map_Generator FILES\Star_Map_Generator_bak_20250510_1021_00.html
+OLD_Star_Map_Generator FILES\Star_Map_Generator_bak_20250510_1657_11.html
+OLD_Star_Map_Generator FILES\Star_Map_Generator_bak_20250510_1800.html
+OLD_Star_Map_Generator FILES\Star_Map_Generator_bak_20250510_1933.html
+OLD_Star_Map_Generator FILES\Star_Map_Generator_bak_20250510_1938.html
+OLD_Star_Map_Generator FILES\Star_Map_Generator_bak_20250510_1953.html
+OLD_Star_Map_Generator FILES\Star_Map_Generator_bak_20250510_2015.html
+OLD_Star_Map_Generator FILES\Star_Map_Generator_bak_20250510_2022.html
+OLD_Star_Map_Generator FILES\Star_Map_Generator_bak_20250511_2120.html
+OLD_Star_Map_Generator FILES\Star_Map_Generator_bak_20250512_0737.html
+OLD_Star_Map_Generator FILES\Star_Map_Generator_bak_20250512_1212.html
+OLD_Star_Map_Generator FILES\Star_Map_Generator_bak_20250512_1221.html
+OLD_Star_Map_Generator FILES\Star_Map_Generator_bak_20250512_1638.html
+OLD_Star_Map_Generator FILES\Star_Map_Generator_bak_20250512_1644.html
+OLD_Star_Map_Generator FILES\Star_Map_Generator_bak_20250512_1658.html
+OLD_Star_Map_Generator FILES\Star_Map_Generator_bak_20250512_1801.html
+OLD_Star_Map_Generator FILES\Star_Map_Generator_bak_20250512_1845.html
+OLD_Star_Map_Generator FILES\Star_Map_Generator_bak_20250513_2207.html
+OLD_Star_Map_Generator FILES\Star_Map_Generator_bak_20250513_2213.html
+OLD_Star_Map_Generator FILES\Star_Map_Generator_bak_20250513_2235.html
+OLD_Star_Map_Generator FILES\Star_Map_Generator_bak_20250514_0020.html
+OLD_Star_Map_Generator FILES\Star_Map_Generator_bak_20250514_1623.html
+OLD_Star_Map_Generator FILES\Star_Map_Generator_bak_20250515_0907.html
+OLD_Star_Map_Generator FILES\Star_Map_Generator_bak_20250515_0958.html
+OLD_Star_Map_Generator FILES\Star_Map_Generator_bak_20250515_1010.html
+OLD_Star_Map_Generator FILES\Star_Map_Generator_bak_20250515_1117.html
+OLD_Star_Map_Generator FILES\Star_Map_Generator_bak_20250522_1004.html
+OLD_Star_Map_Generator FILES\Star_Map_Generator_GOOD PREVIOUS_4.html
+OLD_Star_Map_Generator FILES\Star_Map_Generator_GOOD WORKING STYLING.txt
+OLD_Star_Map_Generator FILES\Star_Map_Generator_LATEST_2.html
+OLD_Star_Map_Generator FILES\Star_Map_Generator_LATEST.html
+OLD_Star_Map_Generator FILES\Star_Map_Generator_PRE_STYLE BLOCK REPLACEMENT.html
+OLD_Star_Map_Generator FILES\Star_Map_Generator_PREVIOUS_2.html
+OLD_Star_Map_Generator FILES\Star_Map_Generator_PREVIOUS_3.html
+OLD_Star_Map_Generator FILES\Star_Map_Generator_PREVIOUS.html
+OLD_Star_Map_Generator FILES\Star_Map_Generator_RE-WRITTEN BY AUTHOR_0411-10-47-AM.html
+OLD_Star_Map_Generator FILES\Star_Map_Generator_suspect_05312025.html
+OLD_Star_Map_Generator FILES\time-display-toggle-html.html
+OLD_Star_Map_Generator FILES\time-display-toggle-implementation.html
+OLD_Star_Map_Generator FILES\zoom-diagnostic.html
+OLD_Star_Map_Generator FILES\zoom-force-inject.html
+OLD_Star_Map_Generator FILES\zoom-slider-complete-fix.html
+Star_Map_Generator_1.html
+Star_Map_Generator_bak_20250624_1131.html
+Star_Map_Generator_bak_20250624_1138.html
+Star_Map_Generator_bak_20250624_1425_50.html
+Star_Map_Generator_MOD SCRIPT 0703.html
+Star_Map_Generator_test1.html

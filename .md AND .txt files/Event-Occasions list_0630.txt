@@ -1,0 +1,91 @@
+<option value="">Select an option</option>
+<option value="custom">Add Your Own...</option>
+
+<option value="21st_birthday">21st Birthday</option>
+<option value="baby_shower">Baby Shower</option>
+<option value="baptism_christening">Baptism/Christening</option>
+<option value="birthday">Birthday</option></option>
+<option value="christmas_day">Christmas Day</option>
+<option value="congratulations">Congratulations</option>
+<option value="day_we_met">Day We Met</option>
+<option value="day_we_were_engaged">Day We Were Engaged</option>
+<option value="finally_recovered">Finally Recovered</option>
+<option value="first_day_of_school">First Day of School/University</option>
+<option value="first_home">First Home Purchase</option>
+<option value="first_kiss">First Kiss</option>
+<option value="first_trip">First Trip Together</option>
+<option value="finally_retired">Finally Retired</option>
+<option value="get_well_soon">Get Well Soon</option>
+<option value="graduation">Graduation Day</option>
+<option value="new_year">Happy New Year</option>
+<option value="house_warming">Housewarming</option>
+<option value="immigration_citizenship">Immigration/Citizenship</option>
+<option value="major_career_achievement">Major Career Achievement</option>
+<option value="memorial_date">Memorial Date</option>
+<option value="military_service">Military Service</option>
+<option value="mothers_day">Mother's day">Mother's Day</option>
+<option value="new_baby">New Baby Arrival</option>
+<option value="new_job">New Job</option>
+<option value="our_wedding_day">Our Wedding Day</option>
+<option value="personal_achievement">Personal Achievement</option>
+<option value="pet_adoption_day">Pet Adoption Day</option>
+<option value="work_promotion">Promotion at Work</option>
+<option value="remembrance_day">Remembrance Day</option>
+<option value="star_map_date">Star Map Date</option>
+<option value="sympathy_condolences">Sympathy/Condolences</option>
+<option value="thank_you">Thank You</option>
+<option value="vow_renewal_day">Vow Renewal Day</option>
+<option value="valentines_day">Valentine's Day</option>
+<option value="wedding_anniversary">Wedding Anniversary</option>
+<option value="sweet_16_birthday">Sweet 16 Birthday</option>
+
+Mother's Day
+Father's Day
+Birthday
+Day We Met
+Our Wedding Day
+Day We Were Engaged
+Sweet 16 Birthday
+21st Birthday
+Graduation Day
+Finally Retired
+Get Well Soon  
+Sympathy/CondolenceS  
+Congratulations  
+Thank You  
+New Baby Arrival  
+Housewarming  
+Valentine's Day  
+Engagement Party  
+Bridal Shower  
+Promotion at Work  
+New Job  
+Anniversary Celebration
+Baby Shower
+Valentine's Day
+Christmas Day
+Congratulations
+Happy New Year
+Baptism/Christening
+Personal Achievement
+Military Service
+Immigration/Citizenship
+Family Reunion
+First Home Purchase
+Recovery
+Memorial Date
+Pet Adoption Day
+First trip abroad
+Sport/Hobby Anniversary
+First Day of School/University
+Major Career Achievement
+Opened first business
+Personal Growth Milestone
+First kiss
+First trip together
+Vow renewal Day
+Star Map Date
+Remembrance Day
+Just because
+
+

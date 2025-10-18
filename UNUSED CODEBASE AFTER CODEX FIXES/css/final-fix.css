@@ -1,0 +1,105 @@
+/* START OF CODE - Cline - 2025-05-13 23:31 File: css/final-fix.css */
+
+/**
+ * Final UI Fixes for Star Map Generator
+ * 
+ * This file contains final CSS fixes for various UI issues:
+ * 1. Fix Event Details container to keep Event/Occasion and Date/Time on one row
+ * 2. Center-align "View Options" and "Download Options" labels
+ * 3. Center-align button rows and remove padding
+ */
+
+/* Fix Event Details container to keep Event/Occasion and Date/Time on one row */
+#event-details-fieldset {
+    padding: 15px 10px !important;
+}
+
+#event-details-fieldset > div {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important; /* Prevent wrapping */
+    align-items: center !important;
+    justify-content: space-between !important; /* Space between items */
+    gap: 20px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+#event-details-fieldset .input-group {
+    flex: 0 1 auto !important;
+    width: auto !important;
+    margin: 0 !important;
+}
+
+#occasion {
+    width: 250px !important; /* Further reduced from 300px */
+    min-width: 200px !important; /* Further reduced from 250px */
+    max-width: 250px !important;
+}
+
+/* Center-align "View Options" and "Download Options" labels */
+.column-header {
+    text-align: center !important;
+    font-weight: bold !important;
+    color: #333 !important;
+    margin-bottom: 10px !important;
+    padding-bottom: 5px !important;
+    border-bottom: 1px solid #ddd !important;
+    width: 100% !important;
+}
+
+/* Center-align button rows and remove padding */
+.button-list {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important; /* Center buttons */
+    gap: 10px !important;
+    width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.action-button {
+    flex: 0 0 auto !important;
+    padding: 8px 10px !important;
+    font-size: 13px !important;
+    min-width: auto !important;
+    margin: 0 !important;
+}
+
+/* Fix Image Format row layout */
+.settings-row {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 10px 15px !important;
+    margin-bottom: 15px !important;
+    padding: 5px 0 !important;
+}
+
+.radio-group {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 15px !important;
+}
+
+.radio-group label {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 5px !important;
+    margin-right: 0 !important;
+}
+
+/* Style for disabled options */
+.disabled-option {
+    opacity: 0.5 !important;
+    cursor: not-allowed !important;
+}
+
+.disabled-option input[type="checkbox"] {
+    cursor: not-allowed !important;
+}
+
+/* END OF CODE - Cline - 2025-05-13 23:31 File: css/final-fix.css */

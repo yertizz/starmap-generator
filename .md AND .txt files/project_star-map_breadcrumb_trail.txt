@@ -1,0 +1,96 @@
+# Star Map Generator Project Breadcrumb Trail
+
+This document serves as a detailed record of the work done on the Star Map Generator project. If you need to resume work with a new assistant, this will help them quickly understand what has been done and what still needs to be completed.
+
+## Project Overview
+
+The Star Map Generator is a web application that allows users to create custom star maps based on specific dates and locations. The application includes:
+
+1. A user authentication system using Firebase
+2. A history system for storing user inputs
+3. A map interface for selecting locations
+4. A star map generation system
+5. Various customization options for the star map
+
+## Completed Tasks
+
+### 1. Firebase Authentication
+
+- Implemented user registration and login functionality
+- Added email verification
+- Integrated Firebase Authentication with the main application
+- Fixed issues with user account creation
+
+### 2. History System
+
+- Created the `history` directory and `history/data` subdirectory to store history data
+- Created `history_manager.php` to handle storing and retrieving history data
+- Added extensive error logging to diagnose issues
+- Enhanced the history.js file with detailed debugging logs
+- Created test files to verify the history system:
+  - `history/test_history.php`: A PHP test script
+  - `history_manual_test.html`: A browser-based test tool
+
+## Current Status
+
+The history system has been fixed and should now be working correctly. The history data is stored in JSON files on the server in the history/data directory, and user-specific history is maintained by prefixing storage keys with the user's Firebase ID.
+
+## Pending Tasks
+
+1. Test the history system to ensure it's working correctly
+2. Implement any additional modifications requested by the user
+
+## File Structure
+
+Key files in the project:
+
+- `Star_Map_Generator.html`: The main application file
+- `login.html`: The login and registration page
+- `js/history.js`: JavaScript code for the history system
+- `history/history_manager.php`: PHP script for storing and retrieving history data
+- `history/data/`: Directory where history data is stored
+- `js/map.js`: JavaScript code for the map interface
+- `css/coordinate-fields.css`: CSS for the coordinate input fields
+
+## How to Resume Work
+
+If you need to resume work with a new assistant, follow these steps:
+
+1. Share this breadcrumb trail document with them
+2. Explain what you were working on when the connection was lost
+3. Provide any error messages or issues you encountered
+4. Share the current state of the project (what's working and what's not)
+
+## Debugging Tips
+
+If you encounter issues with the history system:
+
+1. Check the PHP error log at `history/php_errorlog` for server-side errors
+2. Check the browser console for client-side errors
+3. Use the test files (`history/test_history.php` and `history_manual_test.html`) to diagnose issues
+4. Verify that the `history/data` directory exists and is writable
+
+## Recent Changes
+
+### 2025-05-11
+- Created the history directory and history_manager.php file
+- Added extensive debugging to the history.js file
+- Created test files to verify the history system
+
+### 2025-05-10
+- Fixed issues with Firebase Authentication
+- Updated the login.html file with better error handling
+- Added debugging to the Star_Map_Generator.html file
+
+## Next Steps
+
+1. Test the history system to ensure it's working correctly
+2. Implement any additional modifications requested by the user
+3. Update this breadcrumb trail document as work progresses
+
+## Location of This File
+
+This breadcrumb trail document is saved in the root directory of the project:
+`c:/Users/phili/E-DRIVE/AnythingPOD/star-map/project_star-map_breadcrumb_trail.md`
+
+You can update this file as you make progress on the project, and refer to it if you need to resume work with a new assistant.

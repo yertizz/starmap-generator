@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Star Map Combined View Diagnostic Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #444;
+            margin-top: 30px;
+        }
+        .instructions {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-left: 4px solid #007bff;
+            margin-bottom: 20px;
+        }
+        .button-row {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        button:hover {
+            background-color: #0069d9;
+        }
+        .code {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 4px;
+            font-family: monospace;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+        .note {
+            background-color: #fff3cd;
+            padding: 15px;
+            border-left: 4px solid #ffc107;
+            margin: 15px 0;
+        }
+        #results {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+            min-height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Star Map Combined View Diagnostic Test</h1>
+        
+        <div class="instructions">
+            <p>This page is designed to help diagnose issues with the Combined View functionality in the Star Map Generator application. It includes the diagnostic tool that will track canvas operations, image loading, and rendering events.</p>
+            <p><strong>Instructions:</strong> Click the button below to open the Star Map Generator in a new tab with the diagnostic tool loaded. Then follow the steps to reproduce the combined view issues.</p>
+        </div>
+        
+        <div class="button-row">
+            <button id="openStarMapBtn">Open Star Map with Diagnostic Tool</button>
+        </div>
+        
+        <h2>How to Use the Diagnostic Tool</h2>
+        
+        <ol>
+            <li>Click the "Open Star Map with Diagnostic Tool" button above.</li>
+            <li>In the new tab, you'll see a small diagnostic panel in the top-right corner.</li>
+            <li>Click on either the "Combined (Landscape)" or "Combined (Portrait)" button to activate the combined view.</li>
+            <li>The diagnostic tool will automatically capture snapshots and generate a report after 2 seconds.</li>
+            <li>Click the "Generate Report" button in the diagnostic panel to create a new report at any time.</li>
+            <li>A download link for the diagnostic report will appear at the bottom-right of the page.</li>
+            <li>Download the report and share it for analysis.</li>
+        </ol>
+        
+        <h2>What the Diagnostic Tool Captures</h2>
+        
+        <ul>
+            <li><strong>Canvas Operations:</strong> All drawing operations on the canvas, including when images are drawn.</li>
+            <li><strong>Image Loading:</strong> When star map and street map images are loaded.</li>
+            <li><strong>Canvas Snapshots:</strong> Visual snapshots of the canvas at key moments.</li>
+            <li><strong>DOM Changes:</strong> Changes to the canvas and its container elements.</li>
+            <li><strong>Script Interactions:</strong> Which scripts are interacting with the canvas.</li>
+        </ul>
+        
+        <div class="note">
+            <p><strong>Note:</strong> The diagnostic tool adds instrumentation to the page but does not modify the core functionality. It only observes and reports on what's happening.</p>
+        </div>
+        
+        <h2>Manual Script Injection</h2>
+        
+        <p>If the button doesn't work, you can manually inject the diagnostic script by opening the Star Map Generator and pasting the following code in the browser console:</p>
+        
+        <div class="code">
+            const script = document.createElement('script');<br>
+            script.src = 'js/combined-view-diagnostic.js';<br>
+            document.head.appendChild(script);
+        </div>
+        
+        <h2>Results</h2>
+        
+        <div id="results">
+            <p>Diagnostic results will appear here after running the tests.</p>
+        </div>
+    </div>
+    
+    <script>
+        document.getElementById('openStarMapBtn').addEventListener('click', function() {
+            // Open Star Map Generator in a new tab
+            const starMapWindow = window.open('Star_Map_Generator.html', '_blank');
+            
+            // Wait for the page to load, then inject the diagnostic script
+            setTimeout(function() {
+                try {
+                    starMapWindow.eval(`
+                        // Check if the script is already loaded
+                        if (!document.querySelector('script[src*="combined-view-diagnostic.js"]')) {
+                            const script = document.createElement('script');
+                            script.src = 'js/combined-view-diagnostic.js';
+                            document.head.appendChild(script);
+                            console.log('Diagnostic script injected');
+                        } else {
+                            console.log('Diagnostic script already loaded');
+                        }
+                    `);
+                } catch (e) {
+                    console.error('Could not inject script:', e);
+                    document.getElementById('results').innerHTML = `
+                        <p style="color: red;">Error: Could not inject the diagnostic script. This is likely due to cross-origin restrictions.</p>
+                        <p>Please use the manual injection method described above.</p>
+                    `;
+                }
+            }, 2000);
+        });
+    </script>
+</body>
+</html>

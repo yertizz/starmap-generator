@@ -1,0 +1,227 @@
+/* START OF CODE - Cline - 2025-04-10 17:32 File: css/text-layers.css */
+/* Fixing background swatch appearance and ensuring all swatches are styled */
+
+/* Hide the original input completely */
+input#font-color-1,
+input#font-color-2,
+input#font-color-3,
+input#fixed-font-color-date,
+input#fixed-font-color-coords,
+input#bg-color-image,
+input#bg-color-canvas {
+    display: none !important;
+}
+
+/* Style ALL manual swatch buttons */
+button.color-swatch { /* Apply base styles to all */
+    width: 30px !important;
+    height: 30px !important;
+    border-radius: 50% !important;
+    border: 1px solid #999 !important;
+    background-color: #FFFFFF !important; /* default */
+    cursor: pointer !important;
+    margin-left: 10px !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+    display: inline-block !important; /* Ensure it's displayed */
+    vertical-align: middle !important; /* Align with other controls */
+    appearance: none !important; /* Override browser default appearance */
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    flex-shrink: 0; /* Prevent shrinking in flex containers */
+}
+
+/* Keep other existing styles */
+.text-entry-wrapper {
+    margin-bottom: 15px;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 10px;
+}
+
+.text-entry-wrapper label {
+    font-weight: bold;
+    margin-right: 10px;
+    min-width: 30px;
+    width: 30px;
+    text-align: right;
+}
+
+.text-entry {
+    width: 300px;
+    max-width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.char-count {
+    font-size: 12px;
+    color: #666;
+    margin-left: 5px;
+    width: 30px;
+    text-align: center;
+    margin-right: 10px;
+}
+
+.font-controls {
+    display: flex;
+    flex-wrap: nowrap; /* Prevent wrapping which might affect swatch */
+    align-items: center;
+    gap: 10px; /* Adjusted gap */
+    width: auto;
+}
+
+.font-family-select {
+    width: 80px !important;
+    max-width: 80px !important;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 5px;
+}
+
+.font-size-select {
+    width: 30px !important;
+    max-width: 30px !important;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 5px;
+}
+
+/* ... rest of your existing styles ... */
+
+/* Fixed Text Styling */
+.fixed-text-styling {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 15px; /* Increased gap */
+    margin-top: 20px; /* Increased margin */
+    margin-bottom: 20px; /* Added margin */
+}
+
+/* Fixed text styling specific adjustments */
+.fixed-text-group {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 15px; /* Increased gap */
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.fixed-text-group label {
+    font-weight: bold;
+    margin-right: 5px; /* Reduced margin */
+    min-width: 80px;
+}
+
+.fixed-text-group .font-family-select {
+    width: 80px !important; /* Force width with !important */
+    max-width: 80px !important;
+    margin-right: 10px; /* Increased margin */
+}
+
+.fixed-text-group .font-size-select {
+    width: 30px !important; /* Force width with !important */
+    max-width: 30px !important;
+    margin-right: 10px; /* Increased margin */
+}
+
+.fixed-text-group .style-options {
+    margin-left: 10px; /* Increased margin */
+    margin-right: 10px; /* Increased margin */
+}
+
+.style-options {
+    display: flex;
+    gap: 15px; /* Increased gap */
+}
+
+.style-options label {
+    font-weight: normal;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    min-width: auto;
+}
+
+.style-options input[type="checkbox"] {
+    margin: 0;
+    vertical-align: middle;
+}
+
+/* Override browser default styling for select elements */
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23131313%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.5em center;
+    background-size: 0.65em auto;
+    padding-right: 1.5em;
+}
+
+/* Star Map Text Styling */
+.star-map-title {
+    font-size: 48px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-family: 'Arial Black', 'Arial Bold', Gadget, sans-serif;
+}
+
+.star-map-subtitle {
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+.star-map-date, .star-map-coordinates {
+    font-size: 14px;
+    margin: 5px 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .text-entry-wrapper {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .font-controls {
+        width: 100%;
+    }
+    
+    .fixed-text-styling {
+        flex-direction: column;
+    }
+}
+
+/* Additional font options */
+.font-family-select option.decorative {
+    font-family: 'Pacifico', cursive;
+}
+
+.font-family-select option.elegant {
+    font-family: 'Playfair Display', serif;
+}
+
+.font-family-select option.modern {
+    font-family: 'Montserrat', sans-serif;
+}
+
+.font-family-select option.classic {
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.font-family-select option.handwritten {
+    font-family: 'Dancing Script', cursive;
+}
+/* END OF CODE - Cline - 2025-04-10 17:32 File: css/text-layers.css */

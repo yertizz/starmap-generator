@@ -1,0 +1,23 @@
+Anthropic refund request
+ACTION: Send the .md file as an attachment with this email to support@anthropic.com. The document provides comprehensive evidence of the implementation failure and my acknowledgment of responsibility.
+
+---------------------------------
+Subject: Refund Request - Claude AI Implementation Failure (July 1, 2025)
+
+Dear Anthropic Support Team,
+
+I am requesting a partial refund for credits consumed during a Claude AI session on July 1, 2025, where implementation errors caused significant application damage requiring extensive restoration work.
+
+Please find attached a detailed incident report documenting the AI's implementation failure, multiple acknowledgments of responsibility by Claude, and Claude's explicit recommendation to request a refund.
+
+The AI consumed approximately 3.5 hours of credits, with 70% spent fixing its own implementation mistakes rather than productive development work.
+
+I am requesting a partial refund for the restoration portion of this session, as recommended by Claude itself.
+
+Please review the attached documentation and process this refund request.
+
+Thank you,
+[Your Name]
+[Your Account Email]
+
+Attachment: anthropic-refund-request-20250701.md

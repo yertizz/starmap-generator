@@ -1,0 +1,45 @@
+/* Styling for the zip code history dropdown */
+#zip-code-history {
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    position: absolute;
+    margin-top: 5px;
+}
+
+#zip-code-history option {
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+#zip-code-history option:hover {
+    background-color: #f0f0f0;
+}
+
+/* Make sure the zip code input has position relative for proper dropdown positioning */
+#zip-code {
+    position: relative;
+}
+
+/* Container for the zip code input to allow for proper dropdown positioning */
+.zip-code-container {
+    position: relative;
+    width: 100%;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    #zip-code-history {
+        max-height: 150px;
+    }
+    
+    #zip-code-history option {
+        padding: 6px 10px;
+    }
+}

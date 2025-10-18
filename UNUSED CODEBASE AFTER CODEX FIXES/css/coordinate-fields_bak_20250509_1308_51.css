@@ -1,0 +1,68 @@
+/* Styling for coordinate input fields */
+
+/* Make the coordinate input fields bold and larger */
+.manual-coordinates input[type="text"] {
+    font-weight: bold;
+    font-size: 16px; /* Increased from default */
+    padding: 8px 30px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    color: #0056b3 !important; /* Force blue text color */
+}
+
+/* Style for the coordinates display */
+#latLongDisplay {
+    font-weight: bold !important;
+    font-size: 1.1em !important;
+    color: #ff0000 !important;
+    margin: 10px 0;
+}
+
+/* Specific widths for each field to prevent wrapping */
+.manual-coordinates input#latitude,
+.manual-coordinates input#longitude {
+    width: 35%; /* Further reduced width for lat/long fields */
+    min-width: 185px; /* Minimum width to ensure readability */
+    max-width: 220px; /* Maximum width to prevent excessive stretching */
+}
+
+.manual-coordinates input#zip-code {
+    width: 25%; /* Ensure zip code field is wide enough for 9-digit codes */
+    min-width: 120px; /* Minimum width to ensure it fits "29485-xxxx" */
+    max-width: 150px; /* Maximum width to prevent excessive stretching */
+}
+
+/* Address input field styling */
+.manual-coordinates input#address {
+    width: calc(100% - 90px);
+    min-width: 300px;
+    flex-grow: 1;
+}
+
+/* Layout for the manual coordinates section */
+.manual-coordinates {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+}
+
+.manual-coordinates label {
+    margin-right: 5px;
+}
+
+.manual-coordinates input[type="text"]:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+    outline: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .manual-coordinates input[type="text"] {
+        font-size: 14px;
+        padding: 6px 10px;
+    }
+}

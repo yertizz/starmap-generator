@@ -1,0 +1,127 @@
+/* START OF CODE - Cline - 2025-05-11 21:21 File: css/settings-preview-download.css */
+
+/* Settings + Preview + Download Section Styles */
+.settings-preview-download-section {
+    margin: 20px 0;
+    padding: 15px;
+    border: 2px solid #cccccc;
+    border-radius: 8px;
+    background-color: #f5f5f5;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    position: relative;
+    clear: both;
+    max-width: 900px !important;
+    width: 900px !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+.settings-preview-download-section legend {
+    font-weight: bold;
+    font-size: 1.15em;
+    color: #0056b3;
+    border: none;
+    border-bottom: 1px solid #eee;
+    padding: 0 15px 10px 15px;
+    margin-bottom: -15px;
+    width: auto;
+    max-width: calc(100% - 30px);
+    text-align: center;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    float: none;
+}
+
+/* Button groups with horizontal separators */
+.button-group {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    margin: 15px 0;
+    padding: 10px 0;
+}
+
+.button-group:not(:last-child) {
+    border-bottom: 1px solid #ddd;
+}
+
+/* Button styles */
+.action-button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 180px;
+    text-align: center;
+    font-size: 14px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.action-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.action-button:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+
+/* Button color variations */
+.settings-button {
+    background-color: #1D99EF; /* Blue */
+}
+
+.settings-button:hover {
+    background-color: #1a87d5;
+}
+
+.view-button {
+    background-color: #FDCA0D; /* Golden */
+}
+
+.view-button:hover {
+    background-color: #e3b60c;
+}
+
+.download-button {
+    background-color: #23B14B; /* Green */
+}
+
+.download-button:hover {
+    background-color: #1f9d42;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .action-button {
+        min-width: 150px;
+        font-size: 13px;
+        padding: 8px 12px;
+    }
+    
+    .button-group {
+        gap: 10px;
+    }
+}
+
+@media (max-width: 576px) {
+    .action-button {
+        min-width: 130px;
+        font-size: 12px;
+        padding: 8px 10px;
+    }
+    
+    .button-group {
+        gap: 8px;
+    }
+}
+
+/* END OF CODE - Cline - 2025-05-11 21:21 File: css/settings-preview-download.css */

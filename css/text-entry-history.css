@@ -1,0 +1,58 @@
+/* Styling for text entry history datalists */
+
+/* Style the datalist dropdown */
+datalist {
+    max-height: 200px;
+    overflow-y: auto;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+/* Style the datalist options */
+datalist option {
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+datalist option:hover {
+    background-color: #f0f0f0;
+}
+
+/* Style the text entry inputs with datalists */
+input[list] {
+    position: relative;
+}
+
+/* Add a small dropdown indicator to inputs with datalists */
+input[list]::after {
+    content: '▼';
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #888;
+    font-size: 12px;
+    pointer-events: none;
+}
+
+/* Highlight text inputs with history */
+input[list]:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    datalist {
+        max-height: 150px;
+    }
+    
+    datalist option {
+        padding: 6px 10px;
+        font-size: 14px;
+    }
+}

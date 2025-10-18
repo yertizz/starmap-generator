@@ -1,0 +1,124 @@
+/* START OF CODE - Cline - 2025-05-14 16:28:00 File: css/container-reorganization.css */
+
+/**
+ * Container Reorganization CSS for Star Map Generator
+ * 
+ * This file contains CSS rules to reorganize the containers and add new functionality:
+ * 1. Remove duplicate Image Format row
+ * 2. Reorganize containers for better flow
+ * 3. Style the Paper Auto-Size and DPI selectors
+ */
+
+/* Star Map Canvas Settings Container */
+#canvas-settings {
+    padding: 15px !important;
+}
+
+/* Paper Auto-Size and DPI selectors */
+.paper-size-row {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+    justify-content: center !important; /* Changed to center alignment */
+    gap: 15px !important;
+    margin-bottom: 15px !important;
+}
+
+.paper-size-row label {
+    font-weight: 600 !important;
+    color: #555 !important;
+    margin-right: 5px !important;
+}
+
+.paper-size-row select {
+    padding: 8px 10px !important;
+    border: 1px solid #ccc !important;
+    border-radius: 4px !important;
+    background-color: white !important;
+}
+
+#paper-auto-size {
+    width: 200px !important;
+    min-width: 200px !important;
+}
+
+#dpi-selector {
+    width: 80px !important;
+    min-width: 80px !important;
+}
+
+/* Hide all Image Format rows in Star Map Canvas Settings */
+#canvas-settings .settings-row:has(input[name="image-format"]) {
+    display: none !important;
+}
+
+/* Move Text Placements to its own container */
+.text-placement-container {
+    margin: 20px 0 !important;
+    padding: 15px !important;
+    border: 2px solid #cccccc !important;
+    border-radius: 8px !important;
+    background-color: #f5f5f5 !important;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1) !important;
+    position: relative !important;
+    clear: both !important;
+    max-width: 900px !important;
+    width: 900px !important;
+    box-sizing: border-box !important;
+    overflow: visible !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+.text-placement-container legend {
+    font-weight: bold !important;
+    font-size: 1.15em !important;
+    color: #0056b3 !important;
+    border: none !important;
+    border-bottom: 1px solid #eee !important;
+    padding: 0 15px 10px 15px !important;
+    margin-bottom: -15px !important;
+    width: auto !important;
+    max-width: calc(100% - 30px) !important;
+    text-align: center !important;
+    display: block !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    float: none !important;
+}
+
+/* Move Image Format in Settings + Preview + Download container */
+.settings-preview-download-section .settings-row {
+    margin-top: 5px !important; /* Reduced margin */
+    margin-bottom: 15px !important; /* Added bottom margin */
+    border-top: none !important; /* Removed border */
+    padding-top: 5px !important; /* Reduced padding */
+}
+
+/* Position the Image Format row right after the Load/Save buttons */
+.settings-buttons-row + .settings-row {
+    order: 1 !important;
+}
+
+/* Make the Settings + Preview + Download section use flex layout */
+.settings-preview-download-section {
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+/* Ensure the main-buttons-container comes after the Image Format row */
+.main-buttons-container {
+    order: 2 !important;
+}
+
+/* Ensure the canvas-container comes last */
+.canvas-container {
+    order: 3 !important;
+}
+
+/* Ensure the zoom-section comes after the canvas */
+.zoom-section {
+    order: 4 !important;
+}
+
+/* END OF CODE - Cline - 2025-05-14 16:28:00 File: css/container-reorganization.css */

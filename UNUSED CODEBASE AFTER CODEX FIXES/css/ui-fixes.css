@@ -1,0 +1,9 @@
+/* START OF CODE - Cline - 2025-05-23 15:05:05 File: css/ui-fixes.css */
+
+/* Fix for Star Map Style dropdown width */
+#star-map-style {
+    width: 120px !important;
+    max-width: 120px !important;
+}
+
+/* END OF CODE - Cline - 2025-05-23 15:05:05 File: css/ui-fixes.css */

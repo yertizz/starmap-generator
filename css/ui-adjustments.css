@@ -1,0 +1,175 @@
+/* START OF CODE - Cline - 2025-05-14 00:16:30 File: css/ui-adjustments.css */
+
+/**
+ * UI Adjustments for Star Map Generator
+ * 
+ * This file contains CSS adjustments to fix various UI issues:
+ * 1. Fix button widths to prevent wrapping
+ * 2. Center-align Load and Save Settings buttons
+ * 3. Adjust Event Details container to prevent wrapping
+ * 4. Center-align "Image Format:" row
+ * 5. Other UI improvements
+ */
+
+/* Adjust button widths in the button container to prevent wrapping */
+.view-buttons-column .action-button,
+.download-buttons-column .action-button {
+    min-width: 150px !important; /* Reduced from 180px */
+    padding: 10px 8px !important; /* Reduced horizontal padding */
+    font-size: 13px !important; /* Slightly smaller font */
+}
+
+/* CRITICAL FIX: Vertically center-align Load and Save Settings buttons */
+.settings-buttons-row {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 30px !important;
+    margin: 0 !important; /* No margin */
+    padding: 0 !important; /* No padding */
+    height: 50px !important; /* Fixed height */
+    border: none !important;
+    background: transparent !important;
+}
+
+.settings-buttons-row .action-button,
+.settings-buttons-row button {
+    margin: 0 !important;
+    vertical-align: middle !important;
+}
+
+/* Adjust Event Details container to prevent wrapping */
+#event-details-fieldset {
+    padding: 15px 10px !important;
+}
+
+#event-details-fieldset > div {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important; /* Prevent wrapping */
+    align-items: center !important;
+    justify-content: center !important; /* Center items */
+    gap: 20px !important;
+    width: 100% !important;
+}
+
+#event-details-fieldset .input-group {
+    flex: 0 1 auto !important;
+    width: auto !important;
+    margin: 0 !important;
+}
+
+#occasion {
+    width: 220px !important;
+    min-width: 180px !important;
+    max-width: 220px !important;
+}
+
+/* Ensure time appears in the star map */
+#text-placement-content-date {
+    white-space: normal !important; /* Allow text to wrap if needed */
+    max-width: 300px !important; /* Ensure enough space for date and time */
+}
+
+/* Center-align "View Options" and "Download Options" labels */
+.column-header {
+    text-align: center !important;
+    font-weight: bold !important;
+    color: #333 !important;
+    margin-bottom: 10px !important;
+    padding-bottom: 5px !important;
+    border-bottom: 1px solid #ddd !important;
+    width: 100% !important;
+}
+
+/* Center-align button rows and remove padding */
+.button-list {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important; /* Center buttons */
+    gap: 10px !important;
+    width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* Make buttons more compact */
+.action-button {
+    flex: 0 0 auto !important;
+    padding: 8px 10px !important;
+    font-size: 13px !important;
+    min-width: auto !important;
+    margin: 0 !important;
+}
+
+/* Center-align Image Format row */
+.settings-row {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+    justify-content: center !important; /* Center-align */
+    text-align: center !important;
+    gap: 10px 15px !important;
+    margin-bottom: 15px !important;
+    padding: 5px 0 !important;
+    width: 100% !important;
+}
+
+.settings-row > * {
+    display: inline-block !important;
+    text-align: center !important;
+}
+
+.radio-group {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 10px !important;
+}
+
+/* Style for disabled options */
+.disabled-option {
+    opacity: 0.5 !important;
+    cursor: not-allowed !important;
+}
+
+.disabled-option input[type="checkbox"] {
+    cursor: not-allowed !important;
+}
+
+/* CRITICAL FIX: Hide zoom slider completely */
+.zoom-section,
+.zoom-container,
+.zoom-slider,
+*[id*="zoom"],
+*[class*="zoom"] {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    height: 0 !important;
+    width: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    overflow: hidden !important;
+    position: absolute !important;
+    top: -9999px !important;
+    left: -9999px !important;
+}
+
+/* CRITICAL FIX: Fix canvas obfuscation issue */
+.form-section:last-child canvas:not(#star-map-canvas),
+canvas:not(#star-map-canvas) {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    height: 0 !important;
+    width: 0 !important;
+    position: absolute !important;
+    top: -9999px !important;
+    left: -9999px !important;
+}
+
+/* END OF CODE - Cline - 2025-05-14 00:16:30 File: css/ui-adjustments.css */

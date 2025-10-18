@@ -1,0 +1,24 @@
+/* START OF CODE - Cline - 2025-05-15 11:42:00 File: css/image-format-fix.css */
+
+/**
+ * Image Format Fix CSS for Star Map Generator
+ * 
+ * This file contains CSS rules to fix the Image Format row layout:
+ * 1. Ensure the transparency checkbox appears next to PNG
+ * 2. Set the correct text for the transparency label
+ * 3. Adjust spacing between elements to match the mockup
+ */
+
+/* Hide the original transparency label text */
+label[for="png-transparency"] {
+    font-size: 0 !important;
+}
+
+/* Add the new text using a pseudo-element */
+label[for="png-transparency"]::before {
+    content: "(Transparency PNG Only)" !important;
+    font-size: 14px !important;
+    display: inline-block !important;
+}
+
+/* END OF CODE - Cline - 2025-05-15 11:42:00 File: css/image-format-fix.css */

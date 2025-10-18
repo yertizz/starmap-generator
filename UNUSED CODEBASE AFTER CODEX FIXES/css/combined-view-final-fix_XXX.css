@@ -1,0 +1,39 @@
+/* Combined View Options - CSS-Only Spacing Fix */
+/* This CSS targets the exact elements and fixes spacing without JavaScript */
+
+/* Main container - reduce padding */
+div[style*="background-color: rgb(248, 249, 250)"] {
+    padding: 5px 15px !important;
+}
+
+/* Title - reduce bottom margin and padding */
+div[style*="background-color: rgb(248, 249, 250)"] div[style*="font-weight: bold"][style*="margin-bottom: 15px"] {
+    margin-bottom: 5px !important;
+    padding-bottom: 5px !important;
+}
+
+/* Circle Overlap row - remove bottom margin */
+div[style*="background-color: rgb(248, 249, 250)"] div[style*="display: flex"][style*="margin-bottom: 10px"] {
+    margin-bottom: 0px !important;
+}
+
+/* Line break div - hide completely */
+div[style*="background-color: rgb(248, 249, 250)"] div[style*="height: 20px"][style*="margin: 10px 0"] {
+    display: none !important;
+}
+
+/* Map Order section - reduce top margin and padding */
+div[style*="background-color: rgb(248, 249, 250)"] div[style*="margin-top: 20px"][style*="padding-top: 10px"] {
+    margin-top: 5px !important;
+    padding-top: 0px !important;
+}
+
+/* Note text - reduce top margin */
+div[style*="background-color: rgb(248, 249, 250)"] div[style*="margin-top: 15px"][style*="font-size: 11px"] {
+    margin-top: 5px !important;
+}
+
+/* Circle Overlap slider - set to 5% */
+#circle-overlap-percent {
+    /* Value will be set by minimal JavaScript */
+}

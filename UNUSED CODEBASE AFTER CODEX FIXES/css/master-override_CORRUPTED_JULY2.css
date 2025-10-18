@@ -1,0 +1,699 @@
+/* START OF CODE - Cline - 2025-05-25 15:26:00 File: css/master-override.css */
+
+/**
+ * Master Override CSS for Star Map Generator
+ * 
+ * This file contains CSS rules to ensure proper UI layout and functionality:
+ * 1. Force Event Details container to be a single row
+ * 2. Fix vertical alignment of Load and Save Settings buttons
+ * 3. Hide zoom slider completely
+ * 4. Fix canvas obfuscation issue
+ * 5. Center-align Image Format row
+ * 6. Fix Star Map Style dropdown width
+ */
+
+/* Force Event Details container to be a single row */
+#event-details-fieldset {
+    padding: 10px 5px 10px 5px !important; /* Added bottom padding inside container */
+    min-height: 60px !important; /* Increased height inside container */
+    max-height: none !important; /* Remove max height restriction */
+    overflow: visible !important;
+    margin-bottom: 0px !important; /* Keep bottom margin at 0 */
+}
+
+/* Add space between Event Details and Map Location containers */
+#event-details-fieldset + .form-section {
+    margin-top: 15px !important; /* Added top margin to next section */
+}
+
+/* Adjust space between form sections */
+.form-section {
+    margin-top: 15px !important;
+    margin-bottom: 15px !important;
+}
+
+#event-details-fieldset > div {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    justify-content: flex-start !important; /* Align to start */
+    gap: 10px !important; /* Reduced gap */
+    width: 100% !important;
+    max-width: 100% !important;
+    min-height: 40px !important; /* Reduced minimum height */
+    max-height: none !important; /* Remove max height restriction */
+}
+
+#event-details-fieldset .input-group {
+    flex: 0 0 auto !important; /* Don't shrink */
+    width: auto !important;
+    margin: 0 !important;
+    max-width: none !important; /* Remove max width */
+}
+
+/* Rename Event/Occasion label to save space */
+label[for="occasion"] {
+    font-size: 0.95em !important;
+    width: 50px !important; /* Fixed width */
+    min-width: 50px !important;
+    text-align: right !important;
+}
+
+#occasion {
+    width: 200px !important;
+    min-width: 180px !important;
+    max-width: 200px !important;
+}
+
+/* Fix Date/Time label */
+label[for="date"] {
+    width: 80px !important; /* Fixed width */
+    min-width: 80px !important;
+    text-align: right !important;
+}
+
+/* Make time input not required when toggle is off */
+#time:not(:required) {
+    border-color: #ccc !important;
+}
+
+/* Hide "Please fill out this field" message for time input when toggle is off */
+.time-toggle-container:has(input:not(:checked)) + .validation-message {
+    display: none !important;
+}
+
+/* Fix PNG transparency checkbox logic - More aggressive approach */
+/* When PNG is selected */
+input[name="image-format"][value="png"]:checked ~ label[for="png-transparency"],
+input[name="image-format"][value="png"]:checked ~ label[for="png-transparency"] input,
+input[name="image-format"][value="png"]:checked + label + label[for="png-transparency"],
+input[name="image-format"][value="png"]:checked + label + label[for="png-transparency"] input {
+    opacity: 1 !important;
+    cursor: pointer !important;
+    pointer-events: auto !important;
+}
+
+/* When PNG is NOT selected */
+input[name="image-format"]:not([value="png"]):checked ~ label[for="png-transparency"],
+input[name="image-format"]:not([value="png"]):checked ~ label[for="png-transparency"] input,
+input[name="image-format"]:not([value="png"]):checked + label + label[for="png-transparency"],
+input[name="image-format"]:not([value="png"]):checked + label + label[for="png-transparency"] input {
+    opacity: 0.5 !important;
+    cursor: not-allowed !important;
+    pointer-events: none !important;
+}
+
+/* Direct style for PNG transparency checkbox */
+#png-transparency {
+    pointer-events: auto !important;
+}
+
+/* Force PNG transparency checkbox to be disabled when JPG or SVG is selected */
+input[name="image-format"][value="jpg"]:checked ~ #png-transparency,
+input[name="image-format"][value="svg"]:checked ~ #png-transparency {
+    pointer-events: none !important;
+    opacity: 0.5 !important;
+    cursor: not-allowed !important;
+}
+
+/* Force PNG transparency checkbox to be enabled when PNG is selected */
+input[name="image-format"][value="png"]:checked ~ #png-transparency {
+    pointer-events: auto !important;
+    opacity: 1 !important;
+    cursor: pointer !important;
+}
+
+/* Improve tooltip styling */
+.info-icon[title],
+.text-placement-title .info-icon,
+.text-placement-header .info-icon {
+    position: relative !important;
+    cursor: help !important;
+}
+
+.info-icon[title]::after,
+.text-placement-title .info-icon::after,
+.text-placement-header .info-icon::after {
+    content: attr(title) !important;
+    position: absolute !important;
+    top: -10px !important;
+    left: 50% !important;
+    transform: translateX(-50%) translateY(-100%) !important;
+    background-color: #333 !important;
+    color: white !important;
+    padding: 10px !important;
+    border-radius: 5px !important;
+    font-size: 14px !important;
+    font-weight: normal !important;
+    white-space: normal !important;
+    width: 250px !important;
+    max-width: 250px !important;
+    text-align: left !important;
+    line-height: 1.4 !important;
+    z-index: 1000 !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    transition: opacity 0.3s, visibility 0.3s !important;
+    pointer-events: none !important;
+}
+
+.info-icon[title]:hover::after,
+.text-placement-title .info-icon:hover::after,
+.text-placement-header .info-icon:hover::after {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+.info-icon[title]::before,
+.text-placement-title .info-icon::before,
+.text-placement-header .info-icon::before {
+    content: "" !important;
+    position: absolute !important;
+    top: -10px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    border-width: 5px !important;
+    border-style: solid !important;
+    border-color: #333 transparent transparent transparent !important;
+    z-index: 1001 !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    transition: opacity 0.3s, visibility 0.3s !important;
+}
+
+.info-icon[title]:hover::before,
+.text-placement-title .info-icon:hover::before,
+.text-placement-header .info-icon:hover::before {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+/* Vertically center-align Load and Save Settings buttons */
+.settings-buttons-row {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 30px !important;
+    margin: 0 !important; /* No margin */
+    padding: 0 !important; /* No padding */
+    height: 40px !important; /* Fixed height */
+    border: none !important;
+    background: transparent !important;
+}
+
+.settings-buttons-row .action-button,
+.settings-buttons-row button {
+    margin: 0 !important;
+    vertical-align: middle !important;
+}
+
+/* Center-align Image Format row */
+.settings-row {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+    justify-content: center !important; /* Center-align */
+    text-align: center !important;
+    gap: 10px 15px !important;
+    margin-bottom: 15px !important;
+    padding: 5px 0 !important;
+    width: 100% !important;
+}
+
+.settings-row > * {
+    display: inline-block !important;
+    text-align: center !important;
+}
+
+.radio-group {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 10px !important;
+}
+
+/* Zoom slider is now enabled - removed hiding rules */
+
+/* Zoom Slider Styling */
+#zoom-container.zoom-section,
+.form-section#zoom-container {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    background-color: #e8e8e8 !important;
+    padding: 10px 20px !important;
+    margin: 10px auto !important;
+    border-radius: 5px !important;
+    border: 1px solid #ccc !important;
+    width: auto !important;
+    max-width: 900px !important;
+    box-sizing: border-box !important;
+}
+
+#zoom-container > div {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    align-items: center !important;
+    gap: 15px !important;
+    width: 100% !important;
+    max-width: 600px !important;
+    margin: 0 auto !important;
+}
+
+#zoom-slider {
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    -webkit-appearance: none !important;
+    appearance: none !important;
+    width: auto !important;
+    flex: 1 !important;
+    height: 6px !important;
+    background: #d3d3d3 !important;
+    outline: none !important;
+    cursor: pointer !important;
+    border-radius: 3px !important;
+    margin: 0 10px !important;
+}
+
+#zoom-slider::-webkit-slider-thumb {
+    -webkit-appearance: none !important;
+    appearance: none !important;
+    width: 20px !important;
+    height: 20px !important;
+    background: #007bff !important;
+    cursor: pointer !important;
+    border-radius: 50% !important;
+    border: 2px solid #fff !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3) !important;
+}
+
+#zoom-slider::-moz-range-thumb {
+    width: 20px !important;
+    height: 20px !important;
+    background: #007bff !important;
+    cursor: pointer !important;
+    border-radius: 50% !important;
+    border: 2px solid #fff !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3) !important;
+}
+
+#zoom-value {
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    font-weight: bold !important;
+    color: #333 !important;
+    min-width: 40px !important;
+    text-align: right !important;
+}
+
+#zoom-container label,
+#zoom-container span {
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* Override container-reorganization.css order setting */
+.zoom-section,
+#zoom-container {
+    order: unset !important;
+    position: relative !important;
+    z-index: 10 !important;
+}
+
+/* Ensure zoom slider is not affected by flex order */
+.settings-preview-download-section #zoom-container {
+    order: unset !important;
+    display: block !important;
+}
+
+/* Force zoom container to show with minimum height */
+#zoom-container {
+    min-height: 60px !important;
+    height: auto !important;
+}
+
+/* Debug: Add visible background to see if container renders */
+#zoom-container {
+    background-color: #e8e8e8 !important;
+    border: 1px solid #ccc !important;
+}
+
+/* Force zoom slider inner content to display */
+#zoom-container > div {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    align-items: center !important;
+    gap: 15px !important;
+    width: 100% !important;
+    max-width: 600px !important;
+    margin: 0 auto !important;
+    height: auto !important;
+    min-height: 30px !important;
+}
+
+/* Force all zoom container children to be visible */
+#zoom-container label,
+#zoom-container input,
+#zoom-container span,
+#zoom-container * {
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: static !important;
+    width: auto !important;
+    height: auto !important;
+}
+
+/* Specific styling for zoom slider input */
+#zoom-slider {
+    flex: 1 !important;
+    min-width: 200px !important;
+    max-width: 400px !important;
+    height: 6px !important;
+    margin: 0 10px !important;
+}
+
+/* Force label to show */
+#zoom-container label {
+    font-weight: bold !important;
+    min-width: 60px !important;
+    color: #333 !important;
+}
+
+/* Force value display */
+#zoom-value {
+    min-width: 40px !important;
+    text-align: right !important;
+    font-weight: bold !important;
+    color: #333 !important;
+}
+
+/* Remove any transform that might hide elements */
+#zoom-container,
+#zoom-container * {
+    transform: none !important;
+}
+
+/* FORCE ZOOM CONTAINER TO DISPLAY */
+#zoom-container {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: relative !important;
+    clear: both !important;
+    float: none !important;
+    margin: 10px auto !important;
+    width: auto !important;
+    max-width: 900px !important;
+    height: auto !important;
+    min-height: 60px !important;
+    overflow: visible !important;
+}
+
+/* Target zoom container more specifically within its parent */
+.settings-preview-download-section .form-section.zoom-section {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* Remove any conflicting display from parent fieldset */
+fieldset.settings-preview-download-section {
+    display: block !important;
+}
+
+
+/* Fix canvas obfuscation issue - FIXED to preserve map container */
+.form-section:last-child canvas:not(#star-map-canvas):not(#map),
+canvas:not(#star-map-canvas):not(#map) {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    height: 0 !important;
+    width: 0 !important;
+    position: absolute !important;
+    top: -9999px !important;
+    left: -9999px !important;
+}
+
+/* Preserve the map container */
+#map-container {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: relative !important;
+    height: auto !important;
+    width: 100% !important;
+    overflow: visible !important;
+}
+
+/* Ensure the map is visible and fills its container */
+#map {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: relative !important;
+    height: 500px !important; /* Increased height */
+    width: 100% !important;
+    z-index: 1 !important;
+}
+
+/* Ensure crosshairs are visible and properly positioned */
+#crosshairs {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: absolute !important; /* Changed to absolute positioning */
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    z-index: 2 !important; /* Ensure crosshairs are above the map */
+    pointer-events: none !important; /* Allow clicks to pass through to the map */
+}
+
+/* Fix Star Map Style dropdown width */
+#star-map-style {
+    width: 120px !important;
+    max-width: 120px !important;
+    min-width: 120px !important;
+    text-align: left !important;
+}
+
+/* Also target by name and other selectors for better specificity */
+select[name="star-map-style"],
+select[id*="star-map-style"],
+.settings-row select#star-map-style,
+label[for="star-map-style"] + select {
+    width: 120px !important;
+    max-width: 120px !important;
+    min-width: 120px !important;
+    text-align: left !important;
+}
+
+/* Ensure dropdown options are left-aligned */
+#star-map-style option,
+select[name="star-map-style"] option {
+    text-align: left !important;
+}
+
+/* DPI Dropdown Width Fix */
+#dpi-selector {
+    width: 110px !important;
+    min-width: 110px !important;
+    max-width: 110px !important;
+    padding-right: 25px !important;
+}
+
+/* Also target by other selectors for better specificity */
+select[id="dpi-selector"],
+select[name="dpi-selector"],
+.settings-row select#dpi-selector,
+label[for="dpi-selector"] + select {
+    width: 110px !important;
+    min-width: 110px !important;
+    max-width: 110px !important;
+    padding-right: 25px !important;
+}
+
+
+/* Text Placements section styling fixes - INCREASE WIDTH TO MATCH OTHER CONTAINERS */
+.text-placement-content,
+.text-placement-section {
+    background-color: #f8f9fa !important;
+    border: 2px solid #ccc !important;
+    border-radius: 5px !important;
+    padding: 10px !important;
+    margin-bottom: 10px !important;
+    width: 100% !important;
+    max-width: none !important;
+    box-sizing: border-box !important;
+}
+
+/* Text Placements title should be blue like other containers - REMOVE EXCESS PADDING */
+.text-placement-title,
+.text-placement-header {
+    font-weight: bold !important;
+    font-size: 1.15em !important;
+    color: #0056b3 !important;
+    text-align: center !important;
+    margin-bottom: 5px !important;
+    padding-bottom: 5px !important;
+    border-bottom: none !important;
+}
+
+/* REMOVE ALL HR LINES AND BORDERS IN TEXT PLACEMENTS */
+.text-placement-content hr,
+.text-placement-section hr,
+.text-placement-content .text-placement-row hr,
+.text-placement-grid hr,
+.text-placement-content *:before,
+.text-placement-content *:after {
+    display: none !important;
+    border: none !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* Text Placements rows left-alignment */
+.text-placement-row,
+.text-placement-entry {
+    text-align: left !important;
+    padding: 3px 0 !important;
+}
+
+/* Text Placements - SHORTER GRAY FIELDS TO MATCH DROPDOWNS */
+.text-placement-grid span {
+    text-align: left !important;
+    padding: 2px 8px !important;
+    background-color: #ddd !important;
+    border-radius: 3px !important;
+    font-size: 0.95em !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    width: 430px !important;
+    min-width: 430px !important;
+    max-width: 430px !important;
+    height: 24px !important;
+    min-height: 24px !important;
+    max-height: 24px !important;
+    line-height: 20px !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+/* Specific targeting for Date and Coordinates to match other rows */
+#text-placement-content-date,
+#text-placement-content-coords {
+    text-align: left !important;
+    padding: 2px 8px !important;
+    background-color: #ddd !important;
+    border-radius: 3px !important;
+    font-size: 0.95em !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    width: 430px !important;
+    min-width: 430px !important;
+    max-width: 430px !important;
+    height: 24px !important;
+    min-height: 24px !important;
+    max-height: 24px !important;
+    line-height: 20px !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+/* Fix Text Placements grid layout - SHORTER ROW HEIGHTS TO MATCH DROPDOWNS */
+.text-placement-grid {
+    display: grid !important;
+    grid-template-columns: 80px 450px 70px 70px 70px !important;
+    gap: 5px 8px !important;
+    align-items: center !important;
+    grid-template-rows: repeat(auto-fit, minmax(24px, auto)) !important;
+}
+
+/* FORCE labels to be middle-aligned with gray data blocks */
+.text-placement-grid label {
+    font-weight: 600 !important;
+    text-align: left !important;
+    white-space: nowrap !important;
+    align-self: center !important;
+    justify-self: start !important;
+    display: inline-block !important;
+    line-height: 24px !important;
+    vertical-align: middle !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* FORCE gray data blocks to be shorter and align with dropdowns */
+.text-placement-grid span {
+    align-self: center !important;
+    line-height: 20px !important;
+    min-height: 24px !important;
+    max-height: 24px !important;
+    display: flex !important;
+    align-items: center !important;
+    padding: 2px 8px !important;
+}
+
+/* CHANGE "Coordinates" LABEL TO "Lat/Long" USING CSS */
+.text-placement-grid label:contains("Coordinates"),
+.text-placement-grid label[for*="coords"] {
+    font-size: 0 !important;
+}
+
+.text-placement-grid label:contains("Coordinates"):after,
+.text-placement-grid label[for*="coords"]:after {
+    content: "Lat/Long:" !important;
+    font-size: 0.95em !important;
+    font-weight: 600 !important;
+}
+
+
+#zoom-container {
+    position: static !important;
+    transform: none !important;
+    top: auto !important;
+}
+
+/* HIDE THE FIRST FIXED LAYERS SECTION (WITHOUT TITLE) FROM HTML */
+/* This hides the original Fixed Layers section that loads first without the "Fixed Layers" title */
+#customizable-text-fieldset hr + .fixed-text-content,
+#customizable-text-fieldset .fixed-text-content:not(:has(h3)) {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    overflow: hidden !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* Also hide the HR line before the first Fixed Layers section */
+#customizable-text-fieldset hr:has(+ .fixed-text-content) {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* Alternative approach - hide by position */
+#customizable-text-fieldset > div:last-child hr,
+#customizable-text-fieldset > div:last-child .fixed-text-content {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    overflow: hidden !important;
+}
+
+/* END OF CODE - Cline - 2025-05-25 15:26:00 File: css/master-override.css */

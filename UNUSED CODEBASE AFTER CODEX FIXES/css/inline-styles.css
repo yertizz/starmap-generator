@@ -1,0 +1,274 @@
+/* Inline styles moved from index.html */
+
+/* Font styling for dropdown options */
+.font-family-select option {
+    font-size: 14px;
+}
+
+/* Individual font styles for dropdown options */
+.font-family-select option[value="Abril Fatface"] { font-family: 'Abril Fatface', cursive; }
+.font-family-select option[value="Anton"] { font-family: 'Anton', sans-serif; }
+.font-family-select option[value="Arial"] { font-family: Arial, sans-serif; }
+.font-family-select option[value="Arial Black"] { font-family: 'Arial Black', sans-serif; }
+.font-family-select option[value="Bebas Neue"] { font-family: 'Bebas Neue', sans-serif; }
+.font-family-select option[value="Black Ops One"] { font-family: 'Black Ops One', cursive; }
+.font-family-select option[value="Caveat"] { font-family: 'Caveat', cursive; }
+.font-family-select option[value="Courier New"] { font-family: 'Courier New', monospace; }
+.font-family-select option[value="Dancing Script"] { font-family: 'Dancing Script', cursive; }
+.font-family-select option[value="Great Vibes"] { font-family: 'Great Vibes', cursive; }
+.font-family-select option[value="Helvetica"] { font-family: Helvetica, sans-serif; }
+.font-family-select option[value="Impact"] { font-family: Impact, sans-serif; }
+.font-family-select option[value="Indie Flower"] { font-family: 'Indie Flower', cursive; }
+.font-family-select option[value="Libre Baskerville"] { font-family: 'Libre Baskerville', serif; }
+.font-family-select option[value="Lilita One"] { font-family: 'Lilita One', cursive; }
+.font-family-select option[value="Lora"] { font-family: 'Lora', serif; }
+.font-family-select option[value="Merriweather"] { font-family: 'Merriweather', serif; }
+.font-family-select option[value="Montserrat"] { font-family: 'Montserrat', sans-serif; }
+.font-family-select option[value="Noto Serif"] { font-family: 'Noto Serif', serif; }
+.font-family-select option[value="Nunito"] { font-family: 'Nunito', sans-serif; }
+.font-family-select option[value="Open Sans"] { font-family: 'Open Sans', sans-serif; }
+.font-family-select option[value="Oswald"] { font-family: 'Oswald', sans-serif; }
+.font-family-select option[value="Pacifico"] { font-family: 'Pacifico', cursive; }
+.font-family-select option[value="Permanent Marker"] { font-family: 'Permanent Marker', cursive; }
+.font-family-select option[value="Pinyon Script"] { font-family: 'Pinyon Script', cursive; }
+.font-family-select option[value="Playfair Display"] { font-family: 'Playfair Display', serif; }
+.font-family-select option[value="Quicksand"] { font-family: 'Quicksand', sans-serif; }
+.font-family-select option[value="Raleway"] { font-family: 'Raleway', sans-serif; }
+.font-family-select option[value="Roboto"] { font-family: 'Roboto', sans-serif; }
+.font-family-select option[value="Roboto Slab"] { font-family: 'Roboto Slab', serif; }
+.font-family-select option[value="Satisfy"] { font-family: 'Satisfy', cursive; }
+.font-family-select option[value="Shadows Into Light"] { font-family: 'Shadows Into Light', cursive; }
+.font-family-select option[value="Tangerine"] { font-family: 'Tangerine', cursive; }
+.font-family-select option[value="Times New Roman"] { font-family: 'Times New Roman', serif; }
+.font-family-select option[value="Verdana"] { font-family: Verdana, sans-serif; }
+
+/* Fix for font selects */
+.font-family-select {
+    width: 80px !important;
+    max-width: 80px !important;
+    min-width: 80px !important;
+}
+
+.font-size-select {
+    width: 50px !important;
+    max-width: 50px !important;
+    min-width: 50px !important;
+}
+
+/* Fix for color pickers - reduced by 40% */
+.font-color-picker {
+    width: 18px !important;
+    height: 18px !important;
+    min-width: 18px !important;
+    margin-left: 10px !important;
+}
+
+input[type="color"] {
+    border: 1px solid #000000 !important;
+    width: 18px !important;
+    height: 18px !important;
+    min-width: 18px !important;
+}
+
+/* Fix for fixed text groups */
+.fixed-text-group {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    gap: 15px !important;
+    height: 28px !important;
+    margin-bottom: 15px !important;
+}
+
+/* Remove margin from the last fixed-text-group */
+.fixed-text-group:last-child {
+    margin-bottom: 0 !important;
+}
+
+.fixed-text-group label {
+    min-width: 80px !important;
+    width: 80px !important;
+    height: 28px !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+.fixed-text-group input[type="checkbox"] {
+    margin: 0 !important;
+    position: relative !important;
+    top: 0px !important;
+    vertical-align: middle !important;
+}
+
+/* Fix for style options */
+.style-options {
+    display: flex !important;
+    gap: 15px !important;
+    margin-left: 10px !important;
+    margin-right: 10px !important;
+}
+
+/* Fix for Bold and Italic labels */
+.bold-label {
+    font-weight: bold !important;
+}
+
+.italic-label {
+    font-style: italic !important;
+}
+
+/* Fix for text entry fields size */
+.text-entry {
+    font-size: 12px !important;
+    height: 24px !important;
+    line-height: 1 !important;
+    padding: 2px 6px !important;
+    box-sizing: border-box !important;
+}
+
+/* Styled block with light-grey background and curved corners for grouped sections */
+.grouped-sections-container {
+    background-color: #f5f5f5 !important;
+    border-radius: 10px !important;
+    padding: 15px !important;
+    margin: 20px 0 !important;
+    border: 1px solid #333333 !important; /* Light black border */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+}
+
+/* Fix for dimension input fields */
+.dimension-input input[type="number"] {
+    font-size: 14px !important;
+    height: 28px !important;
+    line-height: 1.2 !important;
+    padding: 4px 8px !important;
+}
+
+/* Fix for "Maintain aspect ratio" checkbox alignment */
+.aspect-ratio-container {
+    display: flex !important;
+    align-items: center !important;
+    margin-top: 0 !important;
+    height: 28px !important;
+}
+
+.aspect-ratio-container label {
+    display: flex !important;
+    align-items: center !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    height: 28px !important;
+}
+
+.aspect-ratio-container input[type="checkbox"] {
+    margin: 0 !important;
+    position: relative !important;
+    top: 0px !important;
+    vertical-align: middle !important;
+}
+
+/* Fix for Background Colors section spacing - removed extra line break */
+.background-colors-section {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+}
+
+/* Fix for Transparency checkbox alignment */
+.png-option {
+    display: flex !important;
+    align-items: center !important;
+}
+
+.png-option label {
+    display: inline-flex !important;
+    align-items: center !important;
+}
+
+.png-option input[type="radio"] {
+    margin-right: 5px !important;
+    vertical-align: middle !important;
+}
+
+#export-transparency {
+    margin-left: 10px !important;
+    margin-right: 5px !important;
+    vertical-align: middle !important;
+    position: relative !important;
+    top: 2px !important; /* Adjusted for better alignment */
+    margin-top: 0 !important;
+}
+
+.transparency-label {
+    white-space: nowrap !important;
+    font-weight: bold !important;
+    vertical-align: middle !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    position: relative !important;
+    top: 2px !important; /* Adjusted for better alignment */
+}
+
+/* Fix for manual coordinates section */
+.manual-coordinates {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    flex-wrap: wrap !important;
+    text-align: center !important;
+    width: 100% !important;
+    gap: 10px !important;
+}
+
+/* Override browser default styling for select elements */
+select {
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    appearance: none !important;
+    background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23131313%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E") !important;
+    background-repeat: no-repeat !important;
+    background-position: right 0.5em center !important;
+    background-size: 0.65em auto !important;
+    padding-right: 1.5em !important;
+}
+
+input[type="color"]::-webkit-color-swatch-wrapper {
+    padding: 0 !important;
+}
+
+input[type="color"]::-webkit-color-swatch {
+    border: none !important;
+}
+
+input[type="color"]::-moz-color-swatch {
+    border: none !important;
+}
+
+/* Fix for placing Input Date on same row as Design/Event/Occasion */
+.top-row {
+    display: flex !important;
+    align-items: center !important;
+    gap: 20px !important;
+    margin-bottom: 15px !important;
+}
+
+.top-row .form-group {
+    flex: 1 !important;
+    margin: 0 !important;
+}
+
+.top-row .date-group {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+}
+
+/* Fix for Google Map coordinates display */
+#latLongDisplay {
+    display: block !important;
+    visibility: visible !important;
+    color: red !important;
+    text-align: center !important;
+    font-weight: bold !important;
+    font-size: 16px !important;
+    margin: 10px 0 !important;
+}

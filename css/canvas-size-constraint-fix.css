@@ -1,0 +1,59 @@
+/**
+ * Canvas Size Constraint Fix
+ * Ensures canvas respects actual paper dimensions and doesn't stretch full screen
+ */
+
+/* Container that holds the canvas - ONLY target the specific canvas container */
+#star-map-canvas-container,
+.canvas-display-area {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 100% !important;
+    padding: 20px !important;
+    box-sizing: border-box !important;
+    background-color: #f5f5f5 !important; /* Light gray background to show canvas bounds */
+}
+
+/* DO NOT affect other form sections */
+.form-section:not(:last-child) {
+    /* Preserve original styling */
+    display: block !important;
+    background-color: transparent !important;
+    padding: inherit !important;
+}
+
+/* The canvas itself - respect actual dimensions */
+#star-map-canvas {
+    /* Remove any forced sizing */
+    width: auto !important;
+    height: auto !important;
+    max-width: 100% !important;
+    max-height: calc(100vh - 200px) !important; /* Leave room for UI */
+    
+    /* Maintain aspect ratio */
+    object-fit: contain !important;
+    
+    /* Visual styling to show canvas bounds */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
+    background-color: white !important;
+    
+    /* No stretching */
+    flex-shrink: 0 !important;
+    flex-grow: 0 !important;
+}
+
+/* For print/download, use actual dimensions */
+@media print {
+    #star-map-canvas {
+        max-width: none !important;
+        max-height: none !important;
+        box-shadow: none !important;
+    }
+}
+
+/* Ensure the canvas uses its natural dimensions from JavaScript */
+canvas[width][height] {
+    width: auto !important;
+    height: auto !important;
+}

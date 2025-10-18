@@ -1,0 +1,83 @@
+/* Star Map Style Dropdown Styles */
+
+.form-group select#star-map-style {
+    width: 150px !important;
+    max-width: 150px !important;
+    display: inline-block !important;
+}
+
+.style-selector-container {
+    width: auto !important;
+    max-width: 150px !important;
+    margin: 0 auto !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Advanced Options Button */
+#advanced-options-btn {
+    margin-top: 10px;
+    width: 150px;
+}
+
+/* Advanced Options Container */
+#advanced-options-container {
+    margin-top: 10px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+#advanced-options-container h3 {
+    margin-top: 0;
+    text-align: center;
+    color: #333;
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+#advanced-options-container h4 {
+    color: #2196F3;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    font-size: 16px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 5px;
+}
+
+#advanced-options-container label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: normal;
+}
+
+#advanced-options-container input[type="checkbox"] {
+    margin-right: 5px;
+}
+
+#advanced-options-container input[type="range"] {
+    width: 120px;
+    margin: 0 10px;
+    vertical-align: middle;
+}
+
+/* Apply and Close buttons */
+#apply-advanced-options-btn,
+#close-advanced-options-btn {
+    margin-top: 15px;
+    padding: 8px 15px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    #advanced-options-container {
+        padding: 10px;
+    }
+    
+    #advanced-options-container .grid-container {
+        grid-template-columns: 1fr;
+    }
+}

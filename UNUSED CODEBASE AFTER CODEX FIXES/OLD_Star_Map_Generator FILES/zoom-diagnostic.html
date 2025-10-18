@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Zoom Slider Diagnostic</title>
+</head>
+<body>
+    <h2>Zoom Slider Diagnostic Test</h2>
+    
+    <p>Open your browser console (F12) and run this code to check for the zoom elements:</p>
+    
+    <pre style="background: #f0f0f0; padding: 20px; border-radius: 5px;">
+// Copy and paste this into your browser console:
+
+console.log('=== ZOOM SLIDER DIAGNOSTIC ===');
+
+// Check for zoom slider
+const zoomSlider = document.getElementById('zoom-slider');
+console.log('Zoom slider found:', !!zoomSlider);
+if (zoomSlider) {
+    console.log('Zoom slider parent:', zoomSlider.parentElement);
+    console.log('Zoom slider display:', window.getComputedStyle(zoomSlider).display);
+    console.log('Zoom slider visibility:', window.getComputedStyle(zoomSlider).visibility);
+}
+
+// Check for zoom container
+const zoomContainer = document.getElementById('zoom-container');
+console.log('Zoom container found:', !!zoomContainer);
+if (zoomContainer) {
+    console.log('Zoom container display:', window.getComputedStyle(zoomContainer).display);
+    console.log('Zoom container visibility:', window.getComputedStyle(zoomContainer).visibility);
+}
+
+// Check for zoom value
+const zoomValue = document.getElementById('zoom-value');
+console.log('Zoom value span found:', !!zoomValue);
+
+// Check if zoom section exists
+const zoomSections = document.querySelectorAll('.zoom-section');
+console.log('Number of zoom sections found:', zoomSections.length);
+zoomSections.forEach((section, index) => {
+    console.log(`Zoom section ${index + 1}:`, section);
+    console.log(`- Display:`, window.getComputedStyle(section).display);
+    console.log(`- HTML:`, section.outerHTML.substring(0, 100) + '...');
+});
+
+console.log('=== END DIAGNOSTIC ===');
+    </pre>
+    
+    <h3>Quick Fix to Try:</h3>
+    <p>If the zoom slider exists but isn't visible, try this in the console:</p>
+    
+    <pre style="background: #f0f0f0; padding: 20px; border-radius: 5px;">
+// Force display the zoom container:
+const zoomContainer = document.getElementById('zoom-container');
+if (zoomContainer) {
+    zoomContainer.style.display = 'block !important';
+    zoomContainer.style.visibility = 'visible !important';
+    zoomContainer.style.opacity = '1 !important';
+    console.log('Forced zoom container to display');
+} else {
+    console.log('Zoom container not found!');
+}
+    </pre>
+    
+    <h3>Alternative: Add Zoom Manually</h3>
+    <p>If the zoom slider is completely missing, you can inject it manually:</p>
+    
+    <pre style="background: #f0f0f0; padding: 20px; border-radius: 5px;">
+// Find where to insert (after Image Format section)
+const imageFormatRow = document.querySelector('.settings-row[style*="Image Format"]');
+if (imageFormatRow) {
+    const zoomHTML = `
+    &lt;div class="form-section zoom-section" id="zoom-container" style="background-color: #e8e8e8 !important; padding: 10px 20px !important; margin: 10px 0 !important; border-radius: 5px !important; display: block !important;"&gt;
+        &lt;div style="display: flex; align-items: center; gap: 15px; width: 100%; max-width: 600px; margin: 0 auto;"&gt;
+            &lt;label style="font-weight: bold; min-width: 60px;"&gt;Zoom:&lt;/label&gt;
+            &lt;input type="range" id="zoom-slider" min="50" max="200" value="100" style="flex: 1;"&gt;
+            &lt;span id="zoom-value" style="min-width: 40px; text-align: right;"&gt;100&lt;/span&gt;
+            &lt;span style="font-weight: bold;"&gt;%&lt;/span&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;`;
+    
+    imageFormatRow.insertAdjacentHTML('afterend', zoomHTML);
+    console.log('Zoom slider injected!');
+    
+    // Initialize it
+    const slider = document.getElementById('zoom-slider');
+    const value = document.getElementById('zoom-value');
+    if (slider && value) {
+        slider.addEventListener('input', function() {
+            value.textContent = this.value;
+        });
+    }
+}
+    </pre>
+</body>
+</html>

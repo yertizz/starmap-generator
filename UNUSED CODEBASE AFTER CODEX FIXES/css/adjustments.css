@@ -1,0 +1,109 @@
+/* adjustments.css - Specific adjustments for styling issues */
+
+/* Fix for "Maintain aspect ratio" checkbox alignment */
+.aspect-ratio-container {
+    display: flex !important;
+    align-items: center !important;
+    margin-top: 0 !important;
+    height: 28px !important; /* Match height of dimension inputs */
+}
+
+.aspect-ratio-container label {
+    display: flex !important;
+    align-items: center !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    height: 28px !important; /* Match height of dimension inputs */
+}
+
+.aspect-ratio-container input[type="checkbox"] {
+    margin: 0 !important;
+    position: relative !important;
+    top: 0px !important;
+    vertical-align: middle !important;
+}
+
+/* Fix for Fixed Text Styling fields alignment */
+.fixed-text-group {
+    height: 28px !important; /* Match height of other inputs */
+}
+
+.fixed-text-group label {
+    height: 28px !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+.fixed-text-group input[type="checkbox"] {
+    margin: 0 !important;
+    position: relative !important;
+    top: 0px !important;
+    vertical-align: middle !important;
+}
+
+/* Fix for Background Colors section spacing */
+.input-section:has(> label.center-align:contains("Background Colors")) {
+    margin-top: 10px !important;
+    padding-top: 10px !important;
+    border-top: 1px solid #eee !important;
+}
+
+/* Fix for Bold and Italic labels */
+label:has(input[id*="bold"]) {
+    font-weight: bold !important;
+}
+
+label:has(input[id*="italic"]) {
+    font-style: italic !important;
+}
+
+/* Fix for text entry fields size */
+.text-entry {
+    font-size: 14px !important;
+    height: 28px !important;
+    line-height: 1.2 !important;
+    padding: 4px 8px !important;
+}
+
+/* Fix for dimension input fields */
+.dimension-input input[type="number"] {
+    font-size: 14px !important;
+    height: 28px !important;
+    line-height: 1.2 !important;
+    padding: 4px 8px !important;
+}
+
+/* Fix for Transparency checkbox alignment */
+.png-option {
+    display: flex !important;
+    align-items: center !important;
+}
+
+.png-option label {
+    display: inline-flex !important;
+    align-items: center !important;
+}
+
+.png-option input[type="radio"] {
+    margin-right: 5px !important;
+    vertical-align: middle !important;
+}
+
+#export-transparency {
+    margin-left: 10px !important;
+    margin-right: 5px !important;
+    vertical-align: middle !important;
+    position: relative !important;
+    top: 1px !important;
+    margin-top: 0 !important;
+}
+
+.transparency-label {
+    white-space: nowrap !important;
+    font-weight: bold !important;
+    vertical-align: middle !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    position: relative !important;
+    top: 1px !important;
+}

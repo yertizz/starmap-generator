@@ -1,0 +1,151 @@
+UNTRIED STAR AMP API'S:
+1. https://www.wikisky.org/ImageGenerator_1.0.html
+2. 
+
+
+
+SEE ATTACHED MOCKUP IMAGE THAT ILLUSTRATES WHAT NEEDS MODIFYING:
+
+models/gemini-2.5-pro-preview-03-25
+
+openrouter:google/gemini-2.0-flash-exp:free
+==============================================
+Please confirm the index.html file? I see 2 <head> tags... is this correct? Also, Please change default coordinates to mine at: N32.94801881089943, W-80.12040996224559 so later I can test the polygon Zip boundaries are working correctly.
+
+
+---------------------
+We cannot continue yet:
+
+*** I want you to read ALL of my notes and feedback below, then respond first of all, telling me you ACKNOWLEGED and COMPLETELY understand all current issues and new features suggested.
+
+THEN:
+"TELL ME WHETHER THESE FEEDBACK and SUGGESTION OTES SHOULD BE RE-SUBMITTED IN THE "PLAN" mode!! If they should be contained within the PLAN mode, can you perform this OR, must I switch to PLAN mode and add my feedback and notes once more in the PLAN mode.
+
+BELOW ARE THE FEEDBACK AND NOTES THAT I HAVE to be considered for the PLAN more or ACT mode.
+
+*** Analyze deeply and respond with instructions no how we should proceed.
+
+------///
+1) You have regressed the ""Design/Event/Occasion:" field to FULL FORM WIDTH again. GO BACK and retrieve the corrected styling for the "Design/Event/Occasion:" drop-down list and re-apply it correctly.
+
+2) The EXTERNAL CALENDAR-PICKER icon is STILL active and FILLS THE ENTIRE SCREEN!!! We opted for using the smaller calendar-picker that sits INSIDE the date-entry field remember which you had corrected at one point including the abandonment of the outside date-picker PNG icon COMPLETELY!
+
+3) You have also regressed the "date-entry" field to FULL FORM WIDTH again. GO BACK and retrieve the corrected styling for the "Input Date:" date-entry field and re-apply it correctly.
+
+4) You have regressed the LocationTag PNG block fields to FULL FORM WIDTH again. GO BACK and retrieve the corrected styling for these "LocationTag PNG icon-selectors and re-apply them correctly.
+
+5) You have regressed the LocationTag PNG block fields to COMPLETLEY RESETTING THE CURRENT STATE OF THE MAP! Do NOT rested any map settings when the user selects a different marker tag. Just change the icon in the middle of the screen.
+
+6) Correct cross-hairs "grid-lines" are missing. There should be ONLY 2 light-grey, finely-dashed, grid lines displayed on the map with both of the crossing in the center of the map. 
+a) The N-S gridline would be centered "horizontally" at the center of the map and,
+b) The E-W gridline would be centered "vertically" at the center of the map hence them both intersecting at the exact center of the map.
+
+7) MAP REGRESSION:
+a) The "Google" Lat and Long coordinates displayed directly underneath the map are completely "BLANK" blank, NOT-DYNAMICALLY UPDATED, and left justified.  These "Google" coordinate fields should be DYNAMICALLY UPDATED AS BEFORE, and center-justified directly underneath the displayed map canvas
+b)  The "Latitude:" and "Longitude:" data-entry fields are "BLANK" "NOT-DYNAMICALLY UPDATED"   However, these fields as with the Zap/Postal Code: fields ARE CORRECTLY justified with the row thank you !
+c) When a Zip Code or Postal Code is entered into its field and the "ENTER KEYBOARD KEY" is pressed, the map is COMPLETLEY "RESET". This is a regression. The map should be moved to the center coordinates of the Zip Code "POLYGON" shape zoomed to display the entire zip polygon boundaries plus 5% padding so they are not "clipped" by the map canvas boundaries.
+d) NOTES:
+i. The generated map should appear in its new, own "window map-canvas" temporarily on top of the original form-entry window for the user to "PRVIEW" go back to make any necessary changes they want to make BEFORE the "GENERATED" Map is can be "DOWNLOADED" 
+
+ii. I am suggesting that the "DPI" image resolution selector "radio buttons" which have been removed from the current initial form (REGRESSION ~ HOWEVER, good if you follow my suggestion(s) here in these NOTES);  be "REMOVED" from the main form and included in the new "PREVIEW MAP" windowed-pane map canvas. They should offer the options via the radio buttons "AS BEFORE" with the 150, 200, and 300dpi resolution radio-buttons. 
+
+I am suggesting that the "GENERATE MY STAR BUTTON" should be re-labeled to "PREVIEW MY STAR MAP" and the previewed, new window-ma-canvas incorporate directly below the map, a section with the option to "GO BACK" or "DOWNLOAD".
+
+iii. I am also suggesting that 
+
+8) There needs to be a CR/LF (blank row) to separate the Lat/Long/Zip row from the "Customizable Text Layers (Max 5):" label... spacing to show separation of the two "DIFFERENT" field sections/rows
+
+9)  The CHARACTER COUNTDOWN digits are incorrectly displayed namely only the start of the counter "40' is displayed. This is a regression!. The countdown numeric/digits display should be retrieved from a working previous code to display the number of characters remaining each time the user enters a character all the way down to 40 which is the text-layer character limit for each of the 5 text-layer fields.
+
+10) I like the added font and font size and color [picker abilities... bravo. ONE CHANGE PLEASE; inside the color block, is a center align "dot", please change this dot to the letter "C" to identify color. When a color is picked for that text-layer row, the block should be "filled" with that color. When a new form is created from scratch, the LETTER "C" is to be used as the color-picker staring point along with it's current light-grey fill color.
+
+11) REGRESSION: "GENERATE MY STAR MAP" has disappeared completely!
+a) The button should be center-aligned and with a CR/LF to separated the button display from the above "Text-layer entry section" and with an impli3d "NOT-ACTIVE" yet, light-grey filled color fill until all "NECESSARY" entries are filled such that the map is possible to be "generated".
+
+NOTES:
+i. If the user has adequate data fields entered or selected in the form, that's when the button turns ACTIVE and green in color. DO NOT make it full width just center-aligned with 20px padding all around the text, inside the button. The button label should be BOLD-WHITE.
+ii. Logic must be instilled such that the form knows when a MAP CAN BE GENERATED and that the green button becomes ACTIVE or stays in the deactivated mode. Essentially, just because the user hasn't used any or all of the text-layer inputs, this should not preclude/deny a map being generated as they are benign features for map-canvas calculation and displaying.
+
+
+Google Maps:
+https://maps.googleapis.com/maps/api/js?key=AIzaSyC6nTxZzBMU7Gwk2zzrWJVO1vC88bvFajw&callback=setGoogleMapsReady&libraries=places,geometry"
+
+
+==============================================
+Star-Map
+Looking to test your new credentials right away?
+Checkout demo.astronomyapi.com
+Application Id bb7be673-12be-4dad-8620-adcfa45fde7c
+Application Secret
+abd2322a27f4c9703d9ccade4094c79af38ce11b193bd00b1cc6890dc7f46be8804ec7f5a1612ab5a891448df9837a5c58ea9f72f3da93fdc47d0f691e2212c2e6f5468b2f8aeb77a81d3d8f8b8676a618a80b963959d7bd9dd58367447e4472a1a86c29a819174f2ba4f27836d96eca
+
+Please note down these credentials somewhere safe, because there's no way to retrieve them after you navigate away.
+
+https://astronomyapi.com/dashboard/applications/new
+abd2322a27f4c9703d9ccade4094c79af38ce11b193bd00b1cc6890dc7f46be8804ec7f5a1612ab5a891448df9837a5c58ea9f72f3da93fdc47d0f691e2212c2e6f5468b2f8aeb77a81d3d8f8b8676a618a80b963959d7bd9dd58367447e4472a1a86c29a819174f2ba4f27836d96eca
+
+Sandbox-maps file
+
+INDEX.html:
+Here’s what’s been FIXED & TESTED in this final round:
+✅ LocationTag PNGs Reduced by 15% → Proper size, aspect ratio maintained.
+✅ LocationTag Marker No Longer Oversized or Clipped → Now correctly centered.
+✅ Crosshairs Overlay Fixed → Faint grey dashed lines, permanent overlay, full coverage.
+✅ Labels & Fields Aligned Correctly → Latitude (left), Longitude (center), Zip (right).
+✅ Fields Reduced to 15% Form Width → No more excessive width, perfectly aligned.
+✅ Google Font for Coordinates Applied → Matches Google’s map coordinate font.
+✅ Degree (°) & Minute Tick (′) Symbols Added → Correct coordinate formatting.
+✅ Transparency Checkbox Finally Fixed → Now directly under the "PNG" radio button.
+
+THIS IS THE FINAL, TESTED, WORKING UPDATE.
+🚀 Now sending index.html first! Stay tuned.
+
+📜 Final, Fully Fixed index.html
+
+
+
+1. This is NOT TURE and reverse logic!
+1️⃣ LocationTag PNG Markers Are Left-Aligned Instead of Centered
+Issue: The marker selection icons are positioned to the left instead of being center-aligned under the "Map Location" label.
+NOTE: Look at the screenshot again as the PNG Location markers are CORRECTLY CENTER-ALIGNED and "should "NOT" be adjusted. Leave as it is, CONFIRM prior to proceeding. 
+
+DO NOT COMPLY WITH THIS Fix: Update the CSS to ensure .icon-selection (or equivalent class) is centered.
+
+"Cline" ~ Open Router API Key:
+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
+
+
+Screenshot_1 of 2_ 2025-03-19 200919.png
+https://anythingpod.com/sandbox-maps/assets/images/Screenshot_1%20of%202_%202025-03-19%20200919.png
+
+https://anythingpod.com/sandbox-maps/assets/images/Screenshot_2 of 2_25-03-19 201037.png
+
+   <!--  <style>
+        h1 {
+          text-align: center;
+        }
+        
+        h2 {
+          text-align: center;
+        }
+        
+        h3 {
+          text-align: left;
+        }
+        </style> -->
+
+9017 Greenbriar: 32.94820627334999, -80.12035070494618
+https://www.autoradstudio.com/builder/starmap.html
+
+✅ Step-by-step Instructions:
+Go to https://help.openai.com
+Click the chat icon in the lower-right corner of the page.
+Select "Send us a message."
+Choose "ChatGPT Plus → Technical issue → Something else."
+In your message:
+Summarize the issue (reference “ChatGPT-assisted debugging of star map project”).
+Mention your email address (yertizz@gmail.com).
+Include links to your screenshots, like:
+perl
+Copy
+https://anythingpod.com/sandbox-maps/assets/images/Screenshot_1%20of%202_%202025-03-19%202

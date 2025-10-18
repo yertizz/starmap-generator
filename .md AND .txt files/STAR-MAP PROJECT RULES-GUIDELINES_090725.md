@@ -1,0 +1,77 @@
+STAR-MAP PROJECT - RULES AND GUIDELINES OF AI OPERATION:  09/07/25 13:00 PM PH:
+=======================================================
+
+AI CODING MESSAGING GUIDELINES AND RULES I WANT YOU TO FOLLOW:
+=============================================================
+ROOT FOLDER:
+"C:\Users\phili\E-DRIVE\AnythingPOD\star-map"
+
+"C:\Users\phili\E-DRIVE\AnythingPOD\star-map\Star_Map_Generator.html"
+JS: "C:\Users\phili\E-DRIVE\AnythingPOD\star-map\js"
+CSS: "C:\Users\phili\E-DRIVE\AnythingPOD\star-map\css"
+PROXY: "C:\Users\phili\E-DRIVE\AnythingPOD\star-map\proxy"
+SETTINGS: "C:\Users\phili\E-DRIVE\AnythingPOD\star-map\settings"
+HISTORY: "C:\Users\phili\E-DRIVE\AnythingPOD\star-map\history"
+ASSETS-IMAGES: "C:\Users\phili\E-DRIVE\AnythingPOD\star-map\assets\images"
+BACKUP: "C:\Users\phili\E-DRIVE\AnythingPOD\star-map\backup\create-star-map-backup.bat" ~~~ From VS Code Terminal local"  .\backup\create-backup.bat TO:
+"C:\Users\phili\E-DRIVE\AnythingPOD\STAR-MAP-SOURCE_BACKUPS_050825"
+
+1. PLACE A COMMENT AT THE START AND THE END OF EVERY FILE WE WRITE TO - AN EXAMPLE FOLLOWS:
+-  /* START OF CODE - Codex - 2025-04-09 17:20 File: js/map.js */
+-  /* END OF CODE - Codex - 2025-04-09 17:20 File: js/map.js */
+
+2. INSTEAD OF ME TYPING EACH RESPONSE WITH "SEE ATTACHED SCREENSHOTS" - I WILL BE USING THE ABBREVIATION "SS" or "SST" or SST# or SST # etc. etc. etc.
+
+3. WE HAVE BACKUP BATCH FILE WE CAN RUN THAT SAVES A GOOD POINT IN TIME WITH ALL CODE UNDER THE ROOT FOLDER: THIS IS CALLED:
+ "C:\Users\phili\E-DRIVE\AnythingPOD\star-map\backup\create-star-map-backup.bat"
+
+*** BACKUP FOLDERS ARE STORED IN THE FOLDER:
+"C:\Users\phili\E-DRIVE\AnythingPOD\STAR-MAP-SOURCE_BACKUPS_050825"
+*** SEE ALSO RULE #10.
+
+4. IF YOU NEED CONSOLE LOGS... PLEASE MAKE A POINT OF REQUESTING THEM IN YOUR RESPONSE TO TEST ETC - ELSE I WILL NOT SEND THEM.
+
+5. ALWAYS USE THE write_to_file FUNCTION WHEN EVER YOU WRITE TO 'ANY' FILE - 'NEVER' USE THE replace-in_file function "IT NEVER WORKS" AND IS TOTALLY UNRELIABLE.
+
+6. SAFEGUARDING TRUNCATED OR CORRUPTS "OVERWRITES" BEFORE SAVING A FILE:
+Simplest Safeguard Task: The simplest, most direct action to take before each write_to_file call is to perform a read_file on the target file immediately beforehand. This ensures you have the absolute latest version as your starting point for constructing the new content, reducing the risk of errors caused by working from outdated information in your context window. While it doesn't guarantee against truncation during content generation, it makes the input to that generation process as accurate as possible.
+
+Notice:
+I understand that you cannot guarantee no truncation due to internal limitations, but the best safeguard is to always read the file immediately before constructing the full content for the write operation AND USE RULE #10.
+
+*** USE read_file immediately before every write_to_file as an acceptable safeguard step ***
+
+7. ACRONYM TO CUT DOWN ON TYPING FOR: "CODE MANUALLY UPDATED AND IS NOW 'LIVE ON THE SERVER":
+I WILL USE THE FOLLOWING: CMU or CMU+ or CMU + ~ COMMENTS MAY FOLLOW
+
+8. "NEVER" SEND CODE SNIPPETS... SEND "COMPLETE" SOURCE CODE FOR EACH FILE! UNLESS WE ARE 100% STUCK, THEN YOU MAY REQUEST THAT "I" EDIT WITH A SNIPPET MANUALLY IN VS CODE TO GET US BACK ON TRACK.
+*** THERE IS ALWAYS THE OPTION OF RETIRIEVING THE _bak_ FILE FROM THE BACKUP PROCESS IN RULE #10 OR, FROM THE LATEST AND "AGREED TRUTH" IN THE "GLOBAL PROJECT BACKUP" FOLDER FOR EXAMPLE:
+C:\Users\phili\E-DRIVE\AnythingPOD\STAR-MAP-SOURCE_BACKUPS_050825"
+
+
+9. DO NOT INCLUDE ENVIRONMENT DETAILS AT END OF CODE.
+*** REPEAT****  !!!!!!!!!!!!!! DO NOT INCLUDE ENVIRONMENT DETAILS AT END OF CODE!!!!!!!!!!!!!
+
+10. BACKUPS: "C:\Users\phili\E-DRIVE\AnythingPOD\star-map\backup\create-star-map-backup.bat"
+*** AFTER YOU HAVE "READ" A FILE, FOR MORE BACKUP PROTECTION-GRANULARITY, YOU ARE TO (see next below):
+
+IF THE FILE YOU HAVE READ, REQUIRES EDITING OR CHANGING OR RE-WRITING/SAVING, PERFORM A BACKUP OF THE FILE FIRST IN ITS CURRENT/SAME FOLDER WITH THE FOLLOWING FORMATTTING FOR EXAMPLE, BACKING UP THE js/main_app.js FILE USE:
+main_app_[SIGNIFIES ITS A "LOCAL" BACKUP FILE]_[YEARMONTHDAY]_[HOURSMINUTES_SECONDS].js
+EXAMPLE OF A LOCAL BACK UP FILE (KNOWN AS _bak): "C:\Users\phili\E-DRIVE\AnythingPOD\star-map\js\main_app_bak_20250702_0954.js"
+ 
+BACKUP FOLDER: "C:\Users\phili\E-DRIVE\AnythingPOD\STAR-MAP-SOURCE_BACKUPS_050825"
+i.e main_app_[bak]_[20250508]_[1631_49].js 
+Complete example: main_app_bak_20250504_1631_49.js 
+
+11. IF MY CODEX EXTENSIONS GO "BLANK" AND WE GET DISCONNECTED, DETECT THIS FAILURE AND IMMEDIATELY PROCEED TO CREATE A .md FILE THAT EXPLAINS EXACTLY WHERE WE WERE, AND WITH A SUMMARY OF WHY AND WHAT WE WERE TRYING TO ACHIEVE AT THE TIME MY CHAT WINDOW WENT BLANK.
+*** VIP: WHEN I DO A CODEX EXTENSION RESTART, DISABLE THEN ENABLE IN VS CODE TO RESTART OUR WORK, YOU ARE TO ALWAYS READ THIS .md FILE FIRST SO WE HAVE AN IMMEDIATE CATCHUP WITH NO TIME WASTING OR HAVING TO RE-EXPLAIN EVERYTHING.
+UNDERSTOOD?
+
+STAR MAP CENTER-FORMATTING:
+// First part (e.g., N38° 6.09015′)
+// Second part (e.g., W94° 41.60395′)
+
+***************************************************************************
+PLEASE ACKNOWLEDGE AND CONFIRM YOU UNDERSTAND AND WILL ABIDE MY GUIDELINES
+AT ALL TIMES. IF YOU FEEL AN EXCEPTION IS WARRANTED, ASK ME FIRST CONFIRM??
+***************************************************************************

@@ -1,0 +1,18 @@
+Why Two Folders (settings/ and history/)?
+
+Different Data Types: The "Settings" represent a single snapshot of the entire form configuration at a point in time. The "History" represents multiple, separate lists of past inputs for specific fields.
+Separation of Concerns: Using separate folders and PHP handlers keeps the logic clean. settings_manager.php only deals with saving/loading the single settings object. history_manager.php deals with saving/loading multiple, distinct history arrays based on a provided key. This makes the code easier to manage and debug.
+Data Structure: saved_settings.json contains one complex object. The files in history/data/ each contain a simple array of strings. Storing them separately reflects this structural difference.
+File Listing Summary:
+
+settings/ folder:
+settings_manager.php: Handles saving/loading the main settings object.
+saved_settings.json: Stores the single, comprehensive settings snapshot object.
+history/ folder:
+history_manager.php: Handles saving/loading individual history lists.
+data/ (subdirectory): Contains the actual history data files:
+zipCodeHistory.json: Array of past ZIP code entries.
+history_text-entry-1.json: Array of past Text Entry 1 values.
+history_text-entry-2.json: Array of past Text Entry 2 values.
+history_text-entry-3.json: Array of past Text Entry 3 values.
+history_text-entry-4.json: Array of past Text Entry 4 values.

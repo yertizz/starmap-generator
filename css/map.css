@@ -1,0 +1,141 @@
+/* START OF CODE - Cline - 2025-04-09 17:20 */
+/* Map Section */
+#map-container {
+    position: relative; /* Needed for absolute positioning of crosshairs */
+    height: 450px; /* Increased height from 350px to 450px */
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    overflow: hidden; /* Prevent crosshair lines extending outside */
+}
+
+#map {
+    width: 100%;
+    height: 100%;
+    /* Removed background grid lines for clarity */
+}
+
+/* Map Location Label */
+#map-location-label {
+    text-align: center;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.map-location-label {
+    font-size: larger;
+    text-align: center;
+}
+
+/* LocationTag PNG Icons */
+.icon-selection {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 10px;
+}
+
+.icon-button {
+    border: 1px solid #ccc;
+    padding: 5px;
+    border-radius: 5px;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f9f9f9;
+}
+
+.icon-button img {
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+}
+
+.icon-button.selected {
+    background-color: #e6f7ff;
+    border-color: #1890ff;
+}
+
+.icon-button.selected img {
+    transform: scale(1.2);
+}
+
+/* Manual Coordinates Input */
+.manual-coordinates {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.manual-coordinates label {
+    width: auto;
+    margin: 0;
+    font-size: 14px;
+}
+
+.manual-coordinates input {
+    width: 100px; /* Further reduced width */
+    text-align: left;
+    padding: 5px;
+    margin: 0;
+}
+
+/* Specific styling for ZIP code field */
+#zip-code {
+    width: 80px; /* Even smaller for ZIP code */
+}
+
+/* Coordinates Display */
+#latLongDisplay {
+    text-align: center;
+    font-weight: bold;
+    margin: 10px 0;
+    padding: 5px;
+    background-color: #f5f5f5;
+    border-radius: 5px;
+}
+
+/* Crosshairs - Thin dashed lines spanning container */
+#crosshairs {
+    position: absolute;
+    top: 0; /* Align to container top */
+    left: 0; /* Align to container left */
+    width: 100%; /* Span full container width */
+    height: 100%; /* Span full container height */
+    pointer-events: none;
+    box-sizing: border-box;
+}
+
+#crosshairs::before,
+#crosshairs::after {
+    content: '';
+    position: absolute;
+    background-color: transparent; /* Use border for dashed lines */
+    z-index: 1001; /* Ensure lines are above map tiles */
+}
+
+#crosshairs::before {
+    /* Horizontal line */
+    top: 50%;
+    left: 0; /* Start at left edge */
+    width: 100%; /* Span full width */
+    height: 1px; /* Thin line */
+    border-top: 1px dashed red; /* Dashed RED */
+    transform: translateY(-50%); /* Center vertically */
+}
+
+#crosshairs::after {
+    /* Vertical line */
+    left: 50%;
+    top: 0; /* Start at top edge */
+    width: 1px; /* Thin line */
+    height: 100%; /* Span full height */
+    border-left: 1px dashed red; /* Dashed RED */
+    transform: translateX(-50%); /* Center horizontally */
+}
+/* END OF CODE - Cline - 2025-04-09 17:20 */

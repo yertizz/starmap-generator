@@ -1,0 +1,451 @@
+<!-- START OF CODE - Cline - 2025-05-10 20:38 File: login.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Star Map Generator - Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body { 
+            font-family: 'Open Sans', sans-serif; 
+            margin: 0; 
+            padding: 0; 
+            background-color: #f8f9fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container { 
+            width: 100%;
+            max-width: 400px; 
+            margin: 0 20px;
+            background-color: #fff; 
+            padding: 25px; 
+            border-radius: 8px; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1); 
+        }
+        h1 { 
+            text-align: center; 
+            color: #0056b3; 
+            margin-bottom: 25px; 
+            font-size: 24px;
+        }
+        .form-section {
+            margin-bottom: 15px;
+            padding: 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            background-color: #f5f5f5;
+        }
+        .form-section legend {
+            font-weight: bold;
+            font-size: 16px;
+            color: #0056b3;
+            padding: 0 10px;
+            text-align: center;
+        }
+        .input-group {
+            margin-bottom: 12px;
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #555;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        button {
+            background-color: #0056b3;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        button:hover {
+            background-color: #003d82;
+        }
+        .auth-toggle {
+            text-align: center;
+            margin-top: 12px;
+            color: #555;
+            font-size: 14px;
+        }
+        .auth-toggle a {
+            color: #0056b3;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .auth-toggle a:hover {
+            text-decoration: underline;
+        }
+        .error-message, .success-message {
+            margin-top: 8px;
+            text-align: center;
+            font-size: 14px;
+        }
+        .error-message {
+            color: #dc3545;
+        }
+        .success-message {
+            color: #28a745;
+        }
+        .hidden {
+            display: none;
+        }
+        .password-toggle {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #555;
+            cursor: pointer;
+            padding: 0;
+            font-size: 14px;
+        }
+        .password-field-container {
+            position: relative;
+        }
+        .password-field-container input {
+            padding-right: 35px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Star Map Generator</h1>
+        
+        <!-- Login Form -->
+        <fieldset class="form-section" id="login-section">
+            <legend>Login</legend>
+            <div id="login-form">
+                <div class="input-group">
+                    <label for="login-email">Email:</label>
+                    <input type="email" id="login-email" placeholder="Enter your email" required>
+                </div>
+                <div class="input-group">
+                    <label for="login-password">Password:</label>
+                    <div class="password-field-container">
+                        <input type="password" id="login-password" placeholder="Enter your password" required>
+                        <button type="button" class="password-toggle" onclick="togglePasswordVisibility('login-password', 'login-password-toggle')">
+                            <i id="login-password-toggle" class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="button-container">
+                    <button type="button" onclick="loginUser()">Login</button>
+                    <button type="button" onclick="showResetPassword()">Forgot Password</button>
+                </div>
+                <div class="auth-toggle">
+                    Don't have an account? <a href="#" onclick="toggleForms('register-section', 'login-section')">Sign Up</a>
+                </div>
+                <div id="login-error" class="error-message hidden"></div>
+            </div>
+        </fieldset>
+
+        <!-- Registration Form -->
+        <fieldset class="form-section hidden" id="register-section">
+            <legend>Create Account</legend>
+            <div id="register-form">
+                <div class="input-group">
+                    <label for="register-email">Email:</label>
+                    <input type="email" id="register-email" placeholder="Enter your email" required>
+                </div>
+                <div class="input-group">
+                    <label for="register-password">Password:</label>
+                    <div class="password-field-container">
+                        <input type="password" id="register-password" placeholder="Create a password" required>
+                        <button type="button" class="password-toggle" onclick="togglePasswordVisibility('register-password', 'register-password-toggle')">
+                            <i id="register-password-toggle" class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label for="register-confirm-password">Confirm Password:</label>
+                    <div class="password-field-container">
+                        <input type="password" id="register-confirm-password" placeholder="Confirm your password" required>
+                        <button type="button" class="password-toggle" onclick="togglePasswordVisibility('register-confirm-password', 'register-confirm-password-toggle')">
+                            <i id="register-confirm-password-toggle" class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="button-container">
+                    <button type="button" onclick="registerUser()">Create Account</button>
+                </div>
+                <div class="auth-toggle">
+                    Already have an account? <a href="#" onclick="toggleForms('login-section', 'register-section')">Login</a>
+                </div>
+                <div id="register-error" class="error-message hidden"></div>
+                <div id="register-success" class="success-message hidden"></div>
+            </div>
+        </fieldset>
+
+        <!-- Reset Password Form -->
+        <fieldset class="form-section hidden" id="reset-section">
+            <legend>Reset Password</legend>
+            <div id="reset-form">
+                <div class="input-group">
+                    <label for="reset-email">Email:</label>
+                    <input type="email" id="reset-email" placeholder="Enter your email" required>
+                </div>
+                <div class="button-container">
+                    <button type="button" onclick="resetPassword()">Send Reset Email</button>
+                    <button type="button" onclick="toggleForms('login-section', 'reset-section')">Back to Login</button>
+                </div>
+                <div id="reset-error" class="error-message hidden"></div>
+                <div id="reset-success" class="success-message hidden"></div>
+            </div>
+        </fieldset>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDb8rZMSoTkKVDKuswbFkips-nRfLhcNuA",
+            authDomain: "star-map-4ee1b.firebaseapp.com",
+            projectId: "star-map-4ee1b",
+            storageBucket: "star-map-4ee1b.appspot.com",
+            messagingSenderId: "937281376623",
+            appId: "1:937281376623:web:bafa4c7bae41b2dbe2d89a"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+
+        // Check if user is already logged in
+        auth.onAuthStateChanged(function(user) {
+            if (user && user.emailVerified) {
+                window.location.href = 'Star_Map_Generator.html';
+            }
+        });
+
+        // Toggle between forms
+        function toggleForms(showId, hideId) {
+            document.getElementById(showId).classList.remove('hidden');
+            document.getElementById(hideId).classList.add('hidden');
+            
+            // Clear messages and form fields
+            document.querySelectorAll('.error-message, .success-message').forEach(el => {
+                el.classList.add('hidden');
+                el.textContent = '';
+            });
+            document.querySelectorAll('input').forEach(input => {
+                input.value = '';
+            });
+        }
+
+        // Show reset password form
+        function showResetPassword() {
+            toggleForms('reset-section', 'login-section');
+            const loginEmail = document.getElementById('login-email').value;
+            if (loginEmail) {
+                document.getElementById('reset-email').value = loginEmail;
+            }
+        }
+
+        // Toggle password visibility
+        function togglePasswordVisibility(inputId, toggleId) {
+            const input = document.getElementById(inputId);
+            const toggle = document.getElementById(toggleId);
+            
+            if (input.type === 'password') {
+                input.type = 'text';
+                toggle.classList.remove('fa-eye');
+                toggle.classList.add('fa-eye-slash');
+            } else {
+                input.type = 'password';
+                toggle.classList.remove('fa-eye-slash');
+                toggle.classList.add('fa-eye');
+            }
+        }
+
+        // Login user
+        function loginUser() {
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            const errorElement = document.getElementById('login-error');
+            
+            errorElement.classList.add('hidden');
+            
+            if (!email || !password) {
+                errorElement.textContent = 'Please enter both email and password.';
+                errorElement.classList.remove('hidden');
+                return;
+            }
+            
+            auth.signInWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    if (!userCredential.user.emailVerified) {
+                        errorElement.textContent = 'Please verify your email before logging in.';
+                        errorElement.classList.remove('hidden');
+                        userCredential.user.sendEmailVerification();
+                        auth.signOut();
+                        return;
+                    }
+                    window.location.href = 'Star_Map_Generator.html';
+                })
+                .catch((error) => {
+                    let errorMessage = 'Login failed. Please check your credentials.';
+                    if (error.code === 'auth/user-not-found') {
+                        errorMessage = 'No account found with this email.';
+                    } else if (error.code === 'auth/wrong-password') {
+                        errorMessage = 'Incorrect password.';
+                    }
+                    errorElement.textContent = errorMessage;
+                    errorElement.classList.remove('hidden');
+                });
+        }
+
+        // Register user
+        function registerUser() {
+            const email = document.getElementById('register-email').value;
+            const password = document.getElementById('register-password').value;
+            const confirmPassword = document.getElementById('register-confirm-password').value;
+            const errorElement = document.getElementById('register-error');
+            const successElement = document.getElementById('register-success');
+            
+            errorElement.classList.add('hidden');
+            successElement.classList.add('hidden');
+            
+            if (!email || !password || !confirmPassword) {
+                errorElement.textContent = 'Please fill in all fields.';
+                errorElement.classList.remove('hidden');
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                errorElement.textContent = 'Passwords do not match.';
+                errorElement.classList.remove('hidden');
+                return;
+            }
+            
+            if (password.length < 6) {
+                errorElement.textContent = 'Password must be at least 6 characters.';
+                errorElement.classList.remove('hidden');
+                return;
+            }
+            
+            // Show loading message
+            errorElement.textContent = 'Creating account...';
+            errorElement.classList.remove('hidden');
+            
+            auth.createUserWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    console.log('User created successfully:', userCredential.user.uid);
+                    
+                    // Clear error message
+                    errorElement.classList.add('hidden');
+                    
+                    userCredential.user.sendEmailVerification()
+                        .then(() => {
+                            successElement.textContent = 'Account created! Please check your email to verify.';
+                            successElement.classList.remove('hidden');
+                            
+                            document.getElementById('register-email').value = '';
+                            document.getElementById('register-password').value = '';
+                            document.getElementById('register-confirm-password').value = '';
+                            
+                            auth.signOut();
+                            
+                            setTimeout(() => {
+                                toggleForms('login-section', 'register-section');
+                            }, 3000);
+                        })
+                        .catch((error) => {
+                            console.error('Error sending verification email:', error);
+                            errorElement.textContent = 'Account created, but error sending verification email. You can still log in.';
+                            errorElement.classList.remove('hidden');
+                        });
+                })
+                .catch((error) => {
+                    console.error('Registration error:', error);
+                    let errorMessage = 'Registration failed: ' + error.message;
+                    if (error.code === 'auth/email-already-in-use') {
+                        errorMessage = 'An account with this email already exists.';
+                    } else if (error.code === 'auth/invalid-email') {
+                        errorMessage = 'Invalid email address.';
+                    } else if (error.code === 'auth/network-request-failed') {
+                        errorMessage = 'Network error. Please check your internet connection.';
+                    }
+                    errorElement.textContent = errorMessage;
+                    errorElement.classList.remove('hidden');
+                });
+        }
+
+        // Reset password
+        function resetPassword() {
+            const email = document.getElementById('reset-email').value;
+            const errorElement = document.getElementById('reset-error');
+            const successElement = document.getElementById('reset-success');
+            
+            errorElement.classList.add('hidden');
+            successElement.classList.add('hidden');
+            
+            if (!email) {
+                errorElement.textContent = 'Please enter your email address.';
+                errorElement.classList.remove('hidden');
+                return;
+            }
+            
+            auth.sendPasswordResetEmail(email)
+                .then(() => {
+                    successElement.textContent = 'Password reset email sent.';
+                    successElement.classList.remove('hidden');
+                    
+                    document.getElementById('reset-email').value = '';
+                    
+                    setTimeout(() => {
+                        toggleForms('login-section', 'reset-section');
+                    }, 3000);
+                })
+                .catch((error) => {
+                    let errorMessage = 'Error sending reset email.';
+                    if (error.code === 'auth/user-not-found') {
+                        errorMessage = 'No account found with this email.';
+                    }
+                    errorElement.textContent = errorMessage;
+                    errorElement.classList.remove('hidden');
+                });
+        }
+
+        // Enter key handlers
+        document.getElementById('login-password').addEventListener('keyup', function(event) {
+            if (event.key === 'Enter') loginUser();
+        });
+        
+        document.getElementById('register-confirm-password').addEventListener('keyup', function(event) {
+            if (event.key === 'Enter') registerUser();
+        });
+        
+        document.getElementById('reset-email').addEventListener('keyup', function(event) {
+            if (event.key === 'Enter') resetPassword();
+        });
+    </script>
+</body>
+</html>
+<!-- END OF CODE - Cline - 2025-05-10 20:38 File: login.html -->

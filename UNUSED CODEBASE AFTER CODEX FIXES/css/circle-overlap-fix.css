@@ -1,0 +1,142 @@
+/* START OF CODE - Cline - 2025-06-02 12:47 File: css/circle-overlap-fix.css */
+
+/**
+ * This CSS file fixes the circle overlap slider to make it wider
+ * for better granularity.
+ */
+
+/* Make the slider much wider */
+#circle-overlap-percent {
+    width: 300px !important;
+    min-width: 300px !important;
+    max-width: 100% !important;
+}
+
+/* Style the slider container for better visibility */
+.settings-row div:has(#circle-overlap-percent) {
+    width: 100% !important;
+    padding: 10px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    margin-bottom: 20px !important; /* Add space below the slider */
+}
+
+/* DIRECT APPROACH - Target the specific HTML structure */
+/* This targets the exact structure in the mockup */
+.settings-row div[style*="background-color"] {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    width: 100% !important;
+    padding: 10px !important;
+}
+
+/* Style the title */
+.settings-row div[style*="background-color"] > div:first-child {
+    font-weight: bold !important;
+    font-size: 1.15em !important;
+    color: #0056b3 !important;
+    margin-bottom: 15px !important;
+    text-align: center !important;
+    width: 100% !important;
+}
+
+/* Style the Circle Overlap row */
+.settings-row div[style*="background-color"] > div:has(#circle-overlap-percent) {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    margin-bottom: 20px !important;
+}
+
+/* Style the Map Order row - FORCE IT TO BE ON ITS OWN LINE */
+.settings-row div[style*="background-color"] > div:has(input[name="map-order"]) {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    margin-top: 10px !important;
+}
+
+/* Style the info text */
+.settings-row div[style*="background-color"] > div:last-child {
+    margin-top: 15px !important;
+    font-size: 11px !important;
+    color: #666 !important;
+    font-style: italic !important;
+    text-align: center !important;
+    width: 100% !important;
+}
+
+/* Target by attribute - ULTRA SPECIFIC */
+div:has(input[name="map-order"]),
+div:has([name="map-order"]) {
+    display: block !important;
+    width: 100% !important;
+    clear: both !important;
+    float: none !important;
+    margin-top: 20px !important;
+    padding-top: 10px !important;
+    border-top: 1px solid #eee !important;
+    position: relative !important;
+}
+
+/* Target by text content - ULTRA SPECIFIC */
+div:has(label:contains("Map Order")),
+div:has(div:contains("Map Order")),
+div:has(span:contains("Map Order")),
+div:has(*:contains("Map Order")) {
+    display: block !important;
+    width: 100% !important;
+    clear: both !important;
+    float: none !important;
+    margin-top: 20px !important;
+    padding-top: 10px !important;
+    border-top: 1px solid #eee !important;
+    position: relative !important;
+    overflow: visible !important;
+}
+
+/* Target the specific Map Order section by its exact text */
+div:has(label:contains("Map Order:")),
+div:has(*:contains("Map Order:")),
+div:has(*:contains("Street Map First")),
+div:has(*:contains("Star Map First")) {
+    display: block !important;
+    width: 100% !important;
+    clear: both !important;
+    float: none !important;
+    margin-top: 20px !important;
+    padding-top: 10px !important;
+    border-top: 1px solid #eee !important;
+    position: relative !important;
+    overflow: visible !important;
+}
+
+/* Force any flex containers to be block */
+div[style*="display: flex"]:has(input[name="map-order"]),
+div[style*="display:flex"]:has(input[name="map-order"]) {
+    display: block !important;
+    width: 100% !important;
+    clear: both !important;
+    float: none !important;
+}
+
+/* Make the label more visible */
+.settings-row label[for="circle-overlap-percent"] {
+    min-width: 120px !important;
+    font-weight: bold !important;
+    color: #0056b3 !important;
+}
+
+/* Style the value display */
+#overlap-value {
+    min-width: 40px !important;
+    text-align: right !important;
+    font-weight: bold !important;
+    color: #0056b3 !important;
+}
+
+/* END OF CODE - Cline - 2025-06-02 12:47 File: css/circle-overlap-fix.css */

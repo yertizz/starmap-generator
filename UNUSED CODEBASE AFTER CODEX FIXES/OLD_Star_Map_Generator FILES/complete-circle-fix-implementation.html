@@ -1,0 +1,112 @@
+<!-- 
+COMPLETE CIRCLE FIX IMPLEMENTATION
+==================================
+
+INSTRUCTIONS:
+1. Copy the CSS links below and paste them in your HTML file's <head> section, AFTER all other CSS files
+2. Copy the script tags below and paste them before </body>, after your data-sync.js script
+3. Copy the Combined View Settings HTML and paste it in your Star Map Image Settings section after the Border settings
+
+-->
+
+<!-- ============ STEP 1: CSS LINKS (Add to <head> after other CSS) ============ -->
+<link rel="stylesheet" href="css/canvas-perfect-circle-fix.css">
+<link rel="stylesheet" href="css/canvas-absolute-fix.css">
+
+
+<!-- ============ STEP 2: JAVASCRIPT (Add before </body> after data-sync.js) ============ -->
+<script src="js/perfect-circle-calculator.js"></script>
+<script src="js/canvas-drawing-utils.js"></script>
+<script src="js/star-map-circle-fix.js"></script>
+<script src="js/combined-views-fix.js"></script>
+<script src="js/combined-views-map-order.js"></script>
+
+
+<!-- ============ STEP 3: COMBINED VIEW SETTINGS HTML ============ -->
+<!-- Add this inside your "Star Map Image Settings" section, right after the Border settings row -->
+
+<!-- Combined View Settings -->
+<div class="settings-row" style="margin-top: 15px;">
+    <div style="width: 100%; padding: 10px; background-color: #f8f9fa; border-radius: 5px;">
+        <div style="font-weight: bold; margin-bottom: 10px; color: #333;">Combined View Options:</div>
+        
+        <!-- Overlap Control -->
+        <div style="display: flex; align-items: center; margin-bottom: 10px;">
+            <label style="min-width: 120px;">Circle Overlap:</label>
+            <input type="range" id="circle-overlap-percent" min="0" max="50" value="30" 
+                   style="flex: 1; margin: 0 10px;">
+            <span id="overlap-value" style="min-width: 40px; font-weight: bold;">30%</span>
+        </div>
+        
+        <!-- Map Order Control -->
+        <div style="display: flex; align-items: center; flex-wrap: wrap;">
+            <label style="min-width: 120px;">Map Order:</label>
+            <div style="display: flex; gap: 20px;">
+                <label style="display: flex; align-items: center; cursor: pointer;">
+                    <input type="radio" name="map-order" value="street-first" checked 
+                           style="margin-right: 5px;">
+                    Street Map First
+                </label>
+                <label style="display: flex; align-items: center; cursor: pointer;">
+                    <input type="radio" name="map-order" value="star-first" 
+                           style="margin-right: 5px;">
+                    Star Map First
+                </label>
+            </div>
+        </div>
+        
+        <div style="margin-top: 8px; font-size: 11px; color: #666; font-style: italic;">
+            These settings apply to Combined (Landscape) and Combined (Portrait) views
+        </div>
+    </div>
+</div>
+
+
+<!-- ============ STEP 4: COMBINED VIEW SETTINGS JAVASCRIPT ============ -->
+<!-- Add this in a <script> tag before </body> or in your existing script section -->
+
+<script>
+// Combined View Settings Handler
+(function() {
+    // Initialize settings
+    window.combinedViewSettings = {
+        overlapPercent: 30,
+        streetMapFirst: true
+    };
+    
+    // Wait for DOM
+    document.addEventListener('DOMContentLoaded', function() {
+        // Overlap slider
+        const overlapSlider = document.getElementById('circle-overlap-percent');
+        const overlapValue = document.getElementById('overlap-value');
+        
+        if (overlapSlider && overlapValue) {
+            overlapSlider.addEventListener('input', function() {
+                const value = parseInt(this.value);
+                overlapValue.textContent = value + '%';
+                window.combinedViewSettings.overlapPercent = value;
+            });
+        }
+        
+        // Map order radios
+        const mapOrderRadios = document.querySelectorAll('input[name="map-order"]');
+        mapOrderRadios.forEach(radio => {
+            radio.addEventListener('change', function() {
+                window.combinedViewSettings.streetMapFirst = (this.value === 'street-first');
+            });
+        });
+    });
+})();
+</script>
+
+
+<!-- ============ SUMMARY OF WHAT THIS FIXES ============ -->
+<!-- 
+✅ Perfect circles on all canvas sizes (no more ovals)
+✅ Text placement works on all views including Canvas Layout
+✅ Combined views have proper overlapping circles with text
+✅ User can control overlap amount (0-50%)
+✅ User can choose map order (Street Map First or Star Map First)
+✅ Map Location container scrollbar issue fixed
+✅ Works with all paper sizes and DPI settings
+-->

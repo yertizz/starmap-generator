@@ -1,0 +1,156 @@
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    /* General container adjustments */
+    .container {
+        width: 100%;
+        padding: 10px;
+        box-sizing: border-box;
+    }
+    
+    /* Form elements */
+    .form-group {
+        margin-bottom: 15px;
+    }
+    
+    /* Top row adjustments */
+    .top-row {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    /* Map container */
+    #map-container {
+        height: 250px;
+    }
+    
+    /* Manual coordinates */
+    .manual-coordinates {
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+    }
+
+    .manual-coordinates input {
+        width: 100%;
+        height: 36px;
+        font-size: 16px; /* Prevent iOS zoom on focus */
+        padding: 8px;
+    }
+    
+    .manual-coordinates label {
+        margin-bottom: 5px;
+        display: block;
+        text-align: left;
+    }
+
+    /* Icon selection */
+    .icon-selection {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+    }
+    
+    .icon-button {
+        width: 40px;
+        height: 40px;
+    }
+    
+    /* Text entries */
+    .text-entry-wrapper {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .text-entry {
+        width: 100%;
+        height: 36px;
+        font-size: 16px; /* Prevent iOS zoom on focus */
+        margin-bottom: 10px;
+    }
+    
+    .font-controls {
+        flex-wrap: wrap;
+        gap: 10px;
+        width: 100%;
+    }
+    
+    /* Font selects */
+    .font-family-select,
+    .font-size-select {
+        height: 36px;
+        font-size: 16px; /* Prevent iOS zoom on focus */
+    }
+    
+    /* Style options */
+    .style-options {
+        width: 100%;
+        justify-content: flex-start;
+        margin: 10px 0;
+    }
+    
+    /* Color pickers */
+    input[type="color"] {
+        width: 30px !important;
+        height: 30px !important;
+        min-width: 30px !important;
+    }
+    
+    /* Buttons */
+    #generateBtn,
+    #downloadBtn {
+        width: 100%;
+        height: 44px;
+        font-size: 16px;
+    }
+    
+    /* Canvas */
+    #star-map-canvas {
+        max-width: 100%;
+        /* height: auto; */ /* REMOVED by Cline 2025-04-09 20:20 - Let inline aspect-ratio control height */
+    }
+    
+    /* Grouped sections */
+    .grouped-sections-container {
+        padding: 10px !important;
+    }
+    
+    /* Image options */
+    .image-options table {
+        width: 100%;
+    }
+    
+    .image-options td {
+        display: block;
+        width: 100%;
+        padding: 5px 0;
+        text-align: left;
+    }
+}
+
+/* Specific adjustments for very small screens */
+@media (max-width: 375px) {
+    h1 {
+        font-size: 20px;
+    }
+    
+    .font-family-select {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 100% !important;
+        margin-bottom: 5px;
+    }
+    
+    .font-size-select {
+        width: 80px !important;
+    }
+}
+
+/* Fix for iOS input zoom */
+@supports (-webkit-touch-callout: none) {
+    input[type="text"],
+    input[type="number"],
+    input[type="date"],
+    select {
+        font-size: 16px !important;
+    }
+}

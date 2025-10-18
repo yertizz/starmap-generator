@@ -1,0 +1,181 @@
+<!-- 
+COMPLETE ZOOM SLIDER FIX
+========================
+
+This includes both the CSS styling and JavaScript needed to make the zoom slider work.
+Add these to your HTML file.
+-->
+
+<!-- ========== STEP 1: ADD THIS CSS TO YOUR <head> SECTION ========== -->
+
+<style>
+/* Zoom Slider Container Styling */
+#zoom-container,
+.zoom-section {
+    background-color: #e8e8e8 !important;
+    padding: 10px 20px !important;
+    margin: 10px 0 !important;
+    border-radius: 5px !important;
+    border: 1px solid #ccc !important;
+}
+
+/* Zoom Slider Track */
+#zoom-slider {
+    -webkit-appearance: none !important;
+    appearance: none !important;
+    width: 100% !important;
+    height: 6px !important;
+    background: #d3d3d3 !important;
+    outline: none !important;
+    opacity: 0.9 !important;
+    transition: opacity 0.2s !important;
+    cursor: pointer !important;
+    border-radius: 3px !important;
+}
+
+#zoom-slider:hover {
+    opacity: 1 !important;
+}
+
+/* Zoom Slider Thumb - Chrome/Safari */
+#zoom-slider::-webkit-slider-thumb {
+    -webkit-appearance: none !important;
+    appearance: none !important;
+    width: 20px !important;
+    height: 20px !important;
+    background: #007bff !important;
+    cursor: pointer !important;
+    border-radius: 50% !important;
+    border: 2px solid #fff !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3) !important;
+}
+
+/* Zoom Slider Thumb - Firefox */
+#zoom-slider::-moz-range-thumb {
+    width: 20px !important;
+    height: 20px !important;
+    background: #007bff !important;
+    cursor: pointer !important;
+    border-radius: 50% !important;
+    border: 2px solid #fff !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3) !important;
+}
+
+/* Zoom value display */
+#zoom-value {
+    font-weight: bold !important;
+    color: #333 !important;
+    min-width: 40px !important;
+    text-align: right !important;
+}
+</style>
+
+<!-- ========== STEP 2: UPDATE YOUR ZOOM SLIDER HTML ========== -->
+
+<!-- Replace your current zoom slider div with this: -->
+<div class="form-section zoom-section" id="zoom-container">
+    <div style="display: flex; align-items: center; gap: 15px; width: 100%; max-width: 600px; margin: 0 auto;">
+        <label style="font-weight: bold; min-width: 60px;">Zoom:</label>
+        <input type="range" id="zoom-slider" min="50" max="200" value="100" style="flex: 1;">
+        <span id="zoom-value" style="min-width: 40px; text-align: right;">100</span>
+        <span style="font-weight: bold;">%</span>
+    </div>
+</div>
+
+<!-- ========== STEP 3: ADD THIS JAVASCRIPT BEFORE </body> ========== -->
+
+<script>
+// Zoom Slider Functionality
+(function() {
+    'use strict';
+    
+    console.log('Initializing Zoom Slider...');
+    
+    function initZoom() {
+        const zoomSlider = document.getElementById('zoom-slider');
+        const zoomValue = document.getElementById('zoom-value');
+        const canvas = document.getElementById('star-map-canvas');
+        
+        if (!zoomSlider || !zoomValue) {
+            console.error('Zoom elements not found!');
+            return;
+        }
+        
+        console.log('Zoom elements found, adding functionality...');
+        
+        // Function to update zoom
+        function updateZoom() {
+            const value = parseInt(zoomSlider.value);
+            zoomValue.textContent = value;
+            
+            if (canvas) {
+                const scale = value / 100;
+                canvas.style.transform = `scale(${scale})`;
+                canvas.style.transformOrigin = 'center center';
+                
+                // Adjust container for overflow
+                const container = canvas.parentElement;
+                if (container) {
+                    if (value > 100) {
+                        container.style.overflow = 'auto';
+                        container.style.maxHeight = '80vh';
+                    } else {
+                        container.style.overflow = 'visible';
+                        container.style.maxHeight = 'none';
+                    }
+                }
+                
+                console.log(`Zoom set to ${value}%`);
+            }
+        }
+        
+        // Add event listeners
+        zoomSlider.addEventListener('input', updateZoom);
+        zoomSlider.addEventListener('change', updateZoom);
+        
+        // Initialize
+        updateZoom();
+        
+        // Make zoom functions globally available
+        window.zoomCanvas = {
+            set: function(value) {
+                zoomSlider.value = value;
+                updateZoom();
+            },
+            get: function() {
+                return parseInt(zoomSlider.value);
+            },
+            reset: function() {
+                zoomSlider.value = 100;
+                updateZoom();
+            }
+        };
+        
+        console.log('Zoom slider initialized successfully!');
+    }
+    
+    // Initialize when DOM is ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initZoom);
+    } else {
+        // Small delay to ensure all elements are rendered
+        setTimeout(initZoom, 100);
+    }
+})();
+</script>
+
+<!-- ========== TROUBLESHOOTING ========== -->
+<!-- 
+If the zoom slider still doesn't work:
+
+1. Check browser console for errors (F12)
+2. Make sure the zoom slider HTML has id="zoom-slider" and id="zoom-value"
+3. Ensure the canvas has id="star-map-canvas"
+4. Try refreshing the page (Ctrl+F5)
+
+The zoom slider should:
+- Have a gray background
+- Show a blue slider thumb
+- Display percentage as you slide
+- Scale the canvas when adjusted
+-->

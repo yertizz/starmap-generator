@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>History System Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .section {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            padding: 8px 15px;
+            background-color: #0056b3;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        input {
+            padding: 8px;
+            margin-right: 10px;
+            width: 250px;
+        }
+        pre {
+            background-color: #f5f5f5;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        .success {
+            color: green;
+            font-weight: bold;
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>History System Test</h1>
+    
+    <div class="section">
+        <h2>Test History Storage</h2>
+        <div>
+            <input type="text" id="key" placeholder="Storage Key (e.g., zipCodeHistory)">
+            <input type="text" id="value" placeholder="Value to Store">
+            <button id="add-btn">Add to History</button>
+        </div>
+        <div id="add-result"></div>
+    </div>
+    
+    <div class="section">
+        <h2>Retrieve History</h2>
+        <div>
+            <input type="text" id="retrieve-key" placeholder="Storage Key to Retrieve">
+            <button id="retrieve-btn">Get History</button>
+        </div>
+        <div id="retrieve-result"></div>
+        <pre id="history-data"></pre>
+    </div>
+    
+    <div class="section">
+        <h2>Clear History</h2>
+        <div>
+            <input type="text" id="clear-key" placeholder="Storage Key to Clear">
+            <button id="clear-btn">Clear History</button>
+        </div>
+        <div id="clear-result"></div>
+    </div>
+
+    <script>
+        // Constants
+        const HISTORY_ENDPOINT = 'history/history_manager.php';
+        const MAX_HISTORY_LENGTH = 30;
+
+        // Add to History
+        document.getElementById('add-btn').addEventListener('click', async () => {
+            const key = document.getElementById('key').value.trim();
+            const value = document.getElementById('value').value.trim();
+            const resultElement = document.getElementById('add-result');
+            
+            if (!key || !value) {
+                resultElement.innerHTML = '<span class="error">Please enter both key and value</span>';
+                return;
+            }
+            
+            try {
+                // Get current history
+                let history = await getHistoryArray(key);
+                
+                // Add new value at the beginning
+                if (history.length > 0 && history[0] === value) {
+                    resultElement.innerHTML = '<span class="error">Value already exists at the top of history</span>';
+                    return;
+                }
+                
+                // Remove if exists elsewhere in the array
+                history = history.filter(item => item !== value);
+                
+                // Add to beginning
+                history.unshift(value);
+                
+                // Limit length
+                if (history.length > MAX_HISTORY_LENGTH) {
+                    history = history.slice(0, MAX_HISTORY_LENGTH);
+                }
+                
+                // Save history
+                const success = await saveHistoryArray(key, history);
+                
+                if (success) {
+                    resultElement.innerHTML = `<span class="success">Value "${value}" added to history for key "${key}"</span>`;
+                    // Update the retrieve key field
+                    document.getElementById('retrieve-key').value = key;
+                    // Trigger retrieve to show updated history
+                    document.getElementById('retrieve-btn').click();
+                } else {
+                    resultElement.innerHTML = `<span class="error">Failed to save history</span>`;
+                }
+            } catch (error) {
+                resultElement.innerHTML = `<span class="error">Error: ${error.message}</span>`;
+                console.error("Add history error:", error);
+            }
+        });
+
+        // Retrieve History
+        document.getElementById('retrieve-btn').addEventListener('click', async () => {
+            const key = document.getElementById('retrieve-key').value.trim();
+            const resultElement = document.getElementById('retrieve-result');
+            const dataElement = document.getElementById('history-data');
+            
+            if (!key) {
+                resultElement.innerHTML = '<span class="error">Please enter a key to retrieve</span>';
+                dataElement.textContent = '';
+                return;
+            }
+            
+            try {
+                const history = await getHistoryArray(key);
+                
+                if (history.length === 0) {
+                    resultElement.innerHTML = `<span class="error">No history found for key "${key}"</span>`;
+                    dataElement.textContent = '[]';
+                } else {
+                    resultElement.innerHTML = `<span class="success">Retrieved ${history.length} items for key "${key}"</span>`;
+                    dataElement.textContent = JSON.stringify(history, null, 2);
+                }
+            } catch (error) {
+                resultElement.innerHTML = `<span class="error">Error: ${error.message}</span>`;
+                dataElement.textContent = '';
+                console.error("Retrieve history error:", error);
+            }
+        });
+
+        // Clear History
+        document.getElementById('clear-btn').addEventListener('click', async () => {
+            const key = document.getElementById('clear-key').value.trim();
+            const resultElement = document.getElementById('clear-result');
+            
+            if (!key) {
+                resultElement.innerHTML = '<span class="error">Please enter a key to clear</span>';
+                return;
+            }
+            
+            try {
+                const success = await saveHistoryArray(key, []);
+                
+                if (success) {
+                    resultElement.innerHTML = `<span class="success">History cleared for key "${key}"</span>`;
+                    // Update the retrieve key field
+                    document.getElementById('retrieve-key').value = key;
+                    // Trigger retrieve to show updated history
+                    document.getElementById('retrieve-btn').click();
+                } else {
+                    resultElement.innerHTML = `<span class="error">Failed to clear history</span>`;
+                }
+            } catch (error) {
+                resultElement.innerHTML = `<span class="error">Error: ${error.message}</span>`;
+                console.error("Clear history error:", error);
+            }
+        });
+
+        // Helper Functions
+        async function getHistoryArray(storageKey) {
+            try {
+                const response = await fetch(`${HISTORY_ENDPOINT}?key=${encodeURIComponent(storageKey)}`, {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Cache-Control': 'no-cache'
+                    }
+                });
+
+                if (!response.ok) {
+                    if (response.status === 404) {
+                        return []; // File not found is not an error, just no history yet
+                    }
+                    // Other errors
+                    const errorText = await response.text();
+                    throw new Error(`Server error (${response.status}): ${errorText}`);
+                }
+
+                const contentType = response.headers.get("content-type");
+                if (!contentType || !contentType.includes("application/json")) {
+                    const responseText = await response.text();
+                    throw new Error(`Received non-JSON response from history server: ${contentType}`);
+                }
+
+                const data = await response.json();
+
+                // Ensure the response is an array
+                if (!Array.isArray(data)) {
+                    // Attempt to recover if it's an object with an array property
+                    if (typeof data === 'object' && data !== null && Array.isArray(data.history)) {
+                        return data.history;
+                    }
+                    return []; // Return empty array if format is unexpected
+                }
+
+                return data;
+
+            } catch (error) {
+                console.error(`Error fetching history from server for key "${storageKey}":`, error);
+                return []; // Return empty array on error
+            }
+        }
+
+        async function saveHistoryArray(storageKey, historyArray) {
+            try {
+                const response = await fetch(HISTORY_ENDPOINT, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        key: storageKey,
+                        data: historyArray
+                    })
+                });
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    throw new Error(`Server error (${response.status}): ${errorText}`);
+                }
+
+                const result = await response.json();
+                if (!result.success) {
+                    throw new Error(result.message || 'Server reported an error during save.');
+                }
+
+                return true;
+
+            } catch (error) {
+                console.error(`Error saving history to server for key "${storageKey}":`, error);
+                return false;
+            }
+        }
+    </script>
+</body>
+</html>

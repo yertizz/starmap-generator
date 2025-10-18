@@ -1,0 +1,136 @@
+/**
+ * Force Fix for Zoom Slider Display
+ * This overrides any conflicting styles with maximum specificity
+ */
+
+/* Force the zoom container to display */
+#zoom-container.zoom-section,
+.form-section#zoom-container,
+div#zoom-container {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: relative !important;
+    z-index: 10 !important;
+    background-color: #e8e8e8 !important;
+    padding: 10px 20px !important;
+    margin: 10px auto !important;
+    border-radius: 5px !important;
+    border: 1px solid #ccc !important;
+    width: auto !important;
+    max-width: 900px !important;
+    box-sizing: border-box !important;
+}
+
+/* Force the inner div to display */
+#zoom-container > div,
+.zoom-section > div {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    align-items: center !important;
+    gap: 15px !important;
+    width: 100% !important;
+    max-width: 600px !important;
+    margin: 0 auto !important;
+}
+
+/* Force the zoom slider to display */
+#zoom-slider {
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    -webkit-appearance: none !important;
+    appearance: none !important;
+    width: auto !important;
+    flex: 1 !important;
+    height: 6px !important;
+    background: #d3d3d3 !important;
+    outline: none !important;
+    cursor: pointer !important;
+    border-radius: 3px !important;
+    margin: 0 10px !important;
+}
+
+/* Force zoom slider thumb */
+#zoom-slider::-webkit-slider-thumb {
+    -webkit-appearance: none !important;
+    appearance: none !important;
+    width: 20px !important;
+    height: 20px !important;
+    background: #007bff !important;
+    cursor: pointer !important;
+    border-radius: 50% !important;
+    border: 2px solid #fff !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3) !important;
+}
+
+#zoom-slider::-moz-range-thumb {
+    width: 20px !important;
+    height: 20px !important;
+    background: #007bff !important;
+    cursor: pointer !important;
+    border-radius: 50% !important;
+    border: 2px solid #fff !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3) !important;
+}
+
+/* Force zoom value display */
+#zoom-value {
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    font-weight: bold !important;
+    color: #333 !important;
+    min-width: 40px !important;
+    text-align: right !important;
+}
+
+/* Force all labels and text in zoom container */
+#zoom-container label,
+#zoom-container span {
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* Remove any height restrictions */
+#zoom-container,
+#zoom-container * {
+    min-height: auto !important;
+    height: auto !important;
+}
+
+/* Ensure it's not hidden by overflow */
+.form-section {
+    overflow: visible !important;
+}
+
+/* Debug: Add a red border to see if container is there */
+#zoom-container {
+    border: 2px solid red !important;
+}
+
+/* Additional force display rules */
+.settings-preview-download-section .form-section.zoom-section {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    height: auto !important;
+    min-height: 80px !important;
+}
+
+/* Ensure parent containers don't hide it */
+.settings-preview-download-section {
+    overflow: visible !important;
+}
+
+/* Force display even if hidden by JavaScript */
+#zoom-container[style*="display: none"],
+#zoom-container[style*="display:none"],
+#zoom-container.hidden,
+#zoom-container[hidden] {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}

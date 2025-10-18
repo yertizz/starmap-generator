@@ -1,0 +1,37 @@
+/**
+ * Canvas Perfect Circle Fix
+ * Prevents canvas stretching and maintains proper aspect ratio
+ */
+
+/* Remove the 100% width that's stretching the canvas */
+/* Allow inline styles (set by JS) to control display size precisely. */
+#star-map-canvas {
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+    margin: 0 auto;
+    aspect-ratio: unset;
+    border-radius: 0;
+    transform: none;
+}
+
+/* Ensure the container doesn't force stretching */
+.canvas-container {
+    text-align: center !important;
+    overflow: visible !important;
+}
+
+/* Remove any circular container styling that might affect the canvas */
+.circular-starfield-container {
+    aspect-ratio: unset !important;
+    border-radius: 0 !important;
+}
+
+/* Ensure the canvas uses its natural dimensions */
+#star-map-canvas[width][height] {
+    /* Use the actual canvas dimensions set by JavaScript */
+    width: attr(width px) !important;
+    height: attr(height px) !important;
+}

@@ -1,0 +1,262 @@
+STAR-MAP guidelines: 05/20/11:50 AM:
+===================
+*** NOTICE TO YOU *** :
+
+I HAVE REVERTED TO THE PREVIOUS *** NON-MODULARIZED" VERSION OF MY star mapping PROJECT BECUASE OF YOUR INAEDQUACIES TO SOLVE BASIC STYLING ISSUES WHICH WERE WORKING CORRECTLY IN THE PREVIOUS PRE-MODULARIZED PROJECT LOCATED LOCALLY AT:
+"C:\Users\phili\E-DRIVE\AnythingPOD\star-map\ !! THIS IS WHERE WE SHALL BE WORKING USING THE HTML FILE: "C:\Users\phili\E-DRIVE\AnythingPOD\star-map\Star_Map_Generator.html"
+
+SO, NOW WE WILL WORK ON THIS EARLIER PROJECT TO COMPLETE THAT WITH SOME MODOR UI FIZES AND BY ADDING A FEW MORE BUTTON FEATURES.
+
+*** I WILL CREATE A BACKUP FILE FIRST BEFORE YOU BEGIN.
+
+*** FIRST, A SUCCESSFUL BACK WAS PERFORMED:
+USING : "C:\Users\phili\E-DRIVE\AnythingPOD\star-map\backup\create-star-map-backup.bat" AT : 2025-05-08_11-01-53 IN THE FOLLOWING FOLDER:
+"C:\Users\phili\E-DRIVE\AnythingPOD\STAR-MAP-SOURCE_BACKUPS_050825"
+
+
+THE PRIMARY TASK IS NOW AS FOLLOWS:
+1. WE MUST ENSURE THAT MY *** NEW *** GOOGLE MAPS API KEY IS UPDATED TO REPLACE ANY PREVIOUS CALL TO A PREVIOUS "GOOGLE MAP API":
+*** THE NEW GOOGLE MAPS "API" KEY IS: AIzaSyCpvv1IJYxwGVMh24MLFDH6LmupseApSZU
+
+FYI: *** I HAVE LOADED THE FILE AND THE GOOGLE MAP AND THE PROJECT IS WPORKING TO PRODUCE A PREVIEW AND DOWNLOAD STARMAP!!! 
+
+2. THE FOLLOWING ROOT FOLDERS ARE TO BE USED TO READ AND EDIT FOR THIS PROJECT FROM NOW ON.
+
+ROOT FOLDER:
+"C:\Users\phili\E-DRIVE\AnythingPOD\star-map"
+
+HTML FILE: "C:\Users\phili\E-DRIVE\AnythingPOD\star-map\Star_Map_Generator.html"
+JS: "C:\Users\phili\E-DRIVE\AnythingPOD\star-map\js"
+CSS: "C:\Users\phili\E-DRIVE\AnythingPOD\star-map\css"
+PROXY: "C:\Users\phili\E-DRIVE\AnythingPOD\star-map\proxy"
+SETTINGS: "C:\Users\phili\E-DRIVE\AnythingPOD\star-map\settings"
+HISTORY: "C:\Users\phili\E-DRIVE\AnythingPOD\star-map\history"
+ASSETS-IMAGES: "C:\Users\phili\E-DRIVE\AnythingPOD\star-map\assets\images"
+BACKUP: "C:\Users\phili\E-DRIVE\AnythingPOD\star-map\backup\create-star-map-backup.bat"
+
+
+*** NOTE MY GUIDELINES FOR DEVELOPING TOGETHER. ACKNOWLEDGE AND CONFIRM.
+VIP: THE "PRIMARY" FILES THAT ARE USED FOR THE GEOCODING FUNCTIONS ARE (NOT NECESSARILY "ALL" THE FILES):
+A. "C:\Users\phili\E-DRIVE\$1 AnythingPOD\star-map\Star_Map_Generator.html"
+B. "C:\Users\phili\E-DRIVE\$1 AnythingPOD\star-map\js\main_app.js"
+C. "C:\Users\phili\E-DRIVE\$1 AnythingPOD\star-map\js\map.js"
+
+NOTE: ONCE THE FIRST TASK OF REPLACING THE GOOGLE MAP "API" IS WORKING WE WILL TEST "PREVIEWING" A STAR MAP.
+
+AI CODING MESSAGING GUIDELINES AND RULES I WANT YOU TO FOLLOW:
+=============================================================
+ROOT FOLDER:
+"C:\Users\phili\E-DRIVE\AnythingPOD\star-map"
+
+HTML FILE: *** CURENTLY: "C:\Users\phili\E-DRIVE\AnythingPOD\star-map\index-new.html"
+JS: "C:\Users\phili\E-DRIVE\AnythingPOD\star-map\js"
+CSS: "C:\Users\phili\E-DRIVE\AnythingPOD\star-map\css"
+PROXY: "C:\Users\phili\E-DRIVE\AnythingPOD\star-map\proxy"
+SETTINGS: "C:\Users\phili\E-DRIVE\AnythingPOD\star-map\settings"
+HISTORY: "C:\Users\phili\E-DRIVE\AnythingPOD\star-map\history"
+ASSETS-IMAGES: "C:\Users\phili\E-DRIVE\AnythingPOD\star-map\assets\images"
+BACKUP: "C:\Users\phili\E-DRIVE\AnythingPOD\star-map\backup\create-star-map-backup.bat" ~~~ From VS Code Terminal local"  .\backup\create-backup.bat TO:
+"C:\Users\phili\E-DRIVE\AnythingPOD\STAR-MAP-SOURCE_BACKUPS_050825"
+
+1. PLACE A COMMENT AT THE START AND THE END OF EVERY FILE WE WRITE TO - AN EXAMPLE FOLLOWS:
+-  /* START OF CODE - Cline - 2025-04-09 17:20 File: js/map.js */
+-  /* END OF CODE - Cline - 2025-04-09 17:20 File: js/map.js */
+
+2. INSTEAD OF ME TYPING EACH RESPONSE WITH "SEE ATTACHED SCREENSHOTS" - I WILL BE USING THE ABBREVIATION "SST" or SST# or SST # etc. etc. etc.
+
+3. WE HAVE BACKUP BATCH FILE WE CAN RUN THAT SAVES A GOOD POINT IN TIME WITH ALL CODE UNDER THE ROOT FOLDER: THIS IS CALLED:  "C:\Users\phili\E-DRIVE\AnythingPOD\star-map\backup\create-star-map-backup.bat"
+
+*** BACKUP FOLDERS ARE STORED IN THE FOLDER:
+"C:\Users\phili\E-DRIVE\AnythingPOD\STAR-MAP-SOURCE_BACKUPS_050825"
+*** SEE ALSO #10
+
+4. IF YOU NEED CONSOLE LOGS... PLEASE MAKE A POINT OF REQUESTING THEM IN YOUR RESPONSE TO TEST ETC - ELSE I WILL NOT SEND THEM.
+
+5. ALWAYS USE THE write_to_file FUNCTION WHEN EVER YOU WRITE TO 'ANY' FILE - 'NEVER' USE THE replace-in_file function "IT NEVER WORKS" AND IS TOTALLY UNRELIABLE.
+*** YOU PERISTENTLY FAIL WITH READ IN PLACE !!
+
+6. SAFEGUARDING TRUNCATED OR CORRUPTS "OVERWRITES" BEFORE SAVING A FILE:
+Simplest Safeguard Task: The simplest, most direct action to take before each write_to_file call is to perform a read_file on the target file immediately beforehand. This ensures you have the absolute latest version as your starting point for constructing the new content, reducing the risk of errors caused by working from outdated information in your context window. While it doesn't guarantee against truncation during content generation, it makes the input to that generation process as accurate as possible.
+
+Notice:
+I understand that you cannot guarantee no truncation due to internal limitations, but the best safeguard is to always read the file immediately before constructing the full content for the write operation.
+
+*** USE read_file immediately before every write_to_file as an acceptable safeguard step ***
+
+7. ACRONYM TO CUT DOWN ON TYPING FOR: "CODE MANUALLY UPDATED AND IS NOW 'LIVE ON THE SERVER":
+I WILL USE THE FOLLOWING: CMU or CMU+ or CMU + ~ COMMENTS MAY FOLLOW
+
+8. "NEVER" SEND CODE SNIPPETS... SEND "COMPLETE" SOUCRE CODE FOR EACH FILE! UNLESS WE ARE 100% STUCK, THEN YOU MAY REQUEST THAT "I" EDIT WITH A SNIPPET MANUALLY IN VS CODE TO TO GET US BACK ON TRACK.
+
+9. DO NOT INCLUDE ENVIRONMENT DETAILS AT END OF CODE.
+*** REPEAT****  !!!!!!!!!!!!!! DO NOT INCLUDE ENVIRONMENT DETAILS AT END OF CODE!!!!!!!!!!!!!
+
+10. BACKUPS: "C:\Users\phili\E-DRIVE\AnythingPOD\star-map\backup\create-star-map-backup.bat"
+AFTER YOU HAVE "READ" A FILE, FOR MORE BACKUP PROTECTION-GRANULARITY, YOU ARE TO:
+a. IF THE FILE YOU HAVE READ, REQUIRES EDITING OR CHANGING OR RE-WRITING/SAVING, PERFORM A BACKUP OF THE FILE FIRST IN ITS FOLDER, WITH THE FOLLOWING FORMATTTING FOR EXAMPLE, BACKUPPING UP THE js/main_app.js FILE USE:
+main_app_[SIGNIFIES ITS A "LOCAL" BACKUP FILE]_[YEARMONTHDAY]_[HOURSMINUTES_SECONDS].js 
+BACKUP FOLDER: "C:\Users\phili\E-DRIVE\AnythingPOD\STAR-MAP-SOURCE_BACKUPS_050825"
+
+i.e main_app_[bak]_[20250508]_[1631_49].js 
+Complete example: main_app_bak_20250504_1631_49.js 
+
+STAR MAP CENTER-FORMATTING:
+// First part (e.g., N38° 6.09015′)
+// Second part (e.g., W94° 41.60395′)
+
+
+************************************************************************
+ACKNOWLEDGE AND CONFIRM YOU UNDERSTAND AND WILL ABIDE MY THE GUIDELINES
+AT ALL TIMES. IF YOU FEEL AN EXCEPTION IS WARRANTED, ASK ME FIRST
+CONFIRM??
+************************************************************************
+
+Google Maps API 05/07/25 :
+Maps API : AIzaSyCpvv1IJYxwGVMh24MLFDH6LmupseApSZU 
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+Google Maps API 05/07/25 :
+Maps API : AIzaSyCpvv1IJYxwGVMh24MLFDH6LmupseApSZU 
+Billing ID:  4366-4804-7508
+Billing account ID: 010E79-60C176-2CDE58
+
+
+--------------------------------------------------
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Simple Marker</title>
+    <!-- The callback parameter is required, so we use console.debug as a noop -->
+    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCpvv1IJYxwGVMh24MLFDH6LmupseApSZU&callback=console.debug&libraries=maps,marker&v=beta">
+    </script>
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      gmp-map {
+        height: 100%;
+      }
+
+      /* Optional: Makes the sample page fill the window. */
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <gmp-map center="40.12150192260742,-100.45039367675781" zoom="4" map-id="DEMO_MAP_ID">
+      <gmp-advanced-marker position="40.12150192260742,-100.45039367675781" title="My location"></gmp-advanced-marker>
+    </gmp-map>
+  </body>
+</html>
+
+
+~~~~~~~~~~~~
+XXXAIzaSyCHz7FuS7X0ZtBvlh4ORJLG65DONNvpeq8
+
+------------------------
+GeoApify. 4/29/2025
+Geocoding API: 0464276dd8224f90bff827b91e995e2a
+https://apidocs.geoapify.com/docs/geocoding/
+------------------------
+
+THE PRIMARY TASK IS NOW AS FOLLOWS:
+1. WE MUST COMPLETELY REPLACE ALL "GOOGLE MAP API" FUNCTIONALITY WITH THE "GEOAPIFY" API.
+GEOAPIFY KEY: GeoApify. 4/29/2025
+- Geocoding API: 0464276dd8224f90bff827b91e995e2a
+- DOCS: https://apidocs.geoapify.com/docs/geocoding/
+
+https://anythingpod.com/star-map/index-new.html
+
+2. THE FOLLOWING ROOT FOLDERS ARE TO BE USED TO READ AND EDIT FOR THIS PROJECT FROM NOW ON.
+ROOT FOLDER:
+"C:\Users\phili\E-DRIVE\AnythingPOD\star-map"
+HTML FILE: "C:\Users\phili\E-DRIVE\AnythingPOD\star-map\Star_Map_Generator.html"
+JS: "C:\Users\phili\E-DRIVE\AnythingPOD\star-map\js"
+CSS: "C:\Users\phili\E-DRIVE\AnythingPOD\star-map\css"
+PROXY: "C:\Users\phili\E-DRIVE\AnythingPOD\star-map\proxy"
+SETTINGS: "C:\Users\phili\E-DRIVE\AnythingPOD\star-map\settings"
+HISTORY: "C:\Users\phili\E-DRIVE\AnythingPOD\star-map\history"
+ASSETS-IMAGES: "C:\Users\phili\E-DRIVE\AnythingPOD\star-map\assets\images"
+BACKUP: "C:\Users\phili\E-DRIVE\AnythingPOD\star-map\backup"
+
+*** NOTE MY GUIDELINES FOR DEVELOPING TOGETHER SENT MINUTES AGO. ACKNOWLEDGE AND CONFIRM.
+
+VIP: THE "PRIMARY" FILES THAT ARE USED FOR THE GEOCODING FUNCTIONS ARE (NOT NECESSARILY "ALL" THE FILES):
+A. "C:\Users\phili\E-DRIVE\$1 AnythingPOD\star-map\Star_Map_Generator.html"
+B. "C:\Users\phili\E-DRIVE\$1 AnythingPOD\star-map\js\main_app.js"
+C. "C:\Users\phili\E-DRIVE\$1 AnythingPOD\star-map\js\map.js"
+
+NOTE: ONCE ALL THE GOOGLE MAP FUNCTIONS ARE REPLACED WITH THOSE OF GEOAPIFY, WILL THEN INVESTIGATE CREATING THE STAR MAP.
+
+AI CODING MESSAGING GUIDELINES AND RULES I WANT YOU TO FOLLOW:
+=============================================================
+ROOT FOLDER:
+"C:\Users\phili\E-DRIVE\AnythingPOD\star-map"
+
+HTML FILE: *** CURENTLY: "C:\Users\phili\E-DRIVE\AnythingPOD\star-map\index-new.html"
+JS: "C:\Users\phili\E-DRIVE\AnythingPOD\star-map\js"
+CSS: "C:\Users\phili\E-DRIVE\AnythingPOD\star-map\css"
+PROXY: "C:\Users\phili\E-DRIVE\AnythingPOD\star-map\proxy"
+SETTINGS: "C:\Users\phili\E-DRIVE\AnythingPOD\star-map\settings"
+HISTORY: "C:\Users\phili\E-DRIVE\AnythingPOD\star-map\history"
+ASSETS-IMAGES: "C:\Users\phili\E-DRIVE\AnythingPOD\star-map\assets\images"
+BACKUP: "C:\Users\phili\E-DRIVE\AnythingPOD\star-map\backup" : From VS Code Terminal local"  .\backup\modular-backup.bat
+c:\Users\phili\E-DRIVE\AnythingPOD\star-map\WIKI-SKY_star-map-SOURCE_BACKUPS
+
+1. PLACE A COMMENT AT THE START AND THE END OF EVERY FILE WE WRITE TO - AN EXAMPLE FOLLOWS:
+-  /* START OF CODE - Cline - 2025-04-09 17:20 File: js/map.js */
+-  /* END OF CODE - Cline - 2025-04-09 17:20 File: js/map.js */
+
+2. INSTEAD OF ME TYPING EACH RESPONSE WITH "SEE ATTACHED SCREENSHOTS" - I WILL BE USING THE ABBREVIATION "SST" AND SST# ETC ETC
+
+3. WE HAVE BACKUP BATCH FILE WE CAN RUN THAT SAVES A GOOD POINT IN TIME WITH ALL CODE UNDER THE ROOT FOLDER: THIS IS CALLED:  "C:\Users\phili\E-DRIVE\AnythingPOD\star-map\backup\modular-backup.bat
+
+*** BACKUP FOLDERS ARE STORED IN THE FOLDER:
+c:\Users\phili\E-DRIVE\AnythingPOD\star-map\WIKI-SKY_star-map-SOURCE_BACKUPS
+*** SEE ALSO #10
+
+4. IF YOU NEED CONSOLE LOGS... PLEASE MAKE A POINT OF REQUESTING THEM IN YOUR RESPONSE TO TEST ETC - ELSE I WILL NOT SEND THEM.
+
+5. ALWAYS USE THE write_to_file FUNCTION WHEN EVER YOU WRITE TO 'ANY' FILE - 'NEVER' USE THE replace-in_file function "IT NEVER WORKS" AND IS TOTALLY UNRELIABLE.
+*** YOU PERISTENTLY FAIL WITH READ IN PLACE !!
+
+6. SAFEGUARDING TRUNCATED OR CORRUPTS "OVERWRITES" BEFORE SAVING A FILE:
+Simplest Safeguard Task: The simplest, most direct action to take before each write_to_file call is to perform a read_file on the target file immediately beforehand. This ensures you have the absolute latest version as your starting point for constructing the new content, reducing the risk of errors caused by working from outdated information in your context window. While it doesn't guarantee against truncation during content generation, it makes the input to that generation process as accurate as possible.
+
+Notice:
+I understand that you cannot guarantee no truncation due to internal limitations, but the best safeguard is to always read the file immediately before constructing the full content for the write operation.
+
+*** USE read_file immediately before every write_to_file as an acceptable safeguard step ***
+
+7. ACRONYM TO CUT DOWN ON TYPING FOR: "CODE MANUALLY UPDATED AND IS NOW 'LIVE ON THE SERVER":
+I WILL USE THE FOLLOWING: CMU OR CMU+ IF COMMENTS WILL FOLLOW
+
+8. "NEVER" SEND CODE SNIPPETS... SEND "COMPLETE" SOUCRE CODE FOR EACH FILE! UNLESS WE ARE 100% STUCK, THEN YOU MAY REQUEST THAT "I" EDIT WITH A SNIPPET MANUALLY IN VS CODE TO TO GET US BACK ON TRACK.
+
+9. DO NOT INCLUDE ENVIRONMENT DETAILS AT END OF CODE.
+*** REPEAT****  !!!!!!!!!!!!!! DO NOT INCLUDE ENVIRONMENT DETAILS AT END OF CODE!!!!!!!!!!!!!
+
+10. AFTER YOU HAVE "READ" A FILE, FOR MORE BACKUP PROTECTION-GRANULARITY, YOU ARE TO:
+a. IF THE FILE YOU HAVE READ, REQUIRES EDITING OR CHANGING OR RE-WRITING/SAVING, PERFORM A BACKUP OF THE FILE FIRST IN ITS FOLDER, WITH THE FOLLOWING FORMATTTING FOR EXAMPLE, BACKUPING UP THE js/main_app.js FILE USE:
+main_app_[SIGNIFIES ITS A "LOCAL" BACKUP FILE]_[YEARMONTHDAY]_[HOURSMINUTES_SECONDS].js 
+i.e main_app_[bak]_[20250503]_[1631_49_17].js 
+Complete example: main_app_bak_20250504_1631_49.js 
+
+STAR MAP CENTER-FORMATTING:
+// First part (e.g., N38° 6.09015′)
+// Second part (e.g., W94° 41.60395′)
+
+
+
+
+THE COLONNADES, ST. PETE
+N27° 46.49142′ W82° 42.75539′
+--------------------
+https://myprojects.geoapify.com/login
+yzz
+GraCie2107!!
+
+---------------

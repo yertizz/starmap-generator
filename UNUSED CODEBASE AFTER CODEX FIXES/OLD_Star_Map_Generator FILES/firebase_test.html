@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firebase Authentication Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .section {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            padding: 8px 15px;
+            background-color: #0056b3;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        input {
+            padding: 8px;
+            margin-right: 10px;
+            width: 250px;
+        }
+        pre {
+            background-color: #f5f5f5;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        .success {
+            color: green;
+            font-weight: bold;
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Firebase Authentication Test</h1>
+    
+    <div class="section">
+        <h2>Firebase SDK Status</h2>
+        <div id="firebase-status">Checking Firebase SDK...</div>
+        <pre id="firebase-config"></pre>
+    </div>
+    
+    <div class="section">
+        <h2>Create Test User</h2>
+        <div>
+            <input type="email" id="test-email" placeholder="Email">
+            <input type="password" id="test-password" placeholder="Password">
+            <button id="create-user-btn">Create User</button>
+        </div>
+        <div id="create-user-result"></div>
+    </div>
+    
+    <div class="section">
+        <h2>Sign In Test</h2>
+        <div>
+            <input type="email" id="signin-email" placeholder="Email">
+            <input type="password" id="signin-password" placeholder="Password">
+            <button id="signin-btn">Sign In</button>
+        </div>
+        <div id="signin-result"></div>
+    </div>
+    
+    <div class="section">
+        <h2>Current User</h2>
+        <button id="get-current-user-btn">Get Current User</button>
+        <div id="current-user-result"></div>
+    </div>
+    
+    <div class="section">
+        <h2>Sign Out</h2>
+        <button id="signout-btn">Sign Out</button>
+        <div id="signout-result"></div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDb8rZMSoTkKVDKuswbFkips-nRfLhcNuA",
+            authDomain: "star-map-4ee1b.firebaseapp.com",
+            projectId: "star-map-4ee1b",
+            storageBucket: "star-map-4ee1b.appspot.com",
+            messagingSenderId: "937281376623",
+            appId: "1:937281376623:web:bafa4c7bae41b2dbe2d89a"
+        };
+
+        // Initialize Firebase
+        let auth;
+        try {
+            firebase.initializeApp(firebaseConfig);
+            auth = firebase.auth();
+            document.getElementById('firebase-status').innerHTML = '<span class="success">Firebase SDK loaded successfully</span>';
+            document.getElementById('firebase-config').textContent = JSON.stringify(firebaseConfig, null, 2);
+        } catch (error) {
+            document.getElementById('firebase-status').innerHTML = `<span class="error">Error initializing Firebase: ${error.message}</span>`;
+            console.error("Firebase initialization error:", error);
+        }
+
+        // Create User
+        document.getElementById('create-user-btn').addEventListener('click', async () => {
+            const email = document.getElementById('test-email').value;
+            const password = document.getElementById('test-password').value;
+            const resultElement = document.getElementById('create-user-result');
+            
+            if (!email || !password) {
+                resultElement.innerHTML = '<span class="error">Please enter both email and password</span>';
+                return;
+            }
+            
+            try {
+                const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+                resultElement.innerHTML = `<span class="success">User created successfully!</span><pre>${JSON.stringify({
+                    uid: userCredential.user.uid,
+                    email: userCredential.user.email,
+                    emailVerified: userCredential.user.emailVerified
+                }, null, 2)}</pre>`;
+                
+                // Auto-fill sign in fields
+                document.getElementById('signin-email').value = email;
+                document.getElementById('signin-password').value = password;
+            } catch (error) {
+                resultElement.innerHTML = `<span class="error">Error creating user: ${error.message}</span>`;
+                console.error("Create user error:", error);
+            }
+        });
+
+        // Sign In
+        document.getElementById('signin-btn').addEventListener('click', async () => {
+            const email = document.getElementById('signin-email').value;
+            const password = document.getElementById('signin-password').value;
+            const resultElement = document.getElementById('signin-result');
+            
+            if (!email || !password) {
+                resultElement.innerHTML = '<span class="error">Please enter both email and password</span>';
+                return;
+            }
+            
+            try {
+                const userCredential = await auth.signInWithEmailAndPassword(email, password);
+                resultElement.innerHTML = `<span class="success">User signed in successfully!</span><pre>${JSON.stringify({
+                    uid: userCredential.user.uid,
+                    email: userCredential.user.email,
+                    emailVerified: userCredential.user.emailVerified
+                }, null, 2)}</pre>`;
+            } catch (error) {
+                resultElement.innerHTML = `<span class="error">Error signing in: ${error.message}</span>`;
+                console.error("Sign in error:", error);
+            }
+        });
+
+        // Get Current User
+        document.getElementById('get-current-user-btn').addEventListener('click', () => {
+            const resultElement = document.getElementById('current-user-result');
+            const user = auth.currentUser;
+            
+            if (user) {
+                resultElement.innerHTML = `<span class="success">Current user:</span><pre>${JSON.stringify({
+                    uid: user.uid,
+                    email: user.email,
+                    emailVerified: user.emailVerified,
+                    providerId: user.providerId,
+                    displayName: user.displayName,
+                    phoneNumber: user.phoneNumber,
+                    photoURL: user.photoURL
+                }, null, 2)}</pre>`;
+            } else {
+                resultElement.innerHTML = '<span class="error">No user is currently signed in</span>';
+            }
+        });
+
+        // Sign Out
+        document.getElementById('signout-btn').addEventListener('click', async () => {
+            const resultElement = document.getElementById('signout-result');
+            
+            try {
+                await auth.signOut();
+                resultElement.innerHTML = '<span class="success">User signed out successfully</span>';
+            } catch (error) {
+                resultElement.innerHTML = `<span class="error">Error signing out: ${error.message}</span>`;
+                console.error("Sign out error:", error);
+            }
+        });
+
+        // Check initial auth state
+        auth.onAuthStateChanged(user => {
+            const currentUserResult = document.getElementById('current-user-result');
+            if (user) {
+                currentUserResult.innerHTML = `<span class="success">User is signed in:</span><pre>${JSON.stringify({
+                    uid: user.uid,
+                    email: user.email,
+                    emailVerified: user.emailVerified
+                }, null, 2)}</pre>`;
+            } else {
+                currentUserResult.innerHTML = '<span class="error">No user is currently signed in</span>';
+            }
+        });
+    </script>
+</body>
+</html>

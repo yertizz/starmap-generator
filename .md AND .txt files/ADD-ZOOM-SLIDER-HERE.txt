@@ -1,0 +1,67 @@
+ZOOM SLIDER HTML TO ADD TO YOUR Star_Map_Generator.html FILE
+============================================================
+
+FIND THIS SECTION IN YOUR HTML (around line 1340):
+---------------------------------------------------
+    <!-- Image Format Options -->
+    <div class="settings-row" style="margin-top: 15px; border-top: 1px solid #ddd; padding-top: 15px; display: flex; align-items: center; justify-content: center; gap: 20px;">
+        <span style="font-weight: 600;">Image Format:</span>
+        <input type="radio" name="image-format" value="png" id="png-format" checked> <label for="png-format" style="margin-right: 5px;">PNG</label>
+        <input type="checkbox" id="png-transparency"> <label for="png-transparency" style="margin-right: 20px;">Transparency</label>
+        <input type="radio" name="image-format" value="jpg" id="jpg-format"> <label for="jpg-format" style="margin-right: 20px;">JPG</label>
+        <input type="radio" name="image-format" value="svg" id="svg-format"> <label for="svg-format" style="margin-right: 20px;">SVG</label>
+        <input type="radio" name="image-format" value="pdf" id="pdf-format"> <label for="pdf-format">PDF</label>
+    </div>
+
+
+ADD THIS RIGHT AFTER THE ABOVE SECTION:
+----------------------------------------
+    <!-- Canvas Zoom Control -->
+    <div class="form-section zoom-section" id="zoom-container">
+        <div style="display: flex; align-items: center; gap: 15px; width: 100%; max-width: 600px; margin: 0 auto;">
+            <label style="font-weight: bold; min-width: 60px;">Zoom:</label>
+            <input type="range" id="zoom-slider" min="50" max="200" value="100" style="flex: 1;">
+            <span id="zoom-value" style="min-width: 40px; text-align: right;">100</span>
+            <span style="font-weight: bold;">%</span>
+        </div>
+    </div>
+
+
+COMPLETE SECTION SHOULD LOOK LIKE:
+-----------------------------------
+    <!-- Image Format Options -->
+    <div class="settings-row" style="margin-top: 15px; border-top: 1px solid #ddd; padding-top: 15px; display: flex; align-items: center; justify-content: center; gap: 20px;">
+        <span style="font-weight: 600;">Image Format:</span>
+        <input type="radio" name="image-format" value="png" id="png-format" checked> <label for="png-format" style="margin-right: 5px;">PNG</label>
+        <input type="checkbox" id="png-transparency"> <label for="png-transparency" style="margin-right: 20px;">Transparency</label>
+        <input type="radio" name="image-format" value="jpg" id="jpg-format"> <label for="jpg-format" style="margin-right: 20px;">JPG</label>
+        <input type="radio" name="image-format" value="svg" id="svg-format"> <label for="svg-format" style="margin-right: 20px;">SVG</label>
+        <input type="radio" name="image-format" value="pdf" id="pdf-format"> <label for="pdf-format">PDF</label>
+    </div>
+    
+    <!-- Canvas Zoom Control -->
+    <div class="form-section zoom-section" id="zoom-container">
+        <div style="display: flex; align-items: center; gap: 15px; width: 100%; max-width: 600px; margin: 0 auto;">
+            <label style="font-weight: bold; min-width: 60px;">Zoom:</label>
+            <input type="range" id="zoom-slider" min="50" max="200" value="100" style="flex: 1;">
+            <span id="zoom-value" style="min-width: 40px; text-align: right;">100</span>
+            <span style="font-weight: bold;">%</span>
+        </div>
+    </div>
+
+    <!-- Canvas Preview -->
+    <div class="canvas-container" style="margin-top: 20px; text-align: center;">
+        <canvas id="star-map-canvas" width="800" height="800" style="max-width: 100%; height: auto; border: 1px solid #ddd; background-color: #F5F5DC;"></canvas>
+    </div>
+
+
+NOTES:
+------
+1. The zoom slider HTML is currently missing from your page
+2. The CSS styling is already in place in master-override.css
+3. The JavaScript functionality is already loaded
+4. Once you add this HTML, the zoom slider will appear with:
+   - Gray background bar
+   - Blue slider thumb
+   - Percentage display
+   - Full zoom functionality

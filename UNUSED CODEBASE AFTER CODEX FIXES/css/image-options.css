@@ -1,0 +1,78 @@
+/* START OF CODE - Cline - 2025-04-11 17:03 File: css/image-options.css */
+/* Styling for Output Options section - Correct Layout for Background Colors */
+
+/* Using existing .options-grid from HTML style block */
+
+/* Style the group containing "Background Colors" label and the picker group */
+.options-group:has(.color-picker-group) {
+    /* This group is a grid item, let the grid handle its overall placement */
+     display: flex;
+     flex-direction: column;
+     align-items: flex-start; /* Align content left */
+}
+
+.options-group > label:first-child { /* Style the "Background Colors:" label */
+     display: block;
+     font-weight: 600;
+     color: #555;
+     margin-bottom: 10px; /* Space below this main label */
+}
+
+/* Container for the two color picker items - Use Grid to stack rows */
+.color-picker-group {
+     display: grid !important;
+     grid-template-columns: auto 30px; /* Col 1 for label (auto width), Col 2 for swatch (30px) */
+     grid-template-rows: auto auto;    /* Two rows */
+     gap: 10px 10px; /* Row gap, Column gap */
+     align-items: center; /* Vertically align items in each cell */
+     justify-items: start; /* Align labels left, swatches will be in their column */
+     width: auto; /* Fit content */
+     max-width: 250px; /* Optional max width */
+     padding-left: 10px;
+     margin-top: 5px;
+}
+
+/* Target specific labels and buttons within the grid */
+.color-picker-group .color-picker-item {
+    /* This div still exists but we target its children directly for grid placement */
+    display: contents; /* Allow label and button to be direct grid children */
+}
+
+.color-picker-group .color-picker-item label {
+    grid-column: 1 / 2; /* Place labels in the first column */
+    margin: 0;
+    white-space: nowrap;
+    color: #555;
+    font-weight: normal;
+    text-align: left;
+    padding-right: 10px; /* Add padding to separate from swatch column */
+}
+.color-picker-group label[for="bg-color-image"] { grid-row: 1 / 2; }
+.color-picker-group label[for="bg-color-canvas"] { grid-row: 2 / 3; }
+
+.color-picker-group .color-picker-item button.color-swatch {
+    grid-column: 2 / 3; /* Place swatches in the second column */
+    justify-self: center; /* Center swatch in its column cell */
+    margin: 0 !important;
+    /* Inherits size/border-radius from text-layers.css */
+}
+.color-picker-group button[data-target="bg-color-image"] { grid-row: 1 / 2; }
+.color-picker-group button[data-target="bg-color-canvas"] { grid-row: 2 / 3; }
+
+/* Hide inputs */
+.color-picker-group input[type="text"] {
+    display: none !important;
+}
+
+
+/* Image Format Specifics */
+#png-transparency-option {
+    margin-top: 5px;
+    padding-left: 20px;
+}
+
+/* Responsive adjustments if needed */
+@media (max-width: 600px) {
+    /* Adjust layout for smaller screens if necessary */
+}
+/* END OF CODE - Cline - 2025-04-11 17:03 File: css/image-options.css */

@@ -1,0 +1,511 @@
+<!-- START OF CODE - Cline - 2025-04-13 11:42 File: Star_Map_Generator.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Star Map Generator</title>
+<!-- Link all necessary CSS files with cache busting -->
+<link rel="stylesheet" href="css/general.css?v=1.2">
+<link rel="stylesheet" href="css/map.css?v=1.1">
+<link rel="stylesheet" href="css/text-layers.css?v=1.1">
+<!-- <link rel="stylesheet" href="css/image-options.css?v=1.1"> REMOVED -->
+<link rel="stylesheet" href="css/generate-button.css?v=1.1">
+<link rel="stylesheet" href="css/responsive.css?v=1.1">
+<link rel="stylesheet" href="css/starmap-canvas.css?v=1.1">
+<link rel="stylesheet" href="css/settings-button.css?v=1.1">
+<link rel="stylesheet" href="css/zip-code-history.css?v=1.1">
+<link rel="stylesheet" href="css/text-entry-history.css?v=1.1">
+<link rel="stylesheet" href="css/coordinate-fields.css?v=1.1">
+<!-- <link rel="stylesheet" href="css/star-map-style.css?v=1.1"> REMOVED -->
+<!-- Add any other required CSS -->
+<link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Anton&family=Bebas+Neue&family=Black+Ops+One&family=Caveat&family=Dancing+Script&family=Great+Vibes&family=Indie+Flower&family=Libre+Baskerville&family=Lilita+One&family=Lora&family=Merriweather&family=Montserrat&family=Noto+Serif&family=Nunito&family=Open+Sans&family=Oswald&family=Pacifico&family=Permanent+Marker&family=Pinyon+Script&family=Playfair+Display&family=Quicksand&family=Raleway&family=Roboto&family=Roboto+Slab&family=Satisfy&family=Shadows+Into+Light&family=Tangerine&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<!-- Add Custom HEX Picker CSS -->
+<link rel="stylesheet" href="css/color-picker.css?v=1.1">
+<style>
+    /* Basic styles */
+    body { font-family: 'Open Sans', sans-serif; margin: 0; padding: 20px; background-color: #f8f9fa; }
+    .container { max-width: 900px; margin: auto; background-color: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+    h1 { text-align: center; color: #0056b3; margin-bottom: 30px; }
+    /* UPDATED .form-section styles */
+    .form-section {
+        margin-bottom: 25px;
+        padding: 20px;
+        padding-top: 15px; /* Adjust top padding for legend */
+        border: 2px solid #cccccc; /* Thicker border */
+        border-radius: 8px;
+        background-color: #f5f5f5; /* Light grey background */
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Slightly stronger shadow */
+        position: relative;
+    }
+    /* UPDATED legend style */
+    .form-section legend {
+        font-weight: bold;
+        font-size: 1.15em; /* Slightly larger */
+        color: #0056b3; /* Blue color */
+        border: none; /* Remove border */
+        border-bottom: 1px solid #eee; /* Add separator */
+        padding: 0 15px 10px 15px; /* Padding L/R/B */
+        margin-bottom: 20px; /* Space below legend */
+        width: auto; /* Fit content */
+        max-width: calc(100% - 30px); /* Prevent overflow */
+        text-align: center; /* Center align */
+        display: block; /* Make it a block to center */
+        margin-left: auto;
+        margin-right: auto;
+        float: none; /* Override default legend float */
+     }
+     .section-title { /* Keep style for advanced options title */
+        font-weight: bold; font-size: 1.1em; color: #333; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 5px;
+     }
+    .input-group { display: flex; flex-wrap: wrap; gap: 15px; align-items: center; margin-bottom: 15px; }
+    .input-group label { min-width: auto; font-weight: 600; color: #555; margin-right: 5px; } /* Adjusted label */
+    .input-group input[type="text"],
+    .input-group input[type="date"],
+    .input-group input[type="number"],
+    .input-group select { flex-grow: 0; padding: 8px 10px; border: 1px solid #ccc; border-radius: 4px; min-width: auto; } /* Adjusted input */
+
+     /* Specific widths for Event Details */
+     #event-details-fieldset .input-group label[for="occasion"],
+     #event-details-fieldset .input-group label[for="date"] {
+          min-width: auto; width: auto; margin-right: 5px;
+     }
+      #occasion { width: 200px !important; min-width: 150px !important; }
+      #date { width: 150px !important; min-width: 130px !important; }
+      /* Arrange Event Details inputs in a row */
+      #event-details-fieldset .input-group { justify-content: flex-start; margin-bottom: 0; }
+      #event-details-fieldset > div { display: flex; flex-wrap: wrap; align-items: center; gap: 15px 25px; justify-content: center; } /* Center the groups */
+
+    /* Adjustments for Fixed Text Styling Section - CORRECTED */
+    #fixed-text-styling-fieldset .input-group {
+        display: flex;
+        flex-direction: row; /* Keep items in a row */
+        align-items: center; /* Vertically align items */
+        justify-content: flex-start; /* Align items to the start */
+        margin-bottom: 10px; /* Space between rows */
+        gap: 10px; /* Space between elements in a row */
+    }
+    #fixed-text-styling-fieldset .input-group:last-child {
+        margin-bottom: 0; /* No margin on the last row */
+    }
+    #fixed-text-styling-fieldset .input-group > label { /* Target the main label (Date Text:, Coordinates Text:) */
+        width: 120px; /* Fixed width for alignment */
+        min-width: 120px;
+        text-align: right; /* Align text right */
+        margin-right: 10px; /* Space after label */
+        font-weight: 600; /* Make label bold */
+    }
+    #fixed-text-styling-fieldset .input-group select {
+        width: 150px; /* Set width for dropdowns */
+        min-width: 150px;
+        flex-grow: 0; /* Don't allow growing */
+    }
+    #fixed-text-styling-fieldset .input-group .style-options {
+        display: flex;
+        align-items: center;
+        gap: 5px; /* Space between Bold/Italic */
+        margin-left: 15px; /* Space before style options */
+    }
+    #fixed-text-styling-fieldset .input-group .style-options label {
+        margin-right: 10px; /* Space after Italic label */
+        font-weight: normal; /* Normal weight for Bold/Italic labels */
+    }
+    #fixed-text-styling-fieldset .input-group button.color-swatch {
+        margin-left: auto; /* Push color swatch to the right */
+    }
+
+
+    /* Styles for the new Canvas Settings section */
+    #canvas-settings legend { /* Already styled above */ }
+    .settings-row {
+        display: flex;
+        flex-wrap: wrap; /* Allow wrapping */
+        align-items: center; /* Vertically align items */
+        justify-content: center; /* Center items horizontally in the row */
+        gap: 10px 15px; /* Row gap, Column gap */
+        margin-bottom: 15px; /* Space below each row */
+        padding: 5px 0; /* Optional padding */
+        /* border-bottom: 1px solid #eee; */ /* No separator */
+    }
+     .settings-row:last-child {
+         margin-bottom: 0;
+     }
+    .settings-row label {
+        margin-bottom: 0;
+        font-weight: normal;
+        white-space: nowrap;
+        margin-right: 5px;
+        color: #555;
+        line-height: 30px;
+    }
+     /* Make labels before controls bold */
+     .settings-row label[for="output-width"],
+     .settings-row label[for="output-height"],
+     .settings-row label[for="maintain-aspect-ratio"],
+     .settings-row label[for="bg-color-canvas"],
+     .settings-row label[for="star-map-style"] {
+         font-weight: 600;
+     }
+     /* Labels for radio/checkbox groups */
+     .settings-row .radio-group > label,
+     .settings-row label:has(> input[type="checkbox"]) { /* Target label containing checkbox */
+        margin-right: 10px;
+        font-weight: normal;
+     }
+     /* Specific label adjustments */
+     label[for="maintain-aspect-ratio"] { margin-right: 15px; }
+     label[for="bg-color-canvas"] { margin-left: 10px; }
+
+    .settings-row input[type="number"] {
+        width: 70px;
+        min-width: 60px;
+        flex-grow: 0;
+        margin-right: 10px;
+        height: 30px;
+        padding: 5px 8px;
+    }
+     .settings-row input[type="checkbox"] {
+         width: auto;
+         margin-right: 5px;
+         vertical-align: middle;
+     }
+     .settings-row .radio-group {
+         display: inline-flex;
+         align-items: center;
+         gap: 10px;
+         margin-left: 10px;
+     }
+     .settings-row button.color-swatch {
+         margin: 0 10px 0 0 !important;
+         vertical-align: middle;
+     }
+     #star-map-style {
+        min-width: 100px;
+        flex-grow: 0;
+        height: 30px;
+        padding: 5px 8px;
+     }
+     #advanced-options-toggle {
+         height: 30px;
+         padding: 5px 15px;
+         margin-left: 15px; /* Add space */
+     }
+     /* Ensure hidden inputs don't affect layout */
+     input[type="text"][style*="display:none"] {
+         display: none !important;
+     }
+     /* Style for disabled transparency checkbox */
+    label[for="png-transparency"].disabled-option {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+    label[for="png-transparency"].disabled-option input[type="checkbox"] {
+        cursor: not-allowed;
+    }
+
+    /* Restore zoom slider styling */
+    .zoom-section {
+        text-align: center;
+        margin-top: 15px;
+    }
+    .zoom-container {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+    }
+    /* Add specific styles for the slider if needed, e.g., from starmap-canvas.css */
+    .zoom-slider { /* Example - adjust if needed */
+        width: 200px;
+        cursor: pointer;
+    }
+
+
+    /* Ensure advanced options panel is initially closed */
+    #advanced-options-panel {
+        display: none; /* Default state is hidden */
+        margin-top: 15px;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+    }
+    #advanced-options-panel.active {
+        display: block; /* Show when active class is added by JS */
+    }
+
+</style>
+</head>
+<body>
+<div class="container">
+    <h1>Create Your Star Map</h1>
+    <form id="customizationForm" onsubmit="event.preventDefault();">
+
+        <!-- Section 1: Event Details -->
+        <fieldset class="form-section" id="event-details-fieldset"> <!-- Added ID -->
+            <legend>Event Details</legend>
+            <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 15px 25px; justify-content: center;"> <!-- Wrapper Div -->
+                <div class="input-group" style="margin-bottom: 0; flex-grow: 0; width: auto;"> <!-- Group 1 -->
+                    <label for="occasion">Design/Event/Occasion:</label>
+                    <select id="occasion" name="occasion" style="width: 200px; min-width: 150px;">
+                        <option value="">Select an option</option>
+                        <option value="custom">Add Your Own...</option>
+                        <option value="mothers_day">Mother's Day</option>
+                        <option value="fathers_day">Father's Day</option>
+                        <option value="birthday">Birthday</option>
+                        <option value="day_we_met">Day We Met</option>
+                        <option value="our_anniversary">Our Wedding Day</option>
+                        <option value="engagement_day">Day We Were Engaged</option>
+                        <option value="sweet_16_birthday">Sweet 16 Birthday</option>
+                        <option value="21st_birthday">21st Birthday</option>
+                        <option value="graduation_day">Graduation Day</option>
+                        <option value="retirement">Finally Retired</option>
+                    </select>
+                    <input type="text" id="custom-occasion" placeholder="Enter Custom Occasion" style="display: none; flex-grow: 2;">
+                </div>
+                <div class="input-group" style="margin-bottom: 0; flex-grow: 0; width: auto;"> <!-- Group 2 -->
+                    <label for="date">Input Date:</label>
+                    <input type="date" id="date" required style="width: 150px; min-width: 130px;">
+                </div>
+            </div>
+        </fieldset>
+
+        <!-- Section 2: Map Location -->
+        <fieldset class="form-section">
+            <legend>Map Location</legend>
+             <div id="map-container">
+                 <div id="map"></div>
+                 <div id="crosshairs"></div>
+             </div>
+             <p id="latLongDisplay">Lat: ... | Long: ...</p>
+             <div class="manual-coordinates">
+                <label for="latitude">Latitude:</label>
+                <input type="text" id="latitude" placeholder="e.g., N32° 56.88113" required>
+                <label for="longitude">Longitude:</label>
+                <input type="text" id="longitude" placeholder="e.g., W80° 7.22460" required>
+                <label for="zip-code">Zip/Postal Code:</label>
+                <input type="text" id="zip-code" placeholder="Enter Zip/Postal Code" list="zip-code-history">
+                <datalist id="zip-code-history"></datalist>
+             </div>
+        </fieldset>
+
+        <!-- Section 3: Customizable Text Layers -->
+        <fieldset class="form-section">
+            <legend>Customizable Text Layers (Max 50 Chars)</legend>
+            <div id="text-layer-container">
+                <!-- Text Layer 1 -->
+                <div class="text-entry-wrapper">
+                    <label for="text-entry-1">#1:</label>
+                    <input type="text" class="text-entry" id="text-entry-1" placeholder="Main Title" maxlength="50" list="text-entry-1-history" required>
+                    <div class="font-controls">
+                        <select id="font-family-1" class="font-family-select"></select>
+                        <select id="font-size-1" class="font-size-select"></select>
+                        <span class="char-count" id="char-count-1">50</span>
+                        <div class="style-options">
+                            <label><input type="checkbox" id="text-bold-1"> Bold</label>
+                            <label><input type="checkbox" id="text-italic-1"> Italic</label>
+                        </div>
+                        <input type="text" id="font-color-1" value="#FFFFFF" style="display:none;"> <!-- Hide input -->
+                        <button type="button" class="color-swatch" data-target="font-color-1" aria-label="Font Color 1"></button>
+                    </div>
+                </div>
+                <!-- Text Layer 2 -->
+                 <div class="text-entry-wrapper">
+                     <label for="text-entry-2">#2:</label>
+                     <input type="text" class="text-entry" id="text-entry-2" placeholder="Subtitle" maxlength="50" list="text-entry-2-history" required>
+                     <div class="font-controls">
+                         <select id="font-family-2" class="font-family-select"></select>
+                         <select id="font-size-2" class="font-size-select"></select>
+                         <span class="char-count" id="char-count-2">50</span>
+                         <div class="style-options">
+                             <label><input type="checkbox" id="text-bold-2"> Bold</label>
+                             <label><input type="checkbox" id="text-italic-2"> Italic</label>
+                         </div>
+                         <input type="text" id="font-color-2" value="#FFFFFF" style="display:none;"> <!-- Hide input -->
+                         <button type="button" class="color-swatch" data-target="font-color-2" aria-label="Font Color 2"></button>
+                     </div>
+                 </div>
+                <!-- Text Layer 3 -->
+                 <div class="text-entry-wrapper">
+                     <label for="text-entry-3">#3:</label>
+                     <input type="text" class="text-entry" id="text-entry-3" placeholder="Additional text" maxlength="50" list="text-entry-3-history" required>
+                     <div class="font-controls">
+                         <select id="font-family-3" class="font-family-select"></select>
+                         <select id="font-size-3" class="font-size-select"></select>
+                         <span class="char-count" id="char-count-3">50</span>
+                         <div class="style-options">
+                             <label><input type="checkbox" id="text-bold-3"> Bold</label>
+                             <label><input type="checkbox" id="text-italic-3"> Italic</label>
+                         </div>
+                         <input type="text" id="font-color-3" value="#FFFFFF" style="display:none;"> <!-- Hide input -->
+                         <button type="button" class="color-swatch" data-target="font-color-3" aria-label="Font Color 3"></button>
+                     </div>
+                 </div>
+                <datalist id="text-entry-1-history"></datalist>
+                <datalist id="text-entry-2-history"></datalist>
+                <datalist id="text-entry-3-history"></datalist>
+            </div>
+        </fieldset>
+
+        <!-- Section 4: Fixed Text Styling -->
+        <fieldset class="form-section" id="fixed-text-styling-fieldset">
+            <legend>Fixed Text Styling</legend>
+                <div class="input-group">
+                    <label>Date Text:</label>
+                    <select id="fixed-font-family-date" class="font-family-select"></select>
+                    <select id="fixed-font-size-date" class="font-size-select"></select>
+                    <div class="style-options">
+                        <label><input type="checkbox" id="fixed-text-bold-date"> Bold</label>
+                        <label><input type="checkbox" id="fixed-text-italic-date"> Italic</label>
+                    </div>
+                    <input type="text" id="fixed-font-color-date" value="#FFFFFF" style="display:none;"> <!-- Hide input -->
+                    <button type="button" class="color-swatch" data-target="fixed-font-color-date" aria-label="Fixed Date Font Color"></button>
+                </div>
+                <div class="input-group">
+                    <label>Coordinates Text:</label>
+                    <select id="fixed-font-family-coords" class="font-family-select"></select>
+                    <select id="fixed-font-size-coords" class="font-size-select"></select>
+                    <div class="style-options">
+                        <label><input type="checkbox" id="fixed-text-bold-coords"> Bold</label>
+                        <label><input type="checkbox" id="fixed-text-italic-coords"> Italic</label>
+                    </div>
+                    <input type="text" id="fixed-font-color-coords" value="#FFFFFF" style="display:none;"> <!-- Hide input -->
+                    <button type="button" class="color-swatch" data-target="fixed-font-color-coords" aria-label="Fixed Coordinates Font Color"></button>
+                </div>
+        </fieldset>
+
+        <!-- Section 5: NEW Canvas Settings -->
+        <fieldset class="form-section" id="canvas-settings">
+            <legend>Star Map Canvas Settings</legend>
+            <div class="settings-row"> <!-- Row 1 -->
+                <label for="output-width">Width (px):</label>
+                <input type="number" id="output-width" value="1000" min="100">
+                <label for="output-height">Height (px):</label>
+                <input type="number" id="output-height" value="1000" min="100">
+                <label for="maintain-aspect-ratio"><input type="checkbox" id="maintain-aspect-ratio"> Aspect Ratio</label>
+                <label for="bg-color-canvas">Canvas Bg:</label>
+                <input type="text" id="bg-color-canvas" value="#F5F5DC" style="display:none;">
+                <button type="button" class="color-swatch" data-target="bg-color-canvas" aria-label="Star Map Canvas Background Color"></button>
+                <div class="radio-group">
+                    <label><input type="radio" name="dpi" value="150" checked> 150 DPI</label>
+                    <label><input type="radio" name="dpi" value="200"> 200 DPI</label>
+                    <label><input type="radio" name="dpi" value="300"> 300 DPI</label>
+                </div>
+            </div>
+            <div class="settings-row"> <!-- Row 2: Image Format -->
+                 <label>Image Format:</label>
+                 <div class="radio-group">
+                     <label><input type="radio" name="image-format" value="png" checked> PNG</label>
+                     <label for="png-transparency"><input type="checkbox" id="png-transparency"> Transparency</label>
+                     <label><input type="radio" name="image-format" value="jpg"> JPG</label>
+                     <label><input type="radio" name="image-format" value="svg"> SVG</label>
+                 </div>
+            </div>
+             <div class="settings-row"> <!-- Row 3: Star Map Style -->
+                 <label for="star-map-style">Star Map Style:</label>
+                 <select id="star-map-style">
+                     <option value="default" selected>Default</option>
+                     <option value="inverted">Inverted</option>
+                     <option value="navy">Navy</option>
+                     <option value="red">Red</option>
+                 </select>
+                 <button type="button" id="advanced-options-toggle">Advanced Options <i class="fas fa-chevron-down"></i></button>
+             </div>
+             <!-- Advanced Options Panel (Keep separate) -->
+             <div id="advanced-options-panel">
+                 <div class="section-title">Advanced Star Map Options</div>
+                 <div class="advanced-options-grid">
+                     <fieldset class="advanced-options-quadrant">
+                         <legend>Features</legend>
+                         <label><input type="checkbox" id="adv-show-milky-way" data-api-param="showMilkyWay" checked> Milky Way</label>
+                         <label><input type="checkbox" id="adv-show-constellation-lines" data-api-param="showConstellationLines" checked> Constellation Lines</label>
+                         <label><input type="checkbox" id="adv-show-stars-glow" data-api-param="showStarsGlow"> Stars Glow</label>
+                     </fieldset>
+                     <fieldset class="advanced-options-quadrant">
+                         <legend>Celestial Bodies</legend>
+                         <label><input type="checkbox" id="adv-show-moon" data-api-param="showMoon"> Moon</label>
+                         <label><input type="checkbox" id="adv-show-sun" data-api-param="showSun"> Sun</label>
+                         <label><input type="checkbox" id="adv-show-planets" data-api-param="showPlanets" checked> Planets</label>
+                         <label><input type="checkbox" id="adv-show-ecliptic-path" data-api-param="showEclipticPath"> Ecliptic Path</label>
+                     </fieldset>
+                     <fieldset class="advanced-options-quadrant">
+                         <legend>Labels</legend>
+                         <label><input type="checkbox" id="adv-show-planet-labels" data-api-param="showPlanetLabels" checked> Planet Labels</label>
+                         <label><input type="checkbox" id="adv-show-constellation-labels" data-api-param="showConstellationLabels"> Constellation Labels</label>
+                     </fieldset>
+                     <fieldset class="advanced-options-quadrant">
+                         <legend>Star Settings</legend>
+                         <label for="adv-star-size">Star Size: <span id="adv-star-size-value">1.0</span></label>
+                         <input type="range" id="adv-star-size" data-api-param="starSize" min="0.1" max="5" step="0.1" value="1.0">
+                         <label for="adv-star-number">Star Number: <span id="adv-star-number-value">2000</span></label>
+                         <input type="range" id="adv-star-number" data-api-param="starNumber" min="500" max="10000" step="100" value="2000">
+                         <label for="adv-const-line-width">Const. Line Width: <span id="adv-const-line-width-value">1.0</span></label>
+                         <input type="range" id="adv-const-line-width" data-api-param="constellationLineWidth" min="0.1" max="3" step="0.1" value="1.0">
+                     </fieldset>
+                 </div>
+                 <div class="advanced-options-buttons">
+                     <button type="button" id="apply-advanced-options" class="apply-button">Apply & Close</button>
+                     <button type="button" id="cancel-advanced-options" class="cancel-button">Cancel</button>
+                 </div>
+             </div>
+        </fieldset>
+
+        <!-- Section 7: Action Buttons -->
+        <div class="button-container">
+            <button id="loadSettingsBtn" type="button" class="settings-button load-button">LOAD SETTINGS</button>
+            <button id="saveSettingsBtn" type="button" class="settings-button save-button">SAVE SETTINGS</button>
+            <button type="button" id="generateBtn" disabled>PREVIEW MY STAR MAP</button>
+            <button type="button" id="downloadBtn" disabled>DOWNLOAD MY STAR MAP</button>
+        </div>
+
+        <!-- Section 8: Star Map Canvas & Zoom -->
+        <div class="form-section">
+            <div class="zoom-section">
+                <div class="zoom-container">
+                    <label for="zoom-slider">Zoom:</label>
+                    <input type="range" id="zoom-slider" min="50" max="200" value="100" class="zoom-slider">
+                    <span id="zoom-value">100</span>%
+                </div>
+            </div>
+            <canvas id="star-map-canvas" width="800" height="800"></canvas>
+        </div>
+
+    </form>
+
+    <!-- Loading Indicator -->
+    <div id="loading-indicator">
+        <div class="spinner"></div>
+        <div style="color: white; margin-top: 20px; font-weight: bold;">Generating Star Map...</div>
+    </div>
+
+    <!-- External Libraries -->
+    <!-- Add Custom HEX Picker JS -->
+    <script src="js/color-picker.js?v=1.1"></script>
+
+    <!-- Modular Scripts (Order Matters!) -->
+    <script src="js/utils.js?v=1.1"></script>
+    <script src="js/advanced_options.js?v=1.1"></script>
+    <script src="js/history.js?v=1.1"></script>
+    <script src="js/settings.js?v=1.1"></script>
+    <script src="js/picker_init.js?v=1.1"></script> <!-- New init script -->
+    <script src="js/svg_export.js?v=1.1"></script>
+    <script src="js/download.js?v=1.1"></script>
+    <script src="js/map.js?v=1.1"></script> <!-- Load map logic first -->
+    <script src="js/main_app.js?v=1.1"></script> <!-- Load main app logic after -->
+
+    <!-- Google Maps API -->
+    <script>
+        // Global function to be called by Google Maps API when loaded
+        function setGoogleMapsReady() {
+            console.log("Google Maps API script loaded and setGoogleMapsReady callback executed.");
+            window.googleMapsApiLoaded = true;
+            // We no longer try to trigger from here, main_app.js will handle it on DOMContentLoaded
+        }
+    </script>
+    <!-- Load Google Maps API, calling setGoogleMapsReady when done -->
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6nTxZzBMU7Gwk2zzrWJVO1vC88bvFajw&callback=setGoogleMapsReady&libraries=places,geometry"></script>
+
+    <!-- REMOVED Coloris Test Input - Cline - 2025-04-10 11:15 -->
+</body>
+</html>
+<!-- END OF CODE - Cline - 2025-04-13 11:42 File: Star_Map_Generator.html -->

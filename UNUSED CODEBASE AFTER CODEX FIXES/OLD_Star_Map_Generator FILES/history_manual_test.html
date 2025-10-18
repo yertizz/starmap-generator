@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>History System Manual Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .section {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            padding: 8px 15px;
+            background-color: #0056b3;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        input {
+            padding: 8px;
+            margin-right: 10px;
+            width: 250px;
+        }
+        pre {
+            background-color: #f5f5f5;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        .success {
+            color: green;
+            font-weight: bold;
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+        .history-suggestions {
+            position: absolute;
+            background-color: white;
+            border: 1px solid #ccc;
+            max-height: 160px;
+            overflow-y: auto;
+            z-index: 1001;
+            width: 250px;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+            display: none;
+        }
+        .suggestion-item {
+            padding: 6px 10px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+        }
+        .suggestion-item:hover {
+            background-color: #e9ecef;
+        }
+        .suggestion-item span {
+            flex-grow: 1;
+            margin-right: 10px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .delete-suggestion {
+            background: none;
+            border: none;
+            color: #dc3545;
+            cursor: pointer;
+            font-size: 1.2em;
+            font-weight: bold;
+            padding: 0 3px;
+            line-height: 1;
+            flex-shrink: 0;
+            opacity: 0.6;
+        }
+        .delete-suggestion:hover {
+            color: #a71d2a;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <h1>History System Manual Test</h1>
+    
+    <div class="section">
+        <h2>Test History Storage</h2>
+        <div>
+            <input type="text" id="key" placeholder="Storage Key (e.g., zipCodeHistory)">
+            <input type="text" id="value" placeholder="Value to Store">
+            <button id="add-btn">Add to History</button>
+        </div>
+        <div id="add-result"></div>
+    </div>
+    
+    <div class="section">
+        <h2>Retrieve History</h2>
+        <div>
+            <input type="text" id="retrieve-key" placeholder="Storage Key to Retrieve">
+            <button id="retrieve-btn">Get History</button>
+        </div>
+        <div id="retrieve-result"></div>
+        <pre id="history-data"></pre>
+    </div>
+    
+    <div class="section">
+        <h2>Clear History</h2>
+        <div>
+            <input type="text" id="clear-key" placeholder="Storage Key to Clear">
+            <button id="clear-btn">Clear History</button>
+        </div>
+        <div id="clear-result"></div>
+    </div>
+
+    <div class="section">
+        <h2>Test History Dropdown</h2>
+        <div style="position: relative;">
+            <input type="text" id="test-input" placeholder="Enter text here">
+            <div id="test-suggestions" class="history-suggestions" style="display: none;"></div>
+        </div>
+        <div id="dropdown-result"></div>
+    </div>
+
+    <script>
+        // Constants
+        const HISTORY_ENDPOINT = 'history/history_manager.php';
+        const MAX_HISTORY_LENGTH = 30;
+
+        // Add to History
+        document.getElementById('add-btn').addEventListener('click', async () => {
+            const key = document.getElementById('key').value.trim();
+            const value = document.getElementById('value').value.trim();
+            const resultElement = document.getElementById('add-result');
+            
+            if (!key || !value) {
+                resultElement.innerHTML = '<span class="error">Please enter both key and value</span>';
+                return;
+            }
+            
+            try {
+                // Get current history
+                let history = await getHistoryArray(key);
+                
+                // Add new value at the beginning
+                if (history.length > 0 && history[0] === value) {
+                    resultElement.innerHTML = '<span class="error">Value already exists at the top of history</span>';
+                    return;
+                }
+                
+                // Remove if exists elsewhere in the array
+                history = history.filter(item => item !== value);
+                
+                // Add to beginning
+                history.unshift(value);
+                
+                // Limit length
+                if (history.length > MAX_HISTORY_LENGTH) {
+                    history = history.slice(0, MAX_HISTORY_LENGTH);
+                }
+                
+                // Save history
+                const success = await saveHistoryArray(key, history);
+                
+                if (success) {
+                    resultElement.innerHTML = `<span class="success">Value "${value}" added to history for key "${key}"</span>`;
+                    // Update the retrieve key field
+                    document.getElementById('retrieve-key').value = key;
+                    // Trigger retrieve to show updated history
+                    document.getElementById('retrieve-btn').click();
+                } else {
+                    resultElement.innerHTML = `<span class="error">Failed to save history</span>`;
+                }
+            } catch (error) {
+                resultElement.innerHTML = `<span class="error">Error: ${error.message}</span>`;
+                console.error("Add history error:", error);
+            }
+        });
+
+        // Retrieve History
+        document.getElementById('retrieve-btn').addEventListener('click', async () => {
+            const key = document.getElementById('retrieve-key').value.trim();
+            const resultElement = document.getElementById('retrieve-result');
+            const dataElement = document.getElementById('history-data');
+            
+            if (!key) {
+                resultElement.innerHTML = '<span class="error">Please enter a key to retrieve</span>';
+                dataElement.textContent = '';
+                return;
+            }
+            
+            try {
+                const history = await getHistoryArray(key);
+                
+                if (history.length === 0) {
+                    resultElement.innerHTML = `<span class="error">No history found for key "${key}"</span>`;
+                    dataElement.textContent = '[]';
+                } else {
+                    resultElement.innerHTML = `<span class="success">Retrieved ${history.length} items for key "${key}"</span>`;
+                    dataElement.textContent = JSON.stringify(history, null, 2);
+                }
+            } catch (error) {
+                resultElement.innerHTML = `<span class="error">Error: ${error.message}</span>`;
+                dataElement.textContent = '';
+                console.error("Retrieve history error:", error);
+            }
+        });
+
+        // Clear History
+        document.getElementById('clear-btn').addEventListener('click', async () => {
+            const key = document.getElementById('clear-key').value.trim();
+            const resultElement = document.getElementById('clear-result');
+            
+            if (!key) {
+                resultElement.innerHTML = '<span class="error">Please enter a key to clear</span>';
+                return;
+            }
+            
+            try {
+                const success = await saveHistoryArray(key, []);
+                
+                if (success) {
+                    resultElement.innerHTML = `<span class="success">History cleared for key "${key}"</span>`;
+                    // Update the retrieve key field
+                    document.getElementById('retrieve-key').value = key;
+                    // Trigger retrieve to show updated history
+                    document.getElementById('retrieve-btn').click();
+                } else {
+                    resultElement.innerHTML = `<span class="error">Failed to clear history</span>`;
+                }
+            } catch (error) {
+                resultElement.innerHTML = `<span class="error">Error: ${error.message}</span>`;
+                console.error("Clear history error:", error);
+            }
+        });
+
+        // Test History Dropdown
+        const testInput = document.getElementById('test-input');
+        const testSuggestions = document.getElementById('test-suggestions');
+        const testStorageKey = 'test_dropdown_history';
+
+        // Setup focus event
+        testInput.addEventListener('focus', async () => {
+            await displayHistorySuggestions(testInput, testStorageKey, testSuggestions);
+        });
+
+        // Setup blur event
+        testInput.addEventListener('blur', () => {
+            setTimeout(() => {
+                const focusedElement = document.activeElement;
+                const isFocusInside = testSuggestions.contains(focusedElement) || 
+                                     focusedElement?.classList.contains('delete-suggestion');
+                if (!isFocusInside) {
+                    testSuggestions.style.display = 'none';
+                }
+            }, 300);
+        });
+
+        // Setup change event
+        testInput.addEventListener('change', async function() {
+            if (this.value.trim()) {
+                await addHistoryEntry(testStorageKey, this.value.trim());
+                document.getElementById('dropdown-result').innerHTML = 
+                    `<span class="success">Added "${this.value.trim()}" to history</span>`;
+            }
+        });
+
+        // Setup Enter key
+        testInput.addEventListener('keydown', async function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                if (this.value.trim()) {
+                    await addHistoryEntry(testStorageKey, this.value.trim());
+                    document.getElementById('dropdown-result').innerHTML = 
+                        `<span class="success">Added "${this.value.trim()}" to history</span>`;
+                    testSuggestions.style.display = 'none';
+                }
+            }
+        });
+
+        // Helper Functions
+        async function getHistoryArray(storageKey) {
+            try {
+                const response = await fetch(`${HISTORY_ENDPOINT}?key=${encodeURIComponent(storageKey)}`, {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Cache-Control': 'no-cache'
+                    }
+                });
+
+                if (!response.ok) {
+                    if (response.status === 404) {
+                        return []; // File not found is not an error, just no history yet
+                    }
+                    // Other errors
+                    const errorText = await response.text();
+                    throw new Error(`Server error (${response.status}): ${errorText}`);
+                }
+
+                const contentType = response.headers.get("content-type");
+                if (!contentType || !contentType.includes("application/json")) {
+                    const responseText = await response.text();
+                    throw new Error(`Received non-JSON response from history server: ${contentType}`);
+                }
+
+                const data = await response.json();
+
+                // Ensure the response is an array
+                if (!Array.isArray(data)) {
+                    // Attempt to recover if it's an object with an array property
+                    if (typeof data === 'object' && data !== null && Array.isArray(data.history)) {
+                        return data.history;
+                    }
+                    return []; // Return empty array if format is unexpected
+                }
+
+                return data;
+
+            } catch (error) {
+                console.error(`Error fetching history from server for key "${storageKey}":`, error);
+                return []; // Return empty array on error
+            }
+        }
+
+        async function saveHistoryArray(storageKey, historyArray) {
+            try {
+                const response = await fetch(HISTORY_ENDPOINT, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        key: storageKey,
+                        data: historyArray
+                    })
+                });
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    throw new Error(`Server error (${response.status}): ${errorText}`);
+                }
+
+                const result = await response.json();
+                if (!result.success) {
+                    throw new Error(result.message || 'Server reported an error during save.');
+                }
+
+                return true;
+
+            } catch (error) {
+                console.error(`Error saving history to server for key "${storageKey}":`, error);
+                return false;
+            }
+        }
+
+        async function addHistoryEntry(storageKey, value, limit = MAX_HISTORY_LENGTH) {
+            const trimmedValue = value?.trim();
+            if (!trimmedValue) {
+                return;
+            }
+
+            let history = await getHistoryArray(storageKey);
+
+            if (history.length > 0 && history[0] === trimmedValue) {
+                return;
+            }
+
+            history = history.filter(item => item !== trimmedValue);
+            history.unshift(trimmedValue);
+
+            if (history.length > limit) {
+                history = history.slice(0, limit);
+            }
+
+            await saveHistoryArray(storageKey, history);
+        }
+
+        async function removeHistoryEntry(storageKey, suggestionsContainer, valueToRemove, input) {
+            let history = await getHistoryArray(storageKey);
+            const originalLength = history.length;
+            history = history.filter(item => item !== valueToRemove);
+
+            if (history.length < originalLength) {
+                const success = await saveHistoryArray(storageKey, history);
+                if (success) {
+                    // Refresh the currently displayed list
+                    await displayHistorySuggestions(input, storageKey, suggestionsContainer);
+                }
+            }
+        }
+
+        async function displayHistorySuggestions(input, storageKey, suggestionsContainer) {
+            const history = await getHistoryArray(storageKey);
+            suggestionsContainer.innerHTML = '';
+
+            if (history.length > 0) {
+                history.forEach(item => {
+                    const itemDiv = document.createElement('div');
+                    itemDiv.className = 'suggestion-item';
+
+                    const textSpan = document.createElement('span');
+                    textSpan.textContent = item;
+                    textSpan.title = item;
+
+                    textSpan.addEventListener('click', () => {
+                        input.value = item;
+                        suggestionsContainer.style.display = 'none';
+                        input.dispatchEvent(new Event('change', { bubbles: true }));
+                    });
+
+                    const deleteBtn = document.createElement('button');
+                    deleteBtn.type = 'button';
+                    deleteBtn.className = 'delete-suggestion';
+                    deleteBtn.innerHTML = '&times;';
+                    deleteBtn.dataset.value = item;
+                    deleteBtn.title = `Remove "${item}" from history`;
+                    deleteBtn.addEventListener('click', async (e) => {
+                        e.stopPropagation();
+                        await removeHistoryEntry(storageKey, suggestionsContainer, item, input);
+                    });
+
+                    itemDiv.appendChild(textSpan);
+                    itemDiv.appendChild(deleteBtn);
+                    suggestionsContainer.appendChild(itemDiv);
+                });
+                suggestionsContainer.style.display = 'block';
+            } else {
+                suggestionsContainer.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>

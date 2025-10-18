@@ -1,0 +1,212 @@
+<!-- 
+CANVAS ZOOM SLIDER IMPLEMENTATION
+=================================
+
+Add this HTML code to your Star_Map_Generator.html file, right after the Image Format section
+and before the canvas display area.
+-->
+
+<!-- LOOK FOR THIS SECTION IN YOUR HTML FILE -->
+<!-- Image Format section ends with something like: -->
+<div class="form-section">
+    <label>Image Format:</label>
+    <label><input type="radio" name="image-format" value="png" checked> PNG</label>
+    <label><input type="checkbox" id="png-transparency"> (Transparency PNG Only)</label>
+    <!-- ... other format options ... -->
+</div>
+
+<!-- ========== ADD THE ZOOM SLIDER RIGHT HERE (AFTER IMAGE FORMAT) ========== -->
+
+<!-- Canvas Zoom Control -->
+<div class="form-section" style="padding: 10px; background-color: #f8f9fa; border-radius: 5px; margin: 10px 0;">
+    <div style="display: flex; align-items: center; gap: 15px;">
+        <label style="font-weight: bold; min-width: 60px;">Zoom:</label>
+        <input type="range" id="zoom-slider" min="50" max="200" value="100" 
+               style="flex: 1; margin: 0 10px;">
+        <span id="zoom-value" style="min-width: 50px; font-weight: bold;">100</span>
+        <span style="font-weight: bold;">%</span>
+    </div>
+</div>
+
+<!-- ========== END OF ZOOM SLIDER ========== -->
+
+<!-- Then your canvas display area follows -->
+<div class="canvas-container">
+    <canvas id="star-map-canvas"></canvas>
+</div>
+
+
+<!-- ================================================================ -->
+<!-- JAVASCRIPT CODE FOR ZOOM FUNCTIONALITY -->
+<!-- ================================================================ -->
+
+<!-- Add this JavaScript code to your existing scripts or create a new script section -->
+
+<script>
+/**
+ * Canvas Zoom Functionality
+ * Allows users to zoom in/out on the canvas preview
+ */
+(function() {
+    'use strict';
+    
+    console.log('Canvas Zoom: Initializing...');
+    
+    // Store the current zoom level
+    window.canvasZoomLevel = 100;
+    
+    /**
+     * Initialize zoom slider functionality
+     */
+    function initializeZoomSlider() {
+        const zoomSlider = document.getElementById('zoom-slider');
+        const zoomValue = document.getElementById('zoom-value');
+        
+        if (!zoomSlider || !zoomValue) {
+            console.error('Zoom slider elements not found');
+            return;
+        }
+        
+        // Update zoom value display when slider changes
+        zoomSlider.addEventListener('input', function() {
+            const value = parseInt(this.value);
+            zoomValue.textContent = value;
+            window.canvasZoomLevel = value;
+            
+            // Apply zoom to canvas
+            applyCanvasZoom(value);
+        });
+        
+        // Set initial zoom
+        applyCanvasZoom(100);
+        
+        console.log('Canvas Zoom: Slider initialized');
+    }
+    
+    /**
+     * Apply zoom to the canvas element
+     * @param {number} zoomPercent - Zoom percentage (50-200)
+     */
+    function applyCanvasZoom(zoomPercent) {
+        const canvas = document.getElementById('star-map-canvas');
+        if (!canvas) return;
+        
+        const scale = zoomPercent / 100;
+        
+        // Apply CSS transform for zoom
+        canvas.style.transform = `scale(${scale})`;
+        canvas.style.transformOrigin = 'center center';
+        
+        // Adjust container to prevent overflow
+        const container = canvas.parentElement;
+        if (container) {
+            if (zoomPercent > 100) {
+                // Add padding when zoomed in
+                const extraSpace = (scale - 1) * 50;
+                container.style.padding = `${20 + extraSpace}px`;
+                container.style.overflow = 'auto';
+            } else {
+                // Reset padding when zoomed out
+                container.style.padding = '20px';
+                container.style.overflow = 'visible';
+            }
+        }
+        
+        console.log(`Canvas Zoom: Applied ${zoomPercent}% zoom`);
+    }
+    
+    /**
+     * Reset zoom to 100%
+     */
+    window.resetCanvasZoom = function() {
+        const zoomSlider = document.getElementById('zoom-slider');
+        const zoomValue = document.getElementById('zoom-value');
+        
+        if (zoomSlider && zoomValue) {
+            zoomSlider.value = 100;
+            zoomValue.textContent = '100';
+            window.canvasZoomLevel = 100;
+            applyCanvasZoom(100);
+        }
+    };
+    
+    /**
+     * Get current zoom level for downloads
+     * Downloads should always use 100% zoom
+     */
+    window.getCanvasZoomForDownload = function() {
+        // Temporarily reset zoom for download
+        const currentZoom = window.canvasZoomLevel;
+        applyCanvasZoom(100);
+        
+        // Restore zoom after a delay
+        setTimeout(() => {
+            applyCanvasZoom(currentZoom);
+        }, 100);
+        
+        return 100;
+    };
+    
+    // Initialize when DOM is ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initializeZoomSlider);
+    } else {
+        // DOM already loaded
+        initializeZoomSlider();
+    }
+    
+})();
+</script>
+
+
+<!-- ================================================================ -->
+<!-- CSS STYLING FOR ZOOM SLIDER (Optional - for better appearance) -->
+<!-- ================================================================ -->
+
+<style>
+/* Zoom slider styling */
+#zoom-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 6px;
+    background: #ddd;
+    outline: none;
+    opacity: 0.8;
+    transition: opacity 0.2s;
+    border-radius: 3px;
+}
+
+#zoom-slider:hover {
+    opacity: 1;
+}
+
+#zoom-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    background: #4CAF50;
+    cursor: pointer;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+#zoom-slider::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    background: #4CAF50;
+    cursor: pointer;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* Canvas container with zoom support */
+.canvas-container {
+    position: relative;
+    transition: padding 0.3s ease;
+}
+
+#star-map-canvas {
+    transition: transform 0.3s ease;
+}
+</style>
