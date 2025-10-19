@@ -1,159 +1,21 @@
-/* START OF CODE - Emergent - 2024-10-19 [09:12:00-EST] File: js/settings-preview-download.js.txt */
+/* START OF CODE - Emergent - 2024-10-19 [09:15:00-EST] File: js/settings-preview-download.js.txt */
 
- /**
- * Settings + Preview + Download Section - PRODUCTION VERSION
+/**
+ * Settings + Preview + Download Section Functionality
  * 
- * FIXES:
- * - Replaced applyPreviewDisplayConstraints to prevent canvas stretching
- * - REMOVED text rendering from Star Map and Street Map (bare images for design use)
- * - KEPT text rendering ONLY for Canvas Layout and Combined views
- * - Fixed text positioning to prevent overlapping and duplication
- * - IMPLEMENTED clean border masking from scratch (borders hidden in overlap area)
- * - ADDED view tracking to prevent mismatched downloads
- * - ADDED Google Maps proxy to avoid CORS/canvas tainting issues
- * - COMPREHENSIVE alert system for user guidance
- * - PNG/JPG downloads fully working
+ * This script handles the functionality for all buttons in the Settings + Preview + Download section.
+ * It includes functions for:
+ * - Loading and saving settings
+ * - Viewing different map types (star map, street map, star map on canvas)
+ * - Downloading different map types
+ * - Viewing and downloading combined maps (star map + street map) in both landscape and portrait orientations
  */
-
-// Helper function to get backend URL for production deployment
-function getBackendUrl() {
-    // For production deployment on anythingpod.com
-    const currentHost = window.location.origin;
-    
-    // If we're on localhost, use the backend port
-    if (currentHost.includes('localhost') || currentHost.includes('127.0.0.1')) {
-        return 'http://localhost:8001';
-    }
-    
-    // For production on anythingpod.com, backend is at same domain
-    return currentHost;
-}
-
-// Track which view was last generated
-let lastGeneratedView = null;
 
 // Wait for DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', function() {
+    // Initialize the buttons once the DOM is loaded
     initializeButtons();
 });
-
-// --- FIXED: Display sizing helper that maintains aspect ratio ---
-function applyPreviewDisplayConstraints(zoomPercent) {
-    const canvas = document.getElementById('star-map-canvas');
-    if (!canvas) return;
-    
-    // Remove any explicit width/height styles to prevent stretching
-    canvas.style.width = '';
-    canvas.style.height = '';
-    
-    // Let CSS handle the sizing naturally
-    canvas.style.maxWidth = '100%';
-    canvas.style.maxHeight = '70vh';
-    canvas.style.objectFit = 'contain';
-    canvas.style.display = 'block';
-    canvas.style.margin = '0 auto';
-    
-    console.log('🔵 FIXED: Canvas display constraints applied without stretching');
-}
-
-// --- NEW: Text rendering helper for all views ---
-function renderTextLayers(ctx, centerX, centerY, radius, borderWidth) {
-    console.log('🔵 Rendering text layers...');
-    
-    const getEl = id => document.getElementById(id);
-    const getVal = (id, def) => getEl(id)?.value || def;
-    const getInt = (id, def) => parseInt(getVal(id, String(def))) || def;
-    const getChecked = id => getEl(id)?.checked || false;
-    const getRadioVal = (name, def) => {
-        const checkedRadio = document.querySelector(`input[name="${name}"]:checked`);
-        return checkedRadio ? checkedRadio.value : def;
-    };
-    
-    const dateValue = getVal("date", "");
-    const latFullFormatted = getVal("latitude", "");
-    const lonFullFormatted = getVal("longitude", "");
-    
-    // Collect all text data
-    const allTextData = [
-        { id: 'entry1', text: getVal('text-entry-1', ''), fontFamily: getVal('font-family-1', 'Montserrat'), fontSize: parseInt(getVal('font-size-1', '28')), fontColor: getVal('font-color-1', '#FFFFFF'), isBold: getChecked('text-bold-1'), isItalic: getChecked('text-italic-1'), order: parseInt(getVal('text-placement-order-1', '1')), position: getRadioVal('text-placement-pos-1', 'below') },
-        { id: 'entry2', text: getVal('text-entry-2', ''), fontFamily: getVal('font-family-2', 'Montserrat'), fontSize: parseInt(getVal('font-size-2', '16')), fontColor: getVal('font-color-2', '#FFFFFF'), isBold: getChecked('text-bold-2'), isItalic: getChecked('text-italic-2'), order: parseInt(getVal('text-placement-order-2', '2')), position: getRadioVal('text-placement-pos-2', 'below') },
-        { id: 'entry3', text: getVal('text-entry-3', ''), fontFamily: getVal('font-family-3', 'Montserrat'), fontSize: parseInt(getVal('font-size-3', '14')), fontColor: getVal('font-color-3', '#FFFFFF'), isBold: getChecked('text-bold-3'), isItalic: getChecked('text-italic-3'), order: parseInt(getVal('text-placement-order-3', '3')), position: getRadioVal('text-placement-pos-3', 'below') },
-        { id: 'entry4', text: getVal('text-entry-4', ''), fontFamily: getVal('font-family-4', 'Montserrat'), fontSize: parseInt(getVal('font-size-4', '14')), fontColor: getVal('font-color-4', '#FFFFFF'), isBold: getChecked('text-bold-4'), isItalic: getChecked('text-italic-4'), order: parseInt(getVal('text-placement-order-4', '4')), position: getRadioVal('text-placement-pos-4', 'below') },
-        { id: 'date', text: (typeof formatDate === 'function') ? formatDate(dateValue) : dateValue, fontFamily: getVal('fixed-font-family-date', 'Arial'), fontSize: parseInt(getVal('fixed-font-size-date', '14')), fontColor: getVal('fixed-font-color-date', '#FFFFFF'), isBold: getChecked('fixed-text-bold-date'), isItalic: getChecked('fixed-text-italic-date'), order: parseInt(getVal('text-placement-order-date', '5')), position: getRadioVal('text-placement-pos-date', 'below') },
-        { id: 'coords', text: `${latFullFormatted || '?'} | ${lonFullFormatted || '?'}`, fontFamily: getVal('fixed-font-family-coords', 'Arial'), fontSize: parseInt(getVal('fixed-font-size-coords', '14')), fontColor: getVal('fixed-font-color-coords', '#FFFFFF'), isBold: getChecked('fixed-text-bold-coords'), isItalic: getChecked('fixed-text-italic-coords'), order: parseInt(getVal('text-placement-order-coords', '6')), position: getRadioVal('text-placement-pos-coords', 'below') }
-    ];
-    
-    const dynamicTextMargin = radius * 0.10;
-    
-    ctx.textAlign = 'center';
-    const itemsToDraw = allTextData.filter(item => item.text && item.text.trim() !== '').sort((a, b) => a.order - b.order);
-    const aboveItems = itemsToDraw.filter(item => item.position === 'above');
-    const belowItems = itemsToDraw.filter(item => item.position === 'below');
-    
-    const applyFontStyle = (style) => {
-        const fontWeight = style.isBold ? 'bold' : 'normal';
-        const fontStyle = style.isItalic ? 'italic' : 'normal';
-        const sizeNum = parseInt(style.fontSize) || 14;
-        const sizeWithUnit = `${sizeNum}px`;
-        const safeFontFamily = style.fontFamily.includes(' ') ? `"${style.fontFamily}"` : style.fontFamily;
-        ctx.font = `${fontStyle} ${fontWeight} ${sizeWithUnit} ${safeFontFamily}`;
-        ctx.fillStyle = style.fontColor;
-        return sizeNum;
-    };
-    
-    const textSpacing = 1.2;
-    
-    // Draw items BELOW
-    let currentYBelow = centerY + radius + (borderWidth / 2) + dynamicTextMargin;
-    ctx.textBaseline = 'top';
-    belowItems.forEach((item) => {
-        const fontSize = applyFontStyle(item);
-        ctx.fillText(item.text, centerX, currentYBelow);
-        currentYBelow += fontSize * textSpacing;
-    });
-    
-    // Draw items ABOVE
-    let currentYAbove = centerY - radius - (borderWidth / 2) - dynamicTextMargin;
-    ctx.textBaseline = 'bottom';
-    [...aboveItems].reverse().forEach((item) => {
-        const fontSize = applyFontStyle(item);
-        ctx.fillText(item.text, centerX, currentYAbove);
-        currentYAbove -= fontSize * textSpacing;
-    });
-    
-    console.log(`🔵 Rendered ${itemsToDraw.length} text items (${aboveItems.length} above, ${belowItems.length} below)`);
-}
-
-// --- Helpers added by Codex ---
-function validateCoordinates() {
-    const latStr = (document.getElementById('latitude') || {}).value || '';
-    const lngStr = (document.getElementById('longitude') || {}).value || '';
-    let lat, lng;
-    if (typeof parseFormattedCoordinate === 'function') {
-        lat = parseFormattedCoordinate(latStr, 'latitude');
-        lng = parseFormattedCoordinate(lngStr, 'longitude');
-    } else {
-        lat = parseFloat(latStr);
-        lng = parseFloat(lngStr);
-    }
-    return !isNaN(lat) && !isNaN(lng);
-}
-
-function resetCanvasToUserDimensions() {
-    const canvas = document.getElementById('star-map-canvas');
-    const widthInput = document.getElementById('output-width');
-    const heightInput = document.getElementById('output-height');
-    const width = parseInt(widthInput && widthInput.value) || canvas.width || 800;
-    const height = parseInt(heightInput && heightInput.value) || canvas.height || 800;
-    canvas.width = width;
-    canvas.height = height;
-    
-    // FIXED: Apply display constraints without stretching
-    const zoomSlider = document.getElementById('zoom-slider');
-    applyPreviewDisplayConstraints(zoomSlider ? zoomSlider.value : 100);
-    
-    return { width, height };
-}
 
 /**
  * Initialize all buttons in the Settings + Preview + Download section
@@ -161,9 +23,11 @@ function resetCanvasToUserDimensions() {
 function initializeButtons() {
     console.log("Initializing Settings + Preview + Download buttons");
     
-    // Settings buttons
+    // Settings buttons (already implemented in settings.js)
+    // Connect to the original button IDs to maintain compatibility
     document.getElementById('loadSettingsBtn').addEventListener('click', function() {
         console.log("Load Settings button clicked");
+        // Call the existing loadSavedSettings function from settings.js
         if (typeof loadSavedSettings === 'function') {
             loadSavedSettings();
         } else {
@@ -173,6 +37,7 @@ function initializeButtons() {
     
     document.getElementById('saveSettingsBtn').addEventListener('click', function() {
         console.log("Save Settings button clicked");
+        // Call the existing saveCurrentSettings function from settings.js
         if (typeof saveCurrentSettings === 'function') {
             saveCurrentSettings();
         } else {
@@ -197,48 +62,46 @@ function initializeButtons() {
 
 /**
  * View the star map (just the star map itself, not on canvas)
- * FIXED VERSION - Uses arc() for perfect circles
  */
 function viewStarMap() {
-    console.log("🔵 View Star Map button clicked - FIXED VERSION");
+    console.log("View Star Map button clicked");
     
+    // First, check if we have valid coordinates
     if (!validateCoordinates()) {
         alert("Please enter valid coordinates or a location first.");
         return;
     }
     
-    lastGeneratedView = 'star-map'; // Track this view
-    console.log("✅ Set lastGeneratedView to: star-map");
-    
-    const dimensions = resetCanvasToUserDimensions();
+    // Show a warning message that this may take a while
     alert("Computing star map. This may take a while depending on your internet connection.");
     
+    // Store the current view type to handle zoom correctly
     window.currentViewType = 'star-map';
     
+    // Get the canvas and context
     const canvas = document.getElementById('star-map-canvas');
     const ctx = canvas.getContext('2d');
     
+    // Clear the canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     
+    // Draw a background
     const bgColor = document.getElementById('bg-color-canvas').value || '#F5F5DC';
     ctx.fillStyle = bgColor;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     
+    // Get the circle radius
     const radiusPercent = parseInt(document.getElementById('circle-radius-percent').value) || 60;
+    const radius = Math.min(canvas.width, canvas.height) * (radiusPercent / 100) / 2;
     
-    // FIXED: Use single radius for perfect circle
-    const minDim = Math.min(canvas.width, canvas.height);
-    const radius = (minDim * radiusPercent) / 200;
-    
+    // Calculate center position
     const centerX = canvas.width / 2;
     const centerY = canvas.height / 2;
     
-    console.log(`🔵 PERFECT CIRCLE: radius=${radius}, center=${centerX},${centerY}`);
-    
+    // Draw the circle border first (in case the image fails to load)
     const borderWidth = parseInt(document.getElementById('border-width').value) || 1;
     const borderColor = document.getElementById('border-color').value || '#FFFFFF';
     
-    // Draw border with arc (perfect circle)
     if (borderWidth > 0) {
         ctx.beginPath();
         ctx.arc(centerX, centerY, radius, 0, Math.PI * 2, true);
@@ -248,24 +111,30 @@ function viewStarMap() {
         ctx.stroke();
     }
     
-    // Create circular clipping path with arc (perfect circle)
+    // Create a circular clipping path
     ctx.save();
     ctx.beginPath();
     ctx.arc(centerX, centerY, radius, 0, Math.PI * 2, true);
     ctx.closePath();
     ctx.clip();
     
-    // Get coordinates
+    // Get the latitude and longitude
     const latString = document.getElementById('latitude').value;
     const lngString = document.getElementById('longitude').value;
     
+    // Parse the coordinates to decimal format
     let lat, lng;
     if (typeof parseFormattedCoordinate === 'function') {
         lat = parseFormattedCoordinate(latString, 'latitude');
         lng = parseFormattedCoordinate(lngString, 'longitude');
+    } else if (typeof parseDMM === 'function') {
+        lat = parseDMM(latString);
+        lng = parseDMM(lngString);
     } else {
+        // Simple fallback parsing if neither function is available
         const parseCoord = (str) => {
             if (!str) return null;
+            // Try to extract decimal degrees from DMM format
             const match = str.match(/([NS])(\d+)°\s+(\d+\.\d+)′/i);
             if (match) {
                 const direction = match[1].toUpperCase();
@@ -275,8 +144,10 @@ function viewStarMap() {
                 if (direction === 'S') decimal = -decimal;
                 return decimal;
             }
+            // Try simple decimal parsing
             return parseFloat(str);
         };
+        
         lat = parseCoord(latString);
         lng = parseCoord(lngString);
     }
@@ -284,537 +155,206 @@ function viewStarMap() {
     if (isNaN(lat) || isNaN(lng)) {
         console.error("Failed to parse coordinates:", latString, lngString);
         alert("Invalid coordinates format. Please check your input.");
-        ctx.restore();
+        ctx.restore(); // Restore context before returning
         return;
     }
     
-    // Fetch and render star map
+    // Get the date
     const date = document.getElementById('date').value || new Date().toISOString().split('T')[0];
+    
+    // Get the star map style
     const starMapStyle = document.getElementById('star-map-style').value || 'default';
     
-    let lstHours = 0;
+    // Calculate LST for Right Ascension
+    let lstHours;
     if (typeof calculateLST === 'function') {
         lstHours = calculateLST(date, lng);
-        if (isNaN(lstHours)) lstHours = 0;
+        if (isNaN(lstHours)) {
+            console.error("Could not calculate LST");
+            lstHours = 0; // Default to 0 if calculation fails
+        }
+    } else {
+        console.warn("calculateLST function not found, using default LST");
+        lstHours = 0; // Default LST if function not available
     }
     
+    // Prepare API Request Body for the star map
+    const API_IMAGE_SIZE = 1000; // Higher resolution for better quality
     const requestBody = {
         style: starMapStyle,
-        output: { width: 1000, height: 1000, format: "png" },
+        output: {
+            width: API_IMAGE_SIZE,
+            height: API_IMAGE_SIZE,
+            format: "png"
+        },
         observer: { latitude: lat, longitude: lng, date: date },
         view: {
             type: "area",
             parameters: {
-                position: { equatorial: { rightAscension: lstHours, declination: lat } },
-                backgroundColor: "#000033"
+                position: {
+                    equatorial: {
+                        rightAscension: lstHours,
+                        declination: lat
+                    }
+                },
+                backgroundColor: "#000033" // Navy blue background
             }
         }
     };
     
+    console.log("Sending request to PHP proxy for star map:", JSON.stringify(requestBody, null, 2));
+    
+    // Fetch the star map image from the proxy
     fetch('proxy/star_map_proxy.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Accept': 'image/png' },
         body: JSON.stringify(requestBody)
     })
     .then(response => {
-        if (!response.ok) throw new Error(`Proxy error: ${response.status}`);
+        if (!response.ok) {
+            throw new Error(`Proxy error: ${response.status} ${response.statusText}`);
+        }
         return response.blob();
     })
     .then(blob => {
+        // Create an image from the blob
         const starMapUrl = URL.createObjectURL(blob);
         const img = new Image();
         img.crossOrigin = "Anonymous";
         
         img.onload = function() {
-            // Scale to fill the circle
-            const scale = Math.max(radius * 2 / img.width, radius * 2 / img.height);
-            const drawWidth = img.width * scale;
-            const drawHeight = img.height * scale;
+            // Draw the star map image on our canvas, centered and scaled to fit the circle
+            const aspectRatio = img.width / img.height;
+            let drawWidth, drawHeight;
             
-            ctx.drawImage(img, centerX - drawWidth / 2, centerY - drawHeight / 2, drawWidth, drawHeight);
+            if (aspectRatio > 1) {
+                // Image is wider than tall
+                drawHeight = radius * 2;
+                drawWidth = drawHeight * aspectRatio;
+            } else {
+                // Image is taller than wide
+                drawWidth = radius * 2;
+                drawHeight = drawWidth / aspectRatio;
+            }
+            
+            // Draw the image centered in the circle
+            ctx.drawImage(
+                img, 
+                centerX - drawWidth / 2, 
+                centerY - drawHeight / 2, 
+                drawWidth, 
+                drawHeight
+            );
+            
+            // Restore the canvas context
             ctx.restore();
             
-            // NO TEXT LAYERS - Star Map is bare image for design use
-            
+            // Enable the download button
             document.getElementById('download-star-map-btn').disabled = false;
-            applyPreviewDisplayConstraints(document.getElementById('zoom-slider')?.value || 100);
-            console.log("🔵 Star map rendered with PERFECT CIRCLE");
+            
+            console.log("Star map image loaded and drawn successfully");
+            
+            // Revoke the object URL to free up memory
             URL.revokeObjectURL(starMapUrl);
         };
         
         img.onerror = function() {
-            console.error("Failed to load star map image");
+            console.error("Failed to load star map image from blob");
             ctx.restore();
+            
+            // Draw a fallback star map (navy blue circle)
             ctx.beginPath();
             ctx.arc(centerX, centerY, radius, 0, Math.PI * 2, true);
-            ctx.fillStyle = "#000033";
+            ctx.fillStyle = "#000033"; // Navy blue
             ctx.fill();
+            
+            // Redraw the border
+            if (borderWidth > 0) {
+                ctx.beginPath();
+                ctx.arc(centerX, centerY, radius, 0, Math.PI * 2, true);
+                ctx.closePath();
+                ctx.lineWidth = borderWidth;
+                ctx.strokeStyle = borderColor;
+                ctx.stroke();
+            }
+            
+            // Enable the download button even if the image failed to load
             document.getElementById('download-star-map-btn').disabled = false;
+            
+            // Show an error message
             alert("Failed to load star map image. Check your internet connection.");
         };
         
+        // Set the star map image source to the blob URL
         img.src = starMapUrl;
     })
     .catch(error => {
-        console.warn("Proxy failed; drawing fallback:", error);
-        try {
-            const numStars = 1500;
-            for (let i = 0; i < numStars; i++) {
-                const a = Math.random() * Math.PI * 2;
-                const d = Math.random() * (radius * 0.98);
-                const x = centerX + Math.cos(a) * d;
-                const y = centerY + Math.sin(a) * d;
-                const r = Math.random() * 1.2 + 0.2;
-                const o = 0.5 + Math.random() * 0.5;
-                ctx.fillStyle = `rgba(255,255,255,${o.toFixed(2)})`;
-                ctx.beginPath();
-                ctx.arc(x, y, r, 0, Math.PI * 2);
-                ctx.fill();
-            }
-            ctx.restore();
-            
-            // NO TEXT LAYERS - Star Map is bare image for design use
-            
-            document.getElementById('download-star-map-btn').disabled = false;
-        } catch (e) {
-            console.error('Fallback failed:', e);
-            ctx.restore();
-        }
-    });
-}
-
-/**
- * View the star map using the Canvas Layout option
- * This version INCLUDES text layers (unlike bare Star Map button)
- */
-function viewStarMapOnCanvas() {
-    console.log('🔵 View Star Map (Canvas Layout) clicked - WITH TEXT');
-    
-    if (!validateCoordinates()) {
-        alert("Please enter valid coordinates or a location first.");
-        return;
-    }
-    
-    lastGeneratedView = 'star-map-canvas'; // Track this view
-    console.log("✅ Set lastGeneratedView to: star-map-canvas");
-    
-    const dimensions = resetCanvasToUserDimensions();
-    alert("Computing star map. This may take a while depending on your internet connection.");
-    
-    window.currentViewType = 'star-map-canvas';
-    
-    const canvas = document.getElementById('star-map-canvas');
-    const ctx = canvas.getContext('2d');
-    
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
-    const bgColor = document.getElementById('bg-color-canvas').value || '#F5F5DC';
-    ctx.fillStyle = bgColor;
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    
-    const radiusPercent = parseInt(document.getElementById('circle-radius-percent').value) || 60;
-    const minDim = Math.min(canvas.width, canvas.height);
-    const radius = (minDim * radiusPercent) / 200;
-    
-    const centerX = canvas.width / 2;
-    const centerY = canvas.height / 2;
-    
-    const borderWidth = parseInt(document.getElementById('border-width').value) || 1;
-    const borderColor = document.getElementById('border-color').value || '#FFFFFF';
-    
-    if (borderWidth > 0) {
+        console.error("Error fetching star map:", error);
+        ctx.restore();
+        
+        // Draw a fallback star map (navy blue circle)
         ctx.beginPath();
         ctx.arc(centerX, centerY, radius, 0, Math.PI * 2, true);
-        ctx.closePath();
-        ctx.lineWidth = borderWidth;
-        ctx.strokeStyle = borderColor;
-        ctx.stroke();
-    }
-    
-    ctx.save();
-    ctx.beginPath();
-    ctx.arc(centerX, centerY, radius, 0, Math.PI * 2, true);
-    ctx.closePath();
-    ctx.clip();
-    
-    const latString = document.getElementById('latitude').value;
-    const lngString = document.getElementById('longitude').value;
-    
-    let lat, lng;
-    if (typeof parseFormattedCoordinate === 'function') {
-        lat = parseFormattedCoordinate(latString, 'latitude');
-        lng = parseFormattedCoordinate(lngString, 'longitude');
-    } else {
-        const parseCoord = (str) => {
-            if (!str) return null;
-            const match = str.match(/([NS])(\d+)°\s+(\d+\.\d+)′/i);
-            if (match) {
-                const direction = match[1].toUpperCase();
-                const degrees = parseInt(match[2]);
-                const minutes = parseFloat(match[3]);
-                let decimal = degrees + (minutes / 60);
-                if (direction === 'S') decimal = -decimal;
-                return decimal;
-            }
-            return parseFloat(str);
-        };
-        lat = parseCoord(latString);
-        lng = parseCoord(lngString);
-    }
-    
-    if (isNaN(lat) || isNaN(lng)) {
-        console.error("Failed to parse coordinates:", latString, lngString);
-        alert("Invalid coordinates format. Please check your input.");
-        ctx.restore();
-        return;
-    }
-    
-    const date = document.getElementById('date').value || new Date().toISOString().split('T')[0];
-    const starMapStyle = document.getElementById('star-map-style').value || 'default';
-    
-    let lstHours = 0;
-    if (typeof calculateLST === 'function') {
-        lstHours = calculateLST(date, lng);
-        if (isNaN(lstHours)) lstHours = 0;
-    }
-    
-    const requestBody = {
-        style: starMapStyle,
-        output: { width: 1000, height: 1000, format: "png" },
-        observer: { latitude: lat, longitude: lng, date: date },
-        view: {
-            type: "area",
-            parameters: {
-                position: { equatorial: { rightAscension: lstHours, declination: lat } },
-                backgroundColor: "#000033"
-            }
+        ctx.fillStyle = "#000033"; // Navy blue
+        ctx.fill();
+        
+        // Redraw the border
+        if (borderWidth > 0) {
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, radius, 0, Math.PI * 2, true);
+            ctx.closePath();
+            ctx.lineWidth = borderWidth;
+            ctx.strokeStyle = borderColor;
+            ctx.stroke();
         }
-    };
-    
-    fetch('proxy/star_map_proxy.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'image/png' },
-        body: JSON.stringify(requestBody)
-    })
-    .then(response => {
-        if (!response.ok) throw new Error(`Proxy error: ${response.status}`);
-        return response.blob();
-    })
-    .then(blob => {
-        const starMapUrl = URL.createObjectURL(blob);
-        const img = new Image();
-        img.crossOrigin = "Anonymous";
         
-        img.onload = function() {
-            const scale = Math.max(radius * 2 / img.width, radius * 2 / img.height);
-            const drawWidth = img.width * scale;
-            const drawHeight = img.height * scale;
-            
-            ctx.drawImage(img, centerX - drawWidth / 2, centerY - drawHeight / 2, drawWidth, drawHeight);
-            ctx.restore();
-            
-            // CANVAS LAYOUT INCLUDES TEXT LAYERS
-            renderTextLayers(ctx, centerX, centerY, radius, borderWidth);
-            
-            document.getElementById('download-star-map-canvas-btn').disabled = false;
-            applyPreviewDisplayConstraints(document.getElementById('zoom-slider')?.value || 100);
-            console.log("🔵 Canvas Layout rendered with text layers");
-            URL.revokeObjectURL(starMapUrl);
-        };
+        // Enable the download button even if the image failed to load
+        document.getElementById('download-star-map-btn').disabled = false;
         
-        img.onerror = function() {
-            console.error("Failed to load star map image");
-            ctx.restore();
-            renderTextLayers(ctx, centerX, centerY, radius, borderWidth);
-            document.getElementById('download-star-map-canvas-btn').disabled = false;
-            alert("Failed to load star map image. Check your internet connection.");
-        };
-        
-        img.src = starMapUrl;
-    })
-    .catch(error => {
-        console.warn("Proxy failed; drawing fallback:", error);
-        try {
-            const numStars = 1500;
-            for (let i = 0; i < numStars; i++) {
-                const a = Math.random() * Math.PI * 2;
-                const d = Math.random() * (radius * 0.98);
-                const x = centerX + Math.cos(a) * d;
-                const y = centerY + Math.sin(a) * d;
-                const r = Math.random() * 1.2 + 0.2;
-                const o = 0.5 + Math.random() * 0.5;
-                ctx.fillStyle = `rgba(255,255,255,${o.toFixed(2)})`;
-                ctx.beginPath();
-                ctx.arc(x, y, r, 0, Math.PI * 2);
-                ctx.fill();
-            }
-            ctx.restore();
-            renderTextLayers(ctx, centerX, centerY, radius, borderWidth);
-            document.getElementById('download-star-map-canvas-btn').disabled = false;
-        } catch (e) {
-            console.error('Fallback failed:', e);
-            ctx.restore();
-        }
+        // Show an error message
+        alert("Error fetching star map: " + error.message);
     });
-}
-
-// --- Shared helpers for combined views ---
-function getParsedCoords() {
-    const latStr = (document.getElementById('latitude') || {}).value || '';
-    const lngStr = (document.getElementById('longitude') || {}).value || '';
-    let lat, lng;
-    if (typeof parseFormattedCoordinate === 'function') {
-        lat = parseFormattedCoordinate(latStr, 'latitude');
-        lng = parseFormattedCoordinate(lngStr, 'longitude');
-    } else {
-        lat = parseFloat(latStr);
-        lng = parseFloat(lngStr);
-    }
-    return { lat, lng };
-}
-
-function fetchStarPng(lat, lng, dim) {
-    const date = (document.getElementById('date') || {}).value || new Date().toISOString().split('T')[0];
-    const style = (document.getElementById('star-map-style') || {}).value || 'default';
-    let lstHours = 0;
-    if (typeof calculateLST === 'function') {
-        lstHours = calculateLST(date, lng);
-        if (isNaN(lstHours)) lstHours = 0;
-    }
-    const body = {
-        style,
-        output: { width: dim, height: dim, format: 'png' },
-        observer: { latitude: lat, longitude: lng, date },
-        view: { type: 'area', parameters: { position: { equatorial: { rightAscension: lstHours, declination: lat } }, backgroundColor: '#000033' } }
-    };
-    return fetch('proxy/star_map_proxy.php', {
-        method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'image/png' }, body: JSON.stringify(body)
-    }).then(r => { if (!r.ok) throw new Error('star proxy ' + r.status); return r.blob(); })
-      .then(blob => new Promise((res, rej) => { const img = new Image(); img.onload = () => res(img); img.onerror = rej; img.src = URL.createObjectURL(blob); }));
-}
-
-function fetchStreetPng(lat, lng, dim) {
-    // Use backend proxy to avoid CORS issues with canvas downloads
-    const backendUrl = getBackendUrl();
-    const markers = `color:red|${lat},${lng}`;
-    const apiKey = 'AIzaSyCpvv1IJYxwGVMh24MLFDH6LmupseApSZU';
-    const url = `https://maps.googleapis.com/maps/api/staticmap?center=${lat},${lng}&zoom=12&size=${dim}x${dim}&maptype=roadmap&markers=${encodeURIComponent(markers)}&key=${apiKey}`;
-    
-    console.log('🔵 Fetching street map via direct API:', url);
-    
-    return new Promise((res, rej) => { 
-        const img = new Image(); 
-        img.crossOrigin = "anonymous";
-        img.onload = () => {
-            console.log('✅ Street map loaded via direct API');
-            res(img);
-        }; 
-        img.onerror = (e) => {
-            console.error('❌ Street map load failed:', e);
-            rej(e);
-        }; 
-        img.src = url; 
-    });
-}
-
-// FIXED: drawImageInCircle uses arc() for perfect circles
-function drawImageInCircle(ctx, img, cx, cy, r) {
-    ctx.save();
-    ctx.beginPath();
-    ctx.arc(cx, cy, r, 0, Math.PI * 2, true);  // Perfect circle
-    ctx.closePath();
-    ctx.clip();
-    
-    // Scale to fill circle
-    const scale = Math.max(r * 2 / img.width, r * 2 / img.height);
-    const drawW = img.width * scale;
-    const drawH = img.height * scale;
-    
-    ctx.drawImage(img, cx - drawW / 2, cy - drawH / 2, drawW, drawH);
-    ctx.restore();
-    
-    console.log(`🔵 Drew image in PERFECT CIRCLE at (${cx}, ${cy}) radius=${r}`);
-}
-
-function viewCombined(isLandscape) {
-    console.log('🔵 View Combined clicked, landscape=', isLandscape);
-    if (!validateCoordinates()) { alert('Please enter valid coordinates first.'); return; }
-    
-    const { width, height } = resetCanvasToUserDimensions();
-    const canvas = document.getElementById('star-map-canvas');
-    const ctx = canvas.getContext('2d');
-    
-    const bgColor = (document.getElementById('bg-color-canvas') || {}).value || '#F5F5DC';
-    console.log(`🔵 Retrieved bgColor: ${bgColor} for ${isLandscape ? 'LANDSCAPE' : 'PORTRAIT'}`);
-
-    // Set canvas dimensions based on button clicked
-    // Setting dimensions automatically clears the canvas
-    if (isLandscape) {
-        canvas.width = Math.max(width, height);
-        canvas.height = Math.min(width, height);
-    } else {
-        canvas.width = Math.min(width, height);
-        canvas.height = Math.max(width, height);
-    }
-    
-    console.log(`🔵 Canvas dimensions set to: ${canvas.width} x ${canvas.height}`);
-    
-    // Fill with background color immediately after setting dimensions
-    ctx.fillStyle = bgColor; 
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    console.log(`🔵 Background filled with color: ${bgColor}`);
-
-    // FIXED: Use smaller radius for portrait to leave text space
-    const radiusPercent = isLandscape ? 
-        parseInt((document.getElementById('circle-radius-percent') || {}).value) || 60 : 
-        50; // Force 50% for portrait mode to ensure text space
-    
-    console.log(`🔵 Radius: ${radiusPercent}% for ${isLandscape ? 'LANDSCAPE' : 'PORTRAIT'}`);
-    
-    const minDim = Math.min(canvas.width, canvas.height);
-    const r = (minDim * radiusPercent) / 200;
-    
-    const overlap = parseInt((document.getElementById('circle-overlap-percent') || {}).value) || 10;
-    const sep = (2 * r) * (1 - (Math.max(0, Math.min(100, overlap)) / 100));
-    const streetFirst = (function(){ const radio = document.querySelector('input[name="map-order"]:checked'); return radio ? (radio.value === 'street-first') : true; })();
-    const center = { x: canvas.width / 2, y: canvas.height / 2 };
-    const c1 = isLandscape ? { x: center.x - sep / 2, y: center.y } : { x: center.x, y: center.y - sep / 2 };
-    const c2 = isLandscape ? { x: center.x + sep / 2, y: center.y } : { x: center.x, y: center.y + sep / 2 };
-    
-    console.log(`🔵 Combined view: ${isLandscape ? 'LANDSCAPE' : 'PORTRAIT'}, radius=${r}`);
-    
-    const { lat, lng } = getParsedCoords();
-    const dim = Math.min(640, Math.round(r * 2));
-    
-    const borderWidth = parseInt((document.getElementById('border-width') || {}).value) || 2;
-    const borderColor = (document.getElementById('border-color') || {}).value || '#FDCA0D';
-
-    // Fetch both images
-    Promise.all([fetchStreetPng(lat, lng, dim), fetchStarPng(lat, lng, dim)])
-        .then(([streetImg, starImg]) => {
-            // Draw Street Map at c1
-            drawImageInCircle(ctx, streetImg, c1.x, c1.y, r);
-            
-            // Draw Star Map at c2 (on top)
-            drawImageInCircle(ctx, starImg, c2.x, c2.y, r);
-            
-            // Draw borders with masking using composite operation
-            if (borderWidth > 0) {
-                // Create temporary canvas
-                const tempCanvas = document.createElement('canvas');
-                tempCanvas.width = canvas.width;
-                tempCanvas.height = canvas.height;
-                const tempCtx = tempCanvas.getContext('2d');
-                
-                // Draw both borders on temp canvas
-                tempCtx.strokeStyle = borderColor;
-                tempCtx.lineWidth = borderWidth;
-                tempCtx.beginPath();
-                tempCtx.arc(c1.x, c1.y, r, 0, Math.PI * 2);
-                tempCtx.stroke();
-                tempCtx.beginPath();
-                tempCtx.arc(c2.x, c2.y, r, 0, Math.PI * 2);
-                tempCtx.stroke();
-                
-                // Erase the overlap area from BOTH borders
-                tempCtx.globalCompositeOperation = 'destination-out';
-                tempCtx.fillStyle = 'black';
-                
-                // Calculate intersection and erase it
-                // Erase a region that covers where both circles overlap
-                const distance = Math.sqrt(Math.pow(c2.x - c1.x, 2) + Math.pow(c2.y - c1.y, 2));
-                if (distance < 2 * r) {
-                    // Circles overlap - erase almost to outer edge to remove all border slivers
-                    // Erase to outer edge minus 1 pixel
-                    tempCtx.beginPath();
-                    tempCtx.arc(c1.x, c1.y, r - 1, 0, Math.PI * 2);
-                    tempCtx.fill();
-                    // Erase circle 2 to outer edge minus 1 pixel
-                    tempCtx.beginPath();
-                    tempCtx.arc(c2.x, c2.y, r - 1, 0, Math.PI * 2);
-                    tempCtx.fill();
-                }
-                
-                // Copy the result to main canvas
-                ctx.drawImage(tempCanvas, 0, 0);
-            }
-            
-            // Text rendering - use actual circle radius for consistent positioning
-            const canvasCenterX = canvas.width / 2;
-            const canvasCenterY = canvas.height / 2;
-            
-            // For PORTRAIT: Push text further from circles (higher above, lower below)
-            let textRadius = r;
-            if (!isLandscape) {
-                // Portrait: INCREASE radius by 80% to push text further out
-                textRadius = r * 1.80;
-                console.log(`🔵 Portrait mode: Increased text radius to ${textRadius.toFixed(0)}px (from ${r.toFixed(0)}px)`);
-            }
-            
-            renderTextLayers(ctx, canvasCenterX, canvasCenterY, textRadius, borderWidth);
-            
-            applyPreviewDisplayConstraints(document.getElementById('zoom-slider')?.value || 100);
-            console.log('🔵 Combined view complete');
-        })
-        .catch(e => { 
-            console.error('Combined view error:', e); 
-            alert('Failed to render combined view. Error: ' + e.message); 
-        });
-}
-
-function viewStarStreetLandscape(){ 
-    lastGeneratedView = 'star-street-landscape'; // Track this view
-    console.log("✅ Set lastGeneratedView to: star-street-landscape");
-    viewCombined(true); 
-}
-function viewStarStreetPortrait(){ 
-    lastGeneratedView = 'star-street-portrait'; // Track this view
-    console.log("✅ Set lastGeneratedView to: star-street-portrait");
-    viewCombined(false); 
 }
 
 /**
  * View the street map (Google Map) in a circle
- * FIXED VERSION - Uses arc() for perfect circles
  */
 function viewStreetMap() {
-    console.log("🔵 View Street Map button clicked - FIXED VERSION");
+    console.log("View Street Map button clicked");
     
+    // First, check if we have valid coordinates
     if (!validateCoordinates()) {
         alert("Please enter valid coordinates or a location first.");
         return;
     }
     
-    lastGeneratedView = 'street-map'; // Track this view
-    console.log("✅ Set lastGeneratedView to: street-map");
-    
-    const dimensions = resetCanvasToUserDimensions();
+    // Store the current view type to handle zoom correctly
     window.currentViewType = 'street-map';
     
+    // Get the canvas and context
     const canvas = document.getElementById('star-map-canvas');
     const ctx = canvas.getContext('2d');
     
+    // Clear the canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     
+    // Draw a background
     const bgColor = document.getElementById('bg-color-canvas').value || '#F5F5DC';
     ctx.fillStyle = bgColor;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     
+    // Get the circle radius
     const radiusPercent = parseInt(document.getElementById('circle-radius-percent').value) || 60;
+    const radius = Math.min(canvas.width, canvas.height) * (radiusPercent / 100) / 2;
     
-    // FIXED: Use single radius for perfect circle
-    const minDim = Math.min(canvas.width, canvas.height);
-    const radius = (minDim * radiusPercent) / 200;
-    
+    // Calculate center position
     const centerX = canvas.width / 2;
     const centerY = canvas.height / 2;
     
-    console.log(`🔵 PERFECT CIRCLE: radius=${radius}, center=${centerX},${centerY}`);
-    
+    // Draw the circle border first (in case the image fails to load)
     const borderWidth = parseInt(document.getElementById('border-width').value) || 1;
-    const borderColor = document.getElementById('border-color').value || '#FDCA0D';
+    const borderColor = document.getElementById('border-color').value || '#FDCA0D'; // Golden border for street map
     
-    // Draw border with arc (perfect circle)
     if (borderWidth > 0) {
         ctx.beginPath();
         ctx.arc(centerX, centerY, radius, 0, Math.PI * 2, true);
@@ -824,24 +364,30 @@ function viewStreetMap() {
         ctx.stroke();
     }
     
-    // Create circular clipping with arc (perfect circle)
+    // Create a circular clipping path
     ctx.save();
     ctx.beginPath();
     ctx.arc(centerX, centerY, radius, 0, Math.PI * 2, true);
     ctx.closePath();
     ctx.clip();
     
-    // Get coordinates
+    // Get the latitude and longitude
     const latString = document.getElementById('latitude').value;
     const lngString = document.getElementById('longitude').value;
     
+    // Parse the coordinates to decimal format
     let lat, lng;
     if (typeof parseFormattedCoordinate === 'function') {
         lat = parseFormattedCoordinate(latString, 'latitude');
         lng = parseFormattedCoordinate(lngString, 'longitude');
+    } else if (typeof parseDMM === 'function') {
+        lat = parseDMM(latString);
+        lng = parseDMM(lngString);
     } else {
+        // Simple fallback parsing if neither function is available
         const parseCoord = (str) => {
             if (!str) return null;
+            // Try to extract decimal degrees from DMM format
             const match = str.match(/([NS])(\d+)°\s+(\d+\.\d+)′/i);
             if (match) {
                 const direction = match[1].toUpperCase();
@@ -851,8 +397,10 @@ function viewStreetMap() {
                 if (direction === 'S') decimal = -decimal;
                 return decimal;
             }
+            // Try simple decimal parsing
             return parseFloat(str);
         };
+        
         lat = parseCoord(latString);
         lng = parseCoord(lngString);
     }
@@ -860,31 +408,65 @@ function viewStreetMap() {
     if (isNaN(lat) || isNaN(lng)) {
         console.error("Failed to parse coordinates:", latString, lngString);
         alert("Invalid coordinates format. Please check your input.");
-        ctx.restore();
+        ctx.restore(); // Restore context before returning
         return;
     }
     
-    const mapSize = Math.min(radius * 2, 640);
-    // Use backend proxy to avoid CORS issues
-    const backendUrl = getBackendUrl();
-    const markers = `color:red|${lat},${lng}`;
-    const mapUrl = `${backendUrl}/api/maps/proxy?center=${lat},${lng}&zoom=12&size=${mapSize}x${mapSize}&maptype=roadmap&markers=${encodeURIComponent(markers)}`;
+    console.log("Parsed coordinates:", lat, lng);
     
-    console.log('🔵 Loading street map via proxy:', mapUrl);
+    // Create a Google Maps Static API URL
+    // Note: This requires a valid API key to work
+    // Google Maps Static API has a maximum size of 640x640 pixels
+    const mapSize = Math.min(radius * 2, 640); // Limit to 640x640 max
+    const zoom = 12; // Default zoom level
+    const mapType = "roadmap"; // Options: roadmap, satellite, terrain, hybrid
     
+    // Check if we have a Google Maps API key in the global scope
+    const apiKey = "AIzaSyCpvv1IJYxwGVMh24MLFDH6LmupseApSZU"; // Use the API key from the HTML file
+    
+    if (!apiKey) {
+        console.error("Google Maps API key not found");
+        alert("Google Maps API key not found. Cannot load street map.");
+        ctx.restore(); // Restore context before returning
+        return;
+    }
+    
+    // Create the Google Maps Static API URL
+    const mapUrl = `https://maps.googleapis.com/maps/api/staticmap?center=${lat},${lng}&zoom=${zoom}&size=${mapSize}x${mapSize}&maptype=${mapType}&markers=color:red%7C${lat},${lng}&key=${apiKey}`;
+    
+    console.log("Loading Google Maps Static API image from:", mapUrl);
+    
+    // Create a temporary image to load the street map
     const img = new Image();
-    // No crossOrigin needed since we're using same-origin proxy
+    // Remove crossOrigin to avoid CORS issues with Google Maps
     img.onload = function() {
-        console.log('✅ Street map loaded successfully');
-        // Scale to fill the circle
-        const scale = Math.max(radius * 2 / img.width, radius * 2 / img.height);
-        const drawWidth = img.width * scale;
-        const drawHeight = img.height * scale;
+        // Draw the street map image on our canvas, centered and scaled to fit the circle
+        const aspectRatio = img.width / img.height;
+        let drawWidth, drawHeight;
         
-        ctx.drawImage(img, centerX - drawWidth / 2, centerY - drawHeight / 2, drawWidth, drawHeight);
+        if (aspectRatio > 1) {
+            // Image is wider than tall
+            drawHeight = radius * 2;
+            drawWidth = drawHeight * aspectRatio;
+        } else {
+            // Image is taller than wide
+            drawWidth = radius * 2;
+            drawHeight = drawWidth / aspectRatio;
+        }
+        
+        // Draw the image centered in the circle
+        ctx.drawImage(
+            img, 
+            centerX - drawWidth / 2, 
+            centerY - drawHeight / 2, 
+            drawWidth, 
+            drawHeight
+        );
+        
+        // Restore the canvas context
         ctx.restore();
         
-        // Add center marker
+        // Add a marker in the center (optional, as the Google Maps image already has a marker)
         ctx.beginPath();
         ctx.arc(centerX, centerY, 5, 0, Math.PI * 2, true);
         ctx.fillStyle = "#FF0000";
@@ -893,201 +475,778 @@ function viewStreetMap() {
         ctx.strokeStyle = "#000000";
         ctx.stroke();
         
-        // NO TEXT LAYERS - Street Map is bare image for design use
-        
+        // Enable the download button
         document.getElementById('download-street-map-btn').disabled = false;
-        applyPreviewDisplayConstraints(document.getElementById('zoom-slider')?.value || 100);
-        console.log("🔵 Street map rendered with PERFECT CIRCLE");
+        
+        console.log("Street map image loaded and drawn successfully");
+    };
+    
+    // Set the image source to the Google Maps Static API URL
+    img.src = mapUrl;
+    
+    // If the image fails to load, restore the context to avoid clipping issues
+    img.onerror = function() {
+        console.error("Failed to load street map image from Google Maps API");
+        ctx.restore();
+        
+        // Draw a fallback street map (white circle with red marker)
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, radius, 0, Math.PI * 2, true);
+        ctx.fillStyle = "#FFFFFF"; // White
+        ctx.fill();
+        
+        // Add a marker in the center
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, 5, 0, Math.PI * 2, true);
+        ctx.fillStyle = "#FF0000";
+        ctx.fill();
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = "#000000";
+        ctx.stroke();
+        
+        // Redraw the border
+        if (borderWidth > 0) {
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, radius, 0, Math.PI * 2, true);
+            ctx.closePath();
+            ctx.lineWidth = borderWidth;
+            ctx.strokeStyle = borderColor;
+            ctx.stroke();
+        }
+        
+        // Enable the download button even if the image failed to load
+        document.getElementById('download-street-map-btn').disabled = false;
+        
+        // Show an error message
+        alert("Failed to load Google Maps image. Check your internet connection or API key.");
+    };
+}
+
+/**
+ * View the star map on canvas (equivalent to the existing VIEW STAR MAP ON CANVAS functionality)
+ */
+function viewStarMapOnCanvas() {
+    console.log("View Star Map on Canvas button clicked");
+    
+    // Get the background color from the input
+    const bgColor = document.getElementById('bg-color-canvas').value || '#F5F5DC';
+    console.log("Using background color:", bgColor);
+    
+    // Set the background color on the canvas directly
+    const canvas = document.getElementById('star-map-canvas');
+    if (canvas) {
+        // Store the background color in a data attribute for reference
+        canvas.dataset.bgColor = bgColor;
+        
+        // Apply the background color directly to the canvas
+        canvas.style.backgroundColor = bgColor;
+    }
+    
+    // Call the existing generateStarMap function which is the original functionality
+    if (typeof generateStarMap === 'function') {
+        generateStarMap();
+    } else {
+        console.error("generateStarMap function not found");
+        // Fallback implementation if the function doesn't exist
+        viewStarMap();
+    }
+}
+
+/**
+ * View star map and street map side by side in landscape orientation
+ * INDEPENDENT VERSION WITH ACTUAL MAPS
+ */
+function viewStarStreetLandscape() {
+    console.log("🌄 INDEPENDENT Combined Landscape view called");
+    
+    // First, check if we have valid coordinates
+    if (!validateCoordinates()) {
+        alert("Please enter valid coordinates or a location first.");
+        return;
+    }
+    
+    // Store the current view type
+    window.currentViewType = 'star-street-landscape';
+    
+    // CRITICAL: Initialize canvas state independently (no Canvas Layout dependency)
+    initializeCanvasForCombinedView();
+    
+    // Get the canvas
+    const canvas = document.getElementById('star-map-canvas');
+    if (!canvas) {
+        console.error("Canvas not found");
+        return;
+    }
+    
+    // Clear the canvas
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    // Draw background
+    const bgColor = document.getElementById('bg-color-canvas').value || '#F5F5DC';
+    ctx.fillStyle = bgColor;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    
+    // Get the circle radius (smaller for side-by-side)
+    const radiusPercent = parseInt(document.getElementById('circle-radius-percent').value) || 60;
+    const radius = Math.min(canvas.width, canvas.height) * (radiusPercent / 100) / 3;
+    
+    // Calculate positions for both circles
+    const centerY = canvas.height / 2;
+    const leftCenterX = canvas.width / 3;
+    const rightCenterX = canvas.width * 2 / 3;
+    
+    // Remove title text to avoid black text overlay
+    
+    // Get border settings
+    const borderWidth = parseInt(document.getElementById('border-width').value) || 2;
+    const borderColor = document.getElementById('border-color').value || "#FDCA0D";
+    
+    // Check Map Order setting
+    const mapOrderRadios = document.getElementsByName('map-order');
+    let starMapFirst = false;
+    for (const radio of mapOrderRadios) {
+        if (radio.checked && radio.value === 'star-first') {
+            starMapFirst = true;
+            break;
+        }
+    }
+    
+    // Draw borders for both circles
+    ctx.beginPath();
+    ctx.arc(leftCenterX, centerY, radius, 0, Math.PI * 2, true);
+    ctx.closePath();
+    ctx.lineWidth = borderWidth;
+    ctx.strokeStyle = borderColor;
+    ctx.stroke();
+    
+    ctx.beginPath();
+    ctx.arc(rightCenterX, centerY, radius, 0, Math.PI * 2, true);
+    ctx.closePath();
+    ctx.lineWidth = borderWidth;
+    ctx.strokeStyle = borderColor;
+    ctx.stroke();
+    
+    // Render maps based on Map Order setting
+    if (starMapFirst) {
+        // Star map first (left), street map second (right)
+        renderStarMapInCircle(ctx, leftCenterX, centerY, radius);
+        renderStreetMapInCircle(ctx, rightCenterX, centerY, radius);
+    } else {
+        // Street map first (left), star map second (right) - DEFAULT
+        renderStreetMapInCircle(ctx, leftCenterX, centerY, radius);
+        renderStarMapInCircle(ctx, rightCenterX, centerY, radius);
+    }
+    
+    // Enable the download button
+    document.getElementById('download-star-street-landscape-btn').disabled = false;
+    
+    console.log("Independent landscape view with actual maps rendered");
+}
+
+/**
+ * View star map and street map stacked in portrait orientation
+ * INDEPENDENT VERSION WITH ACTUAL MAPS
+ */
+function viewStarStreetPortrait() {
+    console.log("📱 INDEPENDENT Combined Portrait view called");
+    
+    // First, check if we have valid coordinates
+    if (!validateCoordinates()) {
+        alert("Please enter valid coordinates or a location first.");
+        return;
+    }
+    
+    // Store the current view type
+    window.currentViewType = 'star-street-portrait';
+    
+    // CRITICAL: Initialize canvas state independently (no Canvas Layout dependency)
+    initializeCanvasForCombinedView();
+    
+    // Get the canvas
+    const canvas = document.getElementById('star-map-canvas');
+    if (!canvas) {
+        console.error("Canvas not found");
+        return;
+    }
+    
+    // Clear the canvas
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    // Draw background
+    const bgColor = document.getElementById('bg-color-canvas').value || '#F5F5DC';
+    ctx.fillStyle = bgColor;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    
+    // Get the circle radius (smaller for stacked)
+    const radiusPercent = parseInt(document.getElementById('circle-radius-percent').value) || 60;
+    const radius = Math.min(canvas.width, canvas.height) * (radiusPercent / 100) / 3;
+    
+    // Calculate positions for both circles
+    const centerX = canvas.width / 2;
+    const topCenterY = canvas.height / 3;
+    const bottomCenterY = canvas.height * 2 / 3;
+    
+    // Remove title text to avoid black text overlay
+    
+    // Get border settings
+    const borderWidth = parseInt(document.getElementById('border-width').value) || 2;
+    const borderColor = document.getElementById('border-color').value || "#FDCA0D";
+    
+    // Check Map Order setting
+    const mapOrderRadios = document.getElementsByName('map-order');
+    let starMapFirst = false;
+    for (const radio of mapOrderRadios) {
+        if (radio.checked && radio.value === 'star-first') {
+            starMapFirst = true;
+            break;
+        }
+    }
+    
+    // Draw borders for both circles
+    ctx.beginPath();
+    ctx.arc(centerX, topCenterY, radius, 0, Math.PI * 2, true);
+    ctx.closePath();
+    ctx.lineWidth = borderWidth;
+    ctx.strokeStyle = borderColor;
+    ctx.stroke();
+    
+    ctx.beginPath();
+    ctx.arc(centerX, bottomCenterY, radius, 0, Math.PI * 2, true);
+    ctx.closePath();
+    ctx.lineWidth = borderWidth;
+    ctx.strokeStyle = borderColor;
+    ctx.stroke();
+    
+    // Render maps based on Map Order setting
+    if (starMapFirst) {
+        // Star map first (top), street map second (bottom)
+        renderStarMapInCircle(ctx, centerX, topCenterY, radius);
+        renderStreetMapInCircle(ctx, centerX, bottomCenterY, radius);
+    } else {
+        // Street map first (top), star map second (bottom) - DEFAULT
+        renderStreetMapInCircle(ctx, centerX, topCenterY, radius);
+        renderStarMapInCircle(ctx, centerX, bottomCenterY, radius);
+    }
+    
+    // Enable the download button
+    document.getElementById('download-star-street-portrait-btn').disabled = false;
+    
+    console.log("Independent portrait view with actual maps rendered");
+}
+
+/**
+ * Download the star map (equivalent to the existing DOWNLOAD MY STAR MAP button)
+ */
+function downloadStarMap() {
+    console.log("Download Star Map button clicked");
+    // Call the existing downloadStarMap function
+    if (typeof downloadStarMapExisting === 'function') {
+        downloadStarMapExisting();
+    } else {
+        // Fallback to a generic download function
+        downloadCanvasImage('star-map');
+    }
+}
+
+/**
+ * Download the street map (Google Map) in a circle
+ */
+function downloadStreetMap() {
+    console.log("Download Street Map button clicked");
+    // First view the street map, then download it
+    viewStreetMap();
+    
+    // Wait a bit for the map to render, then download
+    setTimeout(function() {
+        downloadCanvasImage('street-map');
+    }, 1000);
+}
+
+/**
+ * Download the star map with canvas layout (equivalent to the existing functionality)
+ */
+function downloadStarMapWithCanvas() {
+    console.log("Download Star Map with Canvas Layout button clicked");
+    
+    // First make sure the canvas has the correct background color
+    const bgColor = document.getElementById('bg-color-canvas').value || '#F5F5DC';
+    console.log("Using background color for download:", bgColor);
+    
+    // Set the background color on the canvas directly
+    const canvas = document.getElementById('star-map-canvas');
+    if (canvas) {
+        // Store the background color in a data attribute for reference
+        canvas.dataset.bgColor = bgColor;
+        
+        // Apply the background color directly to the canvas
+        canvas.style.backgroundColor = bgColor;
+    }
+    
+    // Call the existing function that handles this
+    if (typeof downloadStarMapWithCanvasExisting === 'function') {
+        downloadStarMapWithCanvasExisting();
+    } else {
+        // Fallback to a generic download function
+        downloadCanvasImage('star-map-canvas');
+    }
+}
+
+/**
+ * Download star map and street map side by side in landscape orientation
+ */
+function downloadStarStreetLandscape() {
+    console.log("Download Star Map + Street Map Landscape button clicked");
+    // First view the landscape layout, then download it
+    viewStarStreetLandscape();
+    
+    // Wait a bit for the maps to render, then download
+    setTimeout(function() {
+        downloadCanvasImage('star-street-landscape');
+    }, 1000);
+}
+
+/**
+ * Download star map and street map stacked in portrait orientation
+ */
+function downloadStarStreetPortrait() {
+    console.log("Download Star Map + Street Map Portrait button clicked");
+    // First view the portrait layout, then download it
+    viewStarStreetPortrait();
+    
+    // Wait a bit for the maps to render, then download
+    setTimeout(function() {
+        downloadCanvasImage('star-street-portrait');
+    }, 1000);
+}
+
+/**
+ * Generic function to download the canvas as an image
+ * @param {string} prefix - Prefix for the filename
+ */
+function downloadCanvasImage(prefix) {
+    const canvas = document.getElementById('star-map-canvas');
+    
+    // Get the selected image format
+    const formatRadios = document.getElementsByName('image-format');
+    let format = 'png';
+    for (const radio of formatRadios) {
+        if (radio.checked) {
+            format = radio.value;
+            break;
+        }
+    }
+    
+    // Generate a filename
+    const date = document.getElementById('date').value || new Date().toISOString().split('T')[0];
+    const filename = `${prefix}-${date}.${format}`;
+    
+    // Create a download link
+    const link = document.createElement('a');
+    
+    if (format === 'svg') {
+        // Handle SVG download if implemented
+        if (typeof canvasToSVG === 'function') {
+            const svgData = canvasToSVG(canvas);
+            const blob = new Blob([svgData], { type: 'image/svg+xml' });
+            link.href = URL.createObjectURL(blob);
+        } else {
+            alert("SVG download not implemented yet. Defaulting to PNG.");
+            link.href = canvas.toDataURL('image/png');
+        }
+    } else if (format === 'jpg') {
+        // JPG download
+        link.href = canvas.toDataURL('image/jpeg', 0.9);
+    } else {
+        // PNG download
+        const transparency = document.getElementById('png-transparency').checked;
+        if (transparency) {
+            link.href = canvas.toDataURL('image/png');
+        } else {
+            // Create a new canvas with white background
+            const tempCanvas = document.createElement('canvas');
+            tempCanvas.width = canvas.width;
+            tempCanvas.height = canvas.height;
+            const tempCtx = tempCanvas.getContext('2d');
+            tempCtx.fillStyle = '#FFFFFF';
+            tempCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
+            tempCtx.drawImage(canvas, 0, 0);
+            link.href = tempCanvas.toDataURL('image/png');
+        }
+    }
+    
+    link.download = filename;
+    link.click();
+}
+
+/**
+ * Initialize canvas state for combined views - REMOVES CANVAS LAYOUT DEPENDENCY
+ * This function provides the essential initialization that Canvas Layout normally provides
+ */
+function initializeCanvasForCombinedView() {
+    console.log("🔧 Initializing canvas state for combined view (independent)");
+    
+    try {
+        // Get the canvas
+        const canvas = document.getElementById('star-map-canvas');
+        if (!canvas) {
+            console.error("Canvas not found during initialization");
+            return false;
+        }
+        
+        // ALWAYS set canvas dimensions properly for combined views
+        const widthInput = document.getElementById('width') || document.getElementById('output-width');
+        const heightInput = document.getElementById('height') || document.getElementById('output-height');
+        
+        let width = 2550, height = 3300; // Default dimensions
+        if (widthInput && heightInput && widthInput.value && heightInput.value) {
+            width = parseInt(widthInput.value);
+            height = parseInt(heightInput.value);
+        }
+        
+        // FORCE set canvas dimensions for combined views
+        canvas.width = width;
+        canvas.height = height;
+        
+        // Also set the CSS dimensions to match
+        canvas.style.width = width + 'px';
+        canvas.style.height = height + 'px';
+        
+        console.log(`✅ Canvas FORCED to dimensions: ${width}w x ${height}h`);
+        
+        // Initialize essential canvas state that generateStarMap() normally provides
+        const ctx = canvas.getContext('2d');
+        
+        // Set default canvas properties
+        ctx.imageSmoothingEnabled = true;
+        ctx.imageSmoothingQuality = 'high';
+        
+        // Initialize any global variables that might be needed
+        if (typeof window.currentViewType === 'undefined') {
+            window.currentViewType = 'combined';
+        }
+        
+        // Initialize combinedViewSettings if it doesn't exist
+        if (typeof window.combinedViewSettings === 'undefined') {
+            window.combinedViewSettings = {
+                overlapPercent: 5,
+                streetMapFirst: true
+            };
+        }
+        
+        // Ensure circle overlap slider is set to 5% default
+        const overlapSlider = document.getElementById('circle-overlap-percent');
+        if (overlapSlider && overlapSlider.value === '30') {
+            overlapSlider.value = '5';
+            
+            // Update the display value
+            const overlapValue = document.getElementById('overlap-value');
+            if (overlapValue) {
+                overlapValue.textContent = '5%';
+            }
+            
+            // Update the combinedViewSettings object
+            window.combinedViewSettings.overlapPercent = 5;
+        }
+        
+        console.log("✅ Canvas state initialized successfully for combined view");
+        return true;
+        
+    } catch (error) {
+        console.error("❌ Error initializing canvas state:", error);
+        return false;
+    }
+}
+
+/**
+ * Render street map in a specific circle on the canvas
+ */
+function renderStreetMapInCircle(ctx, centerX, centerY, radius) {
+    console.log(`🗺️ Rendering street map in circle at (${centerX}, ${centerY}) with radius ${radius}`);
+    
+    // Get coordinates
+    const latString = document.getElementById('latitude').value;
+    const lngString = document.getElementById('longitude').value;
+    
+    // Parse coordinates
+    let lat, lng;
+    if (typeof parseFormattedCoordinate === 'function') {
+        lat = parseFormattedCoordinate(latString, 'latitude');
+        lng = parseFormattedCoordinate(lngString, 'longitude');
+    } else if (typeof parseDMM === 'function') {
+        lat = parseDMM(latString);
+        lng = parseDMM(lngString);
+    } else {
+        // Simple fallback parsing
+        const parseCoord = (str) => {
+            if (!str) return null;
+            const match = str.match(/([NS])(\d+)°\s+(\d+\.\d+)′/i);
+            if (match) {
+                const direction = match[1].toUpperCase();
+                const degrees = parseInt(match[2]);
+                const minutes = parseFloat(match[3]);
+                let decimal = degrees + (minutes / 60);
+                if (direction === 'S') decimal = -decimal;
+                return decimal;
+            }
+            return parseFloat(str);
+        };
+        lat = parseCoord(latString);
+        lng = parseCoord(lngString);
+    }
+    
+    if (isNaN(lat) || isNaN(lng)) {
+        console.error("Invalid coordinates for street map");
+        // Draw fallback
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, radius, 0, Math.PI * 2, true);
+        ctx.closePath();
+        ctx.clip();
+        ctx.fillStyle = "#FFFFFF";
+        ctx.fillRect(centerX - radius, centerY - radius, radius * 2, radius * 2);
+        ctx.restore();
+        return;
+    }
+    
+    // Create Google Maps URL
+    const mapSize = Math.min(radius * 2, 640);
+    const zoom = 12;
+    const mapType = "roadmap";
+    const apiKey = "AIzaSyCpvv1IJYxwGVMh24MLFDH6LmupseApSZU";
+    
+    if (!apiKey) {
+        console.error("Google Maps API key not found");
+        return;
+    }
+    
+    const mapUrl = `https://maps.googleapis.com/maps/api/staticmap?center=${lat},${lng}&zoom=${zoom}&size=${mapSize}x${mapSize}&maptype=${mapType}&markers=color:red%7C${lat},${lng}&key=${apiKey}`;
+    
+    // Load and draw the street map
+    const img = new Image();
+    // Remove crossOrigin to avoid CORS issues with Google Maps
+    img.onload = function() {
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, radius, 0, Math.PI * 2, true);
+        ctx.closePath();
+        ctx.clip();
+        
+        const aspectRatio = img.width / img.height;
+        let drawWidth, drawHeight;
+        if (aspectRatio > 1) {
+            drawHeight = radius * 2;
+            drawWidth = drawHeight * aspectRatio;
+        } else {
+            drawWidth = radius * 2;
+            drawHeight = drawWidth / aspectRatio;
+        }
+        
+        ctx.drawImage(img, centerX - drawWidth / 2, centerY - drawHeight / 2, drawWidth, drawHeight);
+        ctx.restore();
+        
+        // Add center marker
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, 3, 0, Math.PI * 2, true);
+        ctx.fillStyle = "#FF0000";
+        ctx.fill();
+        ctx.lineWidth = 1;
+        ctx.strokeStyle = "#000000";
+        ctx.stroke();
+        
+        console.log("✅ Street map rendered successfully");
     };
     
     img.onerror = function() {
         console.error("Failed to load street map");
-        ctx.restore();
+        // Draw fallback
+        ctx.save();
         ctx.beginPath();
         ctx.arc(centerX, centerY, radius, 0, Math.PI * 2, true);
+        ctx.closePath();
+        ctx.clip();
         ctx.fillStyle = "#FFFFFF";
+        ctx.fillRect(centerX - radius, centerY - radius, radius * 2, radius * 2);
+        ctx.restore();
+        
+        // Add center marker
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, 3, 0, Math.PI * 2, true);
+        ctx.fillStyle = "#FF0000";
         ctx.fill();
-        document.getElementById('download-street-map-btn').disabled = false;
-        alert("Failed to load Google Maps image. Check your internet connection or backend proxy.");
     };
     
     img.src = mapUrl;
 }
 
 /**
- * Download functions with proper validation and alerts
+ * Render star map in a specific circle on the canvas
  */
-function downloadStarMap() {
-    console.log("🔵 Download Star Map button clicked");
-    simpleDownload('star-map');
-}
-
-function downloadStreetMap() {
-    console.log("🔵 Download Street Map button clicked");
-    simpleDownload('street-map');
-}
-
-function downloadStarMapWithCanvas() {
-    console.log("🔵 Download Canvas Layout button clicked");
-    simpleDownload('star-map-canvas');
-}
-
-function downloadStarStreetLandscape() {
-    console.log("🔵 Download Combined Landscape button clicked");
-    simpleDownload('star-street-landscape');
-}
-
-function downloadStarStreetPortrait() {
-    console.log("🔵 Download Combined Portrait button clicked");
-    simpleDownload('star-street-portrait');
-}
-
-// ENHANCED download function with comprehensive validation and alerts
-function simpleDownload(viewType) {
-    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
-    console.log('🔵 DOWNLOAD INITIATED');
-    console.log('   Requested view type:', viewType);
-    console.log('   Last generated view:', lastGeneratedView);
-    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+function renderStarMapInCircle(ctx, centerX, centerY, radius) {
+    console.log(`⭐ Rendering star map in circle at (${centerX}, ${centerY}) with radius ${radius}`);
     
-    // Step 1: Check if canvas exists
-    const canvas = document.getElementById('star-map-canvas');
-    if (!canvas) {
-        const msg = '❌ ERROR: Canvas element not found. Please reload the page.';
-        console.error(msg);
-        alert('Canvas not found. Please reload the page and try again.');
-        return;
-    }
+    // IMMEDIATE fallback to ensure something shows up
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, radius, 0, Math.PI * 2, true);
+    ctx.closePath();
+    ctx.clip();
+    ctx.fillStyle = "#000033";
+    ctx.fillRect(centerX - radius, centerY - radius, radius * 2, radius * 2);
+    ctx.restore();
     
-    console.log('✅ Canvas found');
-    console.log('   Canvas dimensions:', canvas.width, 'x', canvas.height);
+    // Add temporary text
+    ctx.fillStyle = "#FFFFFF";
+    ctx.font = "16px Arial";
+    ctx.textAlign = "center";
+    ctx.fillText("Star Map", centerX, centerY);
+    ctx.fillText("Loading...", centerX, centerY + 20);
     
-    // Step 2: Check if canvas has content (reasonable dimensions)
-    if (canvas.width < 100 || canvas.height < 100) {
-        const msg = '⚠️ Canvas is empty or too small';
-        console.warn(msg);
-        alert('Please click one of the YELLOW "View Options" buttons above to generate your desired image first.\n\nThen use the corresponding GREEN download button.');
-        return;
-    }
+    // Get coordinates
+    const latString = document.getElementById('latitude').value;
+    const lngString = document.getElementById('longitude').value;
     
-    console.log('✅ Canvas has content');
-    
-    // Step 3: Check if the correct view was generated
-    if (lastGeneratedView !== viewType) {
-        const viewNames = {
-            'star-map': 'Star Map',
-            'street-map': 'Street Map',
-            'star-map-canvas': 'Canvas Layout',
-            'star-street-landscape': 'Combined Landscape',
-            'star-street-portrait': 'Combined Portrait'
+    // Parse coordinates
+    let lat, lng;
+    if (typeof parseFormattedCoordinate === 'function') {
+        lat = parseFormattedCoordinate(latString, 'latitude');
+        lng = parseFormattedCoordinate(lngString, 'longitude');
+    } else if (typeof parseDMM === 'function') {
+        lat = parseDMM(latString);
+        lng = parseDMM(lngString);
+    } else {
+        // Simple fallback parsing
+        const parseCoord = (str) => {
+            if (!str) return null;
+            const match = str.match(/([NS])(\d+)°\s+(\d+\.\d+)′/i);
+            if (match) {
+                const direction = match[1].toUpperCase();
+                const degrees = parseInt(match[2]);
+                const minutes = parseFloat(match[3]);
+                let decimal = degrees + (minutes / 60);
+                if (direction === 'S') decimal = -decimal;
+                return decimal;
+            }
+            return parseFloat(str);
         };
-        
-        const requestedName = viewNames[viewType] || viewType;
-        const generatedName = viewNames[lastGeneratedView] || (lastGeneratedView || 'None');
-        
-        const msg = `⚠️ VIEW MISMATCH!\n\nYou clicked download for: ${requestedName}\nBut the canvas shows: ${generatedName}\n\nPlease click the YELLOW "View ${requestedName}" button first, then download.`;
-        console.warn('❌ VIEW MISMATCH');
-        console.warn('   Requested:', viewType);
-        console.warn('   Generated:', lastGeneratedView);
-        alert(msg);
+        lat = parseCoord(latString);
+        lng = parseCoord(lngString);
+    }
+    
+    if (isNaN(lat) || isNaN(lng)) {
+        console.error("Invalid coordinates for star map");
         return;
     }
     
-    console.log('✅ View type matches');
+    // Get date and style
+    const date = document.getElementById('date').value || new Date().toISOString().split('T')[0];
+    const starMapStyle = document.getElementById('star-map-style').value || 'default';
     
-    // Step 4: Get download format
-    const formatRadios = document.getElementsByName('image-format');
-    let format = 'png';
-    for (const radio of formatRadios) {
-        if (radio.checked) {
-            format = radio.value.toLowerCase();
-            break;
+    // Calculate LST
+    let lstHours = 0;
+    if (typeof calculateLST === 'function') {
+        lstHours = calculateLST(date, lng);
+        if (isNaN(lstHours)) lstHours = 0;
+    }
+    
+    // Prepare API request
+    const API_IMAGE_SIZE = 800; // Smaller for combined view
+    const requestBody = {
+        style: starMapStyle,
+        output: { width: API_IMAGE_SIZE, height: API_IMAGE_SIZE, format: "png" },
+        observer: { latitude: lat, longitude: lng, date: date },
+        view: {
+            type: "area",
+            parameters: {
+                position: { equatorial: { rightAscension: lstHours, declination: lat } },
+                backgroundColor: "#000033"
+            }
         }
-    }
-    
-    console.log('   Format:', format);
-    
-    // Step 5: Check format support (PNG/JPG only for now)
-    if (format !== 'png' && format !== 'jpg' && format !== 'jpeg') {
-        console.warn('⚠️ Unsupported format:', format);
-        alert(`${format.toUpperCase()} download is not yet implemented.\n\nPlease select PNG or JPG format.`);
-        return;
-    }
-    
-    console.log('✅ Format supported');
-    
-    // Step 6: Get event name and date for filename
-    const occasionEl = document.getElementById('occasion');
-    const customOccasionEl = document.getElementById('custom-occasion');
-    const dateEl = document.getElementById('date');
-    
-    let eventName = 'Star-Map';
-    if (occasionEl) {
-        if (occasionEl.value === 'custom' && customOccasionEl && customOccasionEl.value) {
-            eventName = customOccasionEl.value.replace(/\s+/g, '-');
-        } else if (occasionEl.value) {
-            eventName = occasionEl.options[occasionEl.selectedIndex].text.replace(/\s+/g, '-');
-        }
-    }
-    
-    const date = dateEl ? dateEl.value : '2024-01-01';
-    
-    // Map type names for filename
-    const mapTypeNames = {
-        'star-map': 'Star-Map',
-        'street-map': 'Street-Map',
-        'star-map-canvas': 'Canvas-Layout',
-        'star-street-landscape': 'Combined-Landscape',
-        'star-street-portrait': 'Combined-Portrait'
     };
     
-    const mapType = mapTypeNames[viewType] || viewType;
-    const extension = (format === 'jpg' || format === 'jpeg') ? 'jpg' : 'png';
-    const filename = `${eventName}-${mapType}-${date}.${extension}`;
+    // Fetch star map with timeout
+    const fetchTimeout = setTimeout(() => {
+        console.warn("Star map fetch timeout - keeping fallback");
+    }, 10000);
     
-    console.log('   Filename:', filename);
-    console.log('   Event:', eventName);
-    console.log('   Date:', date);
-    
-    // Step 7: Attempt download
-    console.log('🔄 Attempting to generate download...');
-    
-    try {
-        const link = document.createElement('a');
+    fetch('proxy/star_map_proxy.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'image/png' },
+        body: JSON.stringify(requestBody)
+    })
+    .then(response => {
+        clearTimeout(fetchTimeout);
+        if (!response.ok) throw new Error(`Proxy error: ${response.status}`);
+        return response.blob();
+    })
+    .then(blob => {
+        const starMapUrl = URL.createObjectURL(blob);
+        const img = new Image();
+        img.crossOrigin = "Anonymous";
         
-        if (format === 'png') {
-            link.href = canvas.toDataURL('image/png');
-        } else {
-            link.href = canvas.toDataURL('image/jpeg', 0.95);
-        }
+        img.onload = function() {
+            // FORCE redraw the star map at the exact position
+            ctx.save();
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, radius, 0, Math.PI * 2, true);
+            ctx.closePath();
+            ctx.clip();
+            
+            // Clear the area first
+            ctx.fillStyle = "#000033";
+            ctx.fillRect(centerX - radius, centerY - radius, radius * 2, radius * 2);
+            
+            const aspectRatio = img.width / img.height;
+            let drawWidth, drawHeight;
+            if (aspectRatio > 1) {
+                drawHeight = radius * 2;
+                drawWidth = drawHeight * aspectRatio;
+            } else {
+                drawWidth = radius * 2;
+                drawHeight = drawWidth / aspectRatio;
+            }
+            
+            ctx.drawImage(img, centerX - drawWidth / 2, centerY - drawHeight / 2, drawWidth, drawHeight);
+            ctx.restore();
+            
+            URL.revokeObjectURL(starMapUrl);
+            console.log(`✅ Star map rendered successfully at (${centerX}, ${centerY})`);
+        };
         
-        link.download = filename;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+        img.onerror = function() {
+            console.error("Failed to load star map image");
+            URL.revokeObjectURL(starMapUrl);
+        };
         
-        console.log('✅ DOWNLOAD SUCCESSFUL');
-        console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
-        
-        alert(`✅ Download successful!\n\nFile: ${filename}`);
-        
-    } catch (error) {
-        console.error('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
-        console.error('❌ DOWNLOAD FAILED');
-        console.error('   Error:', error.name);
-        console.error('   Message:', error.message);
-        console.error('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
-        
-        // Specific error handling for cross-origin issues
-        if (error.name === 'SecurityError' || error.message.includes('tainted') || error.message.includes('cross-origin')) {
-            alert('❌ Download failed due to browser security restrictions.\n\n' +
-                  'The canvas contains cross-origin images that cannot be downloaded.\n\n' +
-                  'WORKAROUND: Use your browser\'s screenshot tool or the Print Screen key to capture the image.');
-        } else {
-            alert(`❌ Download failed\n\nError: ${error.message}\n\nPlease try again or use a screenshot tool.`);
-        }
-    }
+        img.src = starMapUrl;
+    })
+    .catch(error => {
+        clearTimeout(fetchTimeout);
+        console.error("Error fetching star map:", error);
+    });
 }
 
+/**
+ * Validate that we have coordinates to work with
+ * @returns {boolean} True if coordinates are valid
+ */
+function validateCoordinates() {
+    const latitude = document.getElementById('latitude').value;
+    const longitude = document.getElementById('longitude').value;
+    
+    return latitude && longitude;
+}
 
-/* END OF CODE - Emergent - 2024-10-19 [09:12:00-EST] */
+// Check if html2canvas is available, if not, load it
+if (typeof html2canvas === 'undefined') {
+    console.log("Loading html2canvas library");
+    const script = document.createElement('script');
+    script.src = 'https://html2canvas.hertzen.com/dist/html2canvas.min.js';
+    script.async = true;
+    document.head.appendChild(script);
+}
+
+// Zoom functionality removed as requested
+
+/* END OF CODE - Cline - 2025-06-22 2:30 pm File: js/settings-preview-download.js */
