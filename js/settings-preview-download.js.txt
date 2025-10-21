@@ -1,4 +1,4 @@
-/* START OF CODE - Emergent - 2025-10-21 [09:21:40-EST] File: js/settings-preview-download.js.txt */
+/* START OF CODE - Emergent - 2025-10-21 [09:25:30-EST] File: js/settings-preview-download.js.txt */
 
  /**
  * Settings + Preview + Download Section - PRODUCTION VERSION
@@ -594,18 +594,18 @@ function fetchStarPng(lat, lng, dim) {
 }
 
 function fetchStreetPng(lat, lng, dim) {
-    // Use backend proxy to avoid CORS issues with canvas downloads
-    const backendUrl = getBackendUrl();
+    // Use direct Google Maps API
+    const apiKey = 'AIzaSyCpvv1IJYxwGVMh24MLFDH6LmupseApSZU';
     const markers = `color:red|${lat},${lng}`;
-    const url = `${backendUrl}/api/maps/proxy?center=${lat},${lng}&zoom=12&size=${dim}x${dim}&maptype=roadmap&markers=${encodeURIComponent(markers)}`;
+    const url = `https://maps.googleapis.com/maps/api/staticmap?center=${lat},${lng}&zoom=12&size=${dim}x${dim}&maptype=roadmap&markers=${encodeURIComponent(markers)}&key=${apiKey}`;
     
-    console.log('🔵 Fetching street map via proxy:', url);
+    console.log('🔵 Fetching street map via direct API:', url);
     
     return new Promise((res, rej) => { 
         const img = new Image(); 
-        // No need for crossOrigin since we're using same-origin proxy
+        img.crossOrigin = "anonymous";
         img.onload = () => {
-            console.log('✅ Street map loaded via proxy');
+            console.log('✅ Street map loaded via direct API');
             res(img);
         }; 
         img.onerror = (e) => {
@@ -1089,4 +1089,4 @@ function simpleDownload(viewType) {
 }
 
 
-/* END OF CODE - Emergent - 2025-10-21 [09:21:40-EST] */
+/* END OF CODE - Emergent - 2025-10-21 [09:25:30-EST] */
