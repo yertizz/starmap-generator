@@ -1,4 +1,4 @@
-/* START OF CODE - Emergent - 2025-10-18 [14:26:52-EST] File: js/settings-preview-download.js */
+/* START OF CODE - Emergent - 2025-10-21 [18:37:38-EST] File: js/settings-preview-download.js.txt */
 
  /**
  * Settings + Preview + Download Section - PRODUCTION VERSION
@@ -6,13 +6,14 @@
  * FIXES:
  * - Replaced applyPreviewDisplayConstraints to prevent canvas stretching
  * - REMOVED text rendering from Star Map and Street Map (bare images for design use)
- * - KEPT text rendering ONLY for Canvas Layout and Combined views
+ * - KEPT text rendering ONLY for Star Map+Text and Combined views
  * - Fixed text positioning to prevent overlapping and duplication
  * - IMPLEMENTED clean border masking from scratch (borders hidden in overlap area)
  * - ADDED view tracking to prevent mismatched downloads
- * - ADDED Google Maps proxy to avoid CORS/canvas tainting issues
+ * - FIXED Combined Landscape/Portrait PNG downloads using toBlob() method
  * - COMPREHENSIVE alert system for user guidance
  * - PNG/JPG downloads fully working
+ * - Renamed "Canvas Layout" to "Star Map+Text"
  */
 
 // Helper function to get backend URL for production deployment
@@ -594,18 +595,18 @@ function fetchStarPng(lat, lng, dim) {
 }
 
 function fetchStreetPng(lat, lng, dim) {
-    // Use backend proxy to avoid CORS issues with canvas downloads
-    const backendUrl = getBackendUrl();
+    // Use direct Google Maps API
+    const apiKey = 'AIzaSyCpvv1IJYxwGVMh24MLFDH6LmupseApSZU';
     const markers = `color:red|${lat},${lng}`;
-    const url = `${backendUrl}/api/maps/proxy?center=${lat},${lng}&zoom=12&size=${dim}x${dim}&maptype=roadmap&markers=${encodeURIComponent(markers)}`;
+    const url = `https://maps.googleapis.com/maps/api/staticmap?center=${lat},${lng}&zoom=12&size=${dim}x${dim}&maptype=roadmap&markers=${encodeURIComponent(markers)}&key=${apiKey}`;
     
-    console.log('🔵 Fetching street map via proxy:', url);
+    console.log('🔵 Fetching street map via direct API:', url);
     
     return new Promise((res, rej) => { 
         const img = new Image(); 
-        // No need for crossOrigin since we're using same-origin proxy
+        img.crossOrigin = "anonymous";
         img.onload = () => {
-            console.log('✅ Street map loaded via proxy');
+            console.log('✅ Street map loaded via direct API');
             res(img);
         }; 
         img.onerror = (e) => {
@@ -864,15 +865,15 @@ function viewStreetMap() {
     }
     
     const mapSize = Math.min(radius * 2, 640);
-    // Use backend proxy to avoid CORS issues
-    const backendUrl = getBackendUrl();
+    // Use direct Google Maps API
+    const apiKey = 'AIzaSyCpvv1IJYxwGVMh24MLFDH6LmupseApSZU';
     const markers = `color:red|${lat},${lng}`;
-    const mapUrl = `${backendUrl}/api/maps/proxy?center=${lat},${lng}&zoom=12&size=${mapSize}x${mapSize}&maptype=roadmap&markers=${encodeURIComponent(markers)}`;
+    const mapUrl = `https://maps.googleapis.com/maps/api/staticmap?center=${lat},${lng}&zoom=12&size=${mapSize}x${mapSize}&maptype=roadmap&markers=${encodeURIComponent(markers)}&key=${apiKey}`;
     
-    console.log('🔵 Loading street map via proxy:', mapUrl);
+    console.log('🔵 Loading street map via direct API:', mapUrl);
     
     const img = new Image();
-    // No crossOrigin needed since we're using same-origin proxy
+    img.crossOrigin = "anonymous";
     img.onload = function() {
         console.log('✅ Street map loaded successfully');
         // Scale to fill the circle
@@ -942,6 +943,7 @@ function downloadStarStreetPortrait() {
 }
 
 // ENHANCED download function with comprehensive validation and alerts
+// FIXED: Uses toBlob() for Combined views to handle potential CORS issues
 function simpleDownload(viewType) {
     console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
     console.log('🔵 DOWNLOAD INITIATED');
@@ -976,7 +978,7 @@ function simpleDownload(viewType) {
         const viewNames = {
             'star-map': 'Star Map',
             'street-map': 'Street Map',
-            'star-map-canvas': 'Canvas Layout',
+            'star-map-canvas': 'Star Map+Text',
             'star-street-landscape': 'Combined Landscape',
             'star-street-portrait': 'Combined Portrait'
         };
@@ -1035,7 +1037,7 @@ function simpleDownload(viewType) {
     const mapTypeNames = {
         'star-map': 'Star-Map',
         'street-map': 'Street-Map',
-        'star-map-canvas': 'Canvas-Layout',
+        'star-map-canvas': 'Star-Map-Text',
         'star-street-landscape': 'Combined-Landscape',
         'star-street-portrait': 'Combined-Portrait'
     };
@@ -1051,6 +1053,47 @@ function simpleDownload(viewType) {
     // Step 7: Attempt download
     console.log('🔄 Attempting to generate download...');
     
+    // FIXED: Use toBlob() for Combined views to better handle potential CORS/tainting issues
+    const isCombinedView = (viewType === 'star-street-landscape' || viewType === 'star-street-portrait');
+    
+    if (isCombinedView && format === 'png') {
+        console.log('🔵 Using toBlob() method for Combined view PNG download...');
+        
+        // Use toBlob for better CORS handling
+        canvas.toBlob(function(blob) {
+            if (!blob) {
+                console.error('❌ toBlob() returned null - canvas may be tainted');
+                alert('❌ Download failed: Unable to export canvas.\n\nThe canvas may contain cross-origin images.\n\nTry using JPG format or use your browser\'s screenshot tool.');
+                return;
+            }
+            
+            console.log('✅ Blob created successfully, size:', blob.size, 'bytes');
+            
+            if (blob.size < 1000) {
+                console.warn('⚠️ Blob size suspiciously small - may be blank');
+            }
+            
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = filename;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            // Clean up
+            setTimeout(() => URL.revokeObjectURL(url), 100);
+            
+            console.log('✅ DOWNLOAD SUCCESSFUL (via toBlob)');
+            console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+            
+            alert(`✅ Download successful!\n\nFile: ${filename}`);
+        }, 'image/png');
+        
+        return; // Exit early for toBlob method
+    }
+    
+    // Standard download using toDataURL for non-Combined views or JPG format
     try {
         const link = document.createElement('a');
         
@@ -1058,6 +1101,11 @@ function simpleDownload(viewType) {
             link.href = canvas.toDataURL('image/png');
         } else {
             link.href = canvas.toDataURL('image/jpeg', 0.95);
+        }
+        
+        // Check if dataURL is suspiciously small (indicates blank canvas)
+        if (link.href.length < 1000) {
+            console.warn('⚠️ DataURL suspiciously small - canvas may be blank or tainted');
         }
         
         link.download = filename;
@@ -1081,7 +1129,7 @@ function simpleDownload(viewType) {
         if (error.name === 'SecurityError' || error.message.includes('tainted') || error.message.includes('cross-origin')) {
             alert('❌ Download failed due to browser security restrictions.\n\n' +
                   'The canvas contains cross-origin images that cannot be downloaded.\n\n' +
-                  'WORKAROUND: Use your browser\'s screenshot tool or the Print Screen key to capture the image.');
+                  'WORKAROUND: Try switching to JPG format or use your browser\'s screenshot tool.');
         } else {
             alert(`❌ Download failed\n\nError: ${error.message}\n\nPlease try again or use a screenshot tool.`);
         }
@@ -1089,4 +1137,4 @@ function simpleDownload(viewType) {
 }
 
 
-/* END OF CODE - Emergent - 2025-10-18 [14:26:52-EST] */
+/* END OF CODE - Emergent - 2025-10-21 [18:37:38-EST] */
