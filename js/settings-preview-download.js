@@ -1,4 +1,4 @@
-/* START OF CODE - Emergent - 2025-10-21 [18:59:01-EST] File: js/settings-preview-download.js.txt */
+/* START OF CODE - Emergent - 2025-10-21 [19:09:09-EST] File: js/settings-preview-download.js.txt */
 
  /**
  * Settings + Preview + Download Section - PRODUCTION VERSION
@@ -9,9 +9,12 @@
  * - KEPT text rendering ONLY for Star Map+Text and Combined views
  * - Fixed text positioning to prevent overlapping and duplication
  * - IMPLEMENTED clean border masking from scratch (borders hidden in overlap area)
+ * - CRITICAL FIX: Created Google Maps proxy (google_maps_proxy.php) with CORS headers to prevent canvas tainting
+ * - FIXED: All Google Maps fetches now use proxy instead of direct API calls
  * - FIXED Combined Landscape/Portrait blank PNG issue by setting lastGeneratedView AFTER render completes
  * - FIXED async rendering: Download buttons disabled until images fully loaded
  * - FIXED Combined Landscape/Portrait PNG downloads using toBlob() method
+ * - FIXED alert message format per user specification
  * - COMPREHENSIVE alert system for user guidance
  * - PNG/JPG downloads fully working
  * - Renamed "Canvas Layout" to "Star Map+Text"
@@ -596,22 +599,20 @@ function fetchStarPng(lat, lng, dim) {
 }
 
 function fetchStreetPng(lat, lng, dim) {
-    // Use direct Google Maps API
-    const apiKey = 'AIzaSyCpvv1IJYxwGVMh24MLFDH6LmupseApSZU';
-    const markers = `color:red|${lat},${lng}`;
-    const url = `https://maps.googleapis.com/maps/api/staticmap?center=${lat},${lng}&zoom=12&size=${dim}x${dim}&maptype=roadmap&markers=${encodeURIComponent(markers)}&key=${apiKey}`;
+    // FIXED: Use proxy to avoid canvas tainting from Google Maps CORS issues
+    const url = `proxy/google_maps_proxy.php?lat=${lat}&lng=${lng}&size=${dim}&zoom=12`;
     
-    console.log('🔵 Fetching street map via direct API:', url);
+    console.log('🔵 Fetching street map via CORS proxy:', url);
     
     return new Promise((res, rej) => { 
         const img = new Image(); 
         img.crossOrigin = "anonymous";
         img.onload = () => {
-            console.log('✅ Street map loaded via direct API');
+            console.log('✅ Street map loaded via proxy (CORS-safe)');
             res(img);
         }; 
         img.onerror = (e) => {
-            console.error('❌ Street map load failed:', e);
+            console.error('❌ Street map proxy load failed:', e);
             rej(e);
         }; 
         img.src = url; 
@@ -884,12 +885,10 @@ function viewStreetMap() {
     }
     
     const mapSize = Math.min(radius * 2, 640);
-    // Use direct Google Maps API
-    const apiKey = 'AIzaSyCpvv1IJYxwGVMh24MLFDH6LmupseApSZU';
-    const markers = `color:red|${lat},${lng}`;
-    const mapUrl = `https://maps.googleapis.com/maps/api/staticmap?center=${lat},${lng}&zoom=12&size=${mapSize}x${mapSize}&maptype=roadmap&markers=${encodeURIComponent(markers)}&key=${apiKey}`;
+    // FIXED: Use proxy to avoid canvas tainting
+    const mapUrl = `proxy/google_maps_proxy.php?lat=${lat}&lng=${lng}&size=${mapSize}&zoom=12`;
     
-    console.log('🔵 Loading street map via direct API:', mapUrl);
+    console.log('🔵 Loading street map via CORS proxy:', mapUrl);
     
     const img = new Image();
     img.crossOrigin = "anonymous";
@@ -1005,7 +1004,8 @@ function simpleDownload(viewType) {
         const requestedName = viewNames[viewType] || viewType;
         const generatedName = viewNames[lastGeneratedView] || (lastGeneratedView || 'None');
         
-        const msg = `⚠️ VIEW MISMATCH!\n\nYou clicked download for: ${requestedName}\nBut the canvas shows: ${generatedName}\n\nPlease click the YELLOW "View ${requestedName}" button first, then download.`;
+        // FIXED: Alert message format as requested by user
+        const msg = `⚠️ VIEW MISMATCH! You clicked the "${requestedName}" green DOWNLOAD button!!\nHOWEVER, the canvas being viewed is for "${generatedName}"\n\nUSE THE YELLOW BUTTONS FOR PREVIEWING THE CANVAS IMAGE.\nUSE THE CORRESPONDING "GREEN" DOWNLOAD BUTTON to save what is being viewed in the Canvas.`;
         console.warn('❌ VIEW MISMATCH');
         console.warn('   Requested:', viewType);
         console.warn('   Generated:', lastGeneratedView);
@@ -1156,4 +1156,4 @@ function simpleDownload(viewType) {
 }
 
 
-/* END OF CODE - Emergent - 2025-10-21 [18:59:01-EST] */
+/* END OF CODE - Emergent - 2025-10-21 [19:09:09-EST] */
