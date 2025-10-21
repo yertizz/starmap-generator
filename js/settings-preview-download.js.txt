@@ -1,4 +1,4 @@
-/* START OF CODE - Emergent - 2024-10-19 [09:15:00-EST] File: js/settings-preview-download.js.txt */
+/* START OF CODE - Emergent - 2025-10-19 [08:54:00-EST] File: js/settings-preview-download.js.txt */
 
 /**
  * Settings + Preview + Download Section Functionality
@@ -1249,4 +1249,4 @@ if (typeof html2canvas === 'undefined') {
 
 // Zoom functionality removed as requested
 
-/* END OF CODE - Cline - 2025-06-22 2:30 pm File: js/settings-preview-download.js */
+/* END OF CODE - Emergent - 2025-10-19 [08:54:00-EST] */
