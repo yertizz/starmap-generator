@@ -1,4 +1,4 @@
-/* START OF CODE - Emergent - 2025-10-21 [18:37:38-EST] File: js/settings-preview-download.js.txt */
+/* START OF CODE - Emergent - 2025-10-21 [18:59:01-EST] File: js/settings-preview-download.js.txt */
 
  /**
  * Settings + Preview + Download Section - PRODUCTION VERSION
@@ -9,7 +9,8 @@
  * - KEPT text rendering ONLY for Star Map+Text and Combined views
  * - Fixed text positioning to prevent overlapping and duplication
  * - IMPLEMENTED clean border masking from scratch (borders hidden in overlap area)
- * - ADDED view tracking to prevent mismatched downloads
+ * - FIXED Combined Landscape/Portrait blank PNG issue by setting lastGeneratedView AFTER render completes
+ * - FIXED async rendering: Download buttons disabled until images fully loaded
  * - FIXED Combined Landscape/Portrait PNG downloads using toBlob() method
  * - COMPREHENSIVE alert system for user guidance
  * - PNG/JPG downloads fully working
@@ -640,6 +641,11 @@ function viewCombined(isLandscape) {
     console.log('🔵 View Combined clicked, landscape=', isLandscape);
     if (!validateCoordinates()) { alert('Please enter valid coordinates first.'); return; }
     
+    // FIXED: Disable download buttons immediately to prevent premature downloads
+    document.getElementById('download-star-street-landscape-btn').disabled = true;
+    document.getElementById('download-star-street-portrait-btn').disabled = true;
+    console.log('🔵 Download buttons DISABLED - rendering in progress...');
+    
     const { width, height } = resetCanvasToUserDimensions();
     const canvas = document.getElementById('star-map-canvas');
     const ctx = canvas.getContext('2d');
@@ -754,22 +760,35 @@ function viewCombined(isLandscape) {
             renderTextLayers(ctx, canvasCenterX, canvasCenterY, textRadius, borderWidth);
             
             applyPreviewDisplayConstraints(document.getElementById('zoom-slider')?.value || 100);
-            console.log('🔵 Combined view complete');
+            
+            // FIXED: Set lastGeneratedView ONLY AFTER successful render
+            if (isLandscape) {
+                lastGeneratedView = 'star-street-landscape';
+                console.log('✅ RENDERING COMPLETE - Set lastGeneratedView to: star-street-landscape');
+                document.getElementById('download-star-street-landscape-btn').disabled = false;
+            } else {
+                lastGeneratedView = 'star-street-portrait';
+                console.log('✅ RENDERING COMPLETE - Set lastGeneratedView to: star-street-portrait');
+                document.getElementById('download-star-street-portrait-btn').disabled = false;
+            }
+            
+            console.log('🔵 Combined view complete - download button ENABLED');
         })
         .catch(e => { 
-            console.error('Combined view error:', e); 
+            console.error('Combined view error:', e);
+            // Re-enable buttons even on error
+            document.getElementById('download-star-street-landscape-btn').disabled = false;
+            document.getElementById('download-star-street-portrait-btn').disabled = false;
             alert('Failed to render combined view. Error: ' + e.message); 
         });
 }
 
 function viewStarStreetLandscape(){ 
-    lastGeneratedView = 'star-street-landscape'; // Track this view
-    console.log("✅ Set lastGeneratedView to: star-street-landscape");
+    // FIXED: lastGeneratedView now set AFTER rendering completes in viewCombined()
     viewCombined(true); 
 }
 function viewStarStreetPortrait(){ 
-    lastGeneratedView = 'star-street-portrait'; // Track this view
-    console.log("✅ Set lastGeneratedView to: star-street-portrait");
+    // FIXED: lastGeneratedView now set AFTER rendering completes in viewCombined()
     viewCombined(false); 
 }
 
@@ -1137,4 +1156,4 @@ function simpleDownload(viewType) {
 }
 
 
-/* END OF CODE - Emergent - 2025-10-21 [18:37:38-EST] */
+/* END OF CODE - Emergent - 2025-10-21 [18:59:01-EST] */
