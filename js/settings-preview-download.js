@@ -1,4 +1,4 @@
-/* START OF CODE - Emergent - 2025-10-21 [19:09:09-EST] File: js/settings-preview-download.js.txt */
+/* START OF CODE - Emergent - 2025-10-22 [10:12:07-EST] File: js/settings-preview-download.js.txt */
 
  /**
  * Settings + Preview + Download Section - PRODUCTION VERSION
@@ -9,11 +9,11 @@
  * - KEPT text rendering ONLY for Star Map+Text and Combined views
  * - Fixed text positioning to prevent overlapping and duplication
  * - IMPLEMENTED clean border masking from scratch (borders hidden in overlap area)
- * - CRITICAL FIX: Created Google Maps proxy (google_maps_proxy.php) with CORS headers to prevent canvas tainting
- * - FIXED: All Google Maps fetches now use proxy instead of direct API calls
- * - FIXED Combined Landscape/Portrait blank PNG issue by setting lastGeneratedView AFTER render completes
+ * - CRITICAL FIX: Google Maps proxy (google_maps_proxy.php) serves images from SAME ORIGIN
+ * - CRITICAL FIX: REMOVED crossOrigin attribute from proxy-loaded images (no longer needed)
+ * - This prevents canvas tainting since images are now same-origin
+ * - FIXED Combined Landscape/Portrait blank PNG by using same-origin proxy (no CORS issues)
  * - FIXED async rendering: Download buttons disabled until images fully loaded
- * - FIXED Combined Landscape/Portrait PNG downloads using toBlob() method
  * - FIXED alert message format per user specification
  * - COMPREHENSIVE alert system for user guidance
  * - PNG/JPG downloads fully working
@@ -600,15 +600,16 @@ function fetchStarPng(lat, lng, dim) {
 
 function fetchStreetPng(lat, lng, dim) {
     // FIXED: Use proxy to avoid canvas tainting from Google Maps CORS issues
+    // NOTE: NO crossOrigin needed since proxy serves from same origin
     const url = `proxy/google_maps_proxy.php?lat=${lat}&lng=${lng}&size=${dim}&zoom=12`;
     
-    console.log('🔵 Fetching street map via CORS proxy:', url);
+    console.log('🔵 Fetching street map via same-origin proxy:', url);
     
     return new Promise((res, rej) => { 
         const img = new Image(); 
-        img.crossOrigin = "anonymous";
+        // REMOVED crossOrigin - proxy serves from same origin, no CORS issues
         img.onload = () => {
-            console.log('✅ Street map loaded via proxy (CORS-safe)');
+            console.log('✅ Street map loaded via same-origin proxy (NO canvas tainting)');
             res(img);
         }; 
         img.onerror = (e) => {
@@ -886,12 +887,13 @@ function viewStreetMap() {
     
     const mapSize = Math.min(radius * 2, 640);
     // FIXED: Use proxy to avoid canvas tainting
+    // NOTE: NO crossOrigin needed since proxy serves from same origin
     const mapUrl = `proxy/google_maps_proxy.php?lat=${lat}&lng=${lng}&size=${mapSize}&zoom=12`;
     
-    console.log('🔵 Loading street map via CORS proxy:', mapUrl);
+    console.log('🔵 Loading street map via same-origin proxy:', mapUrl);
     
     const img = new Image();
-    img.crossOrigin = "anonymous";
+    // REMOVED crossOrigin - proxy serves from same origin, no CORS issues
     img.onload = function() {
         console.log('✅ Street map loaded successfully');
         // Scale to fill the circle
@@ -1072,47 +1074,8 @@ function simpleDownload(viewType) {
     // Step 7: Attempt download
     console.log('🔄 Attempting to generate download...');
     
-    // FIXED: Use toBlob() for Combined views to better handle potential CORS/tainting issues
-    const isCombinedView = (viewType === 'star-street-landscape' || viewType === 'star-street-portrait');
-    
-    if (isCombinedView && format === 'png') {
-        console.log('🔵 Using toBlob() method for Combined view PNG download...');
-        
-        // Use toBlob for better CORS handling
-        canvas.toBlob(function(blob) {
-            if (!blob) {
-                console.error('❌ toBlob() returned null - canvas may be tainted');
-                alert('❌ Download failed: Unable to export canvas.\n\nThe canvas may contain cross-origin images.\n\nTry using JPG format or use your browser\'s screenshot tool.');
-                return;
-            }
-            
-            console.log('✅ Blob created successfully, size:', blob.size, 'bytes');
-            
-            if (blob.size < 1000) {
-                console.warn('⚠️ Blob size suspiciously small - may be blank');
-            }
-            
-            const url = URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = filename;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            
-            // Clean up
-            setTimeout(() => URL.revokeObjectURL(url), 100);
-            
-            console.log('✅ DOWNLOAD SUCCESSFUL (via toBlob)');
-            console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
-            
-            alert(`✅ Download successful!\n\nFile: ${filename}`);
-        }, 'image/png');
-        
-        return; // Exit early for toBlob method
-    }
-    
-    // Standard download using toDataURL for non-Combined views or JPG format
+    // FIXED: Since we're using same-origin proxy, canvas should NOT be tainted
+    // Standard download using toDataURL should work for all views now
     try {
         const link = document.createElement('a');
         
@@ -1156,4 +1119,4 @@ function simpleDownload(viewType) {
 }
 
 
-/* END OF CODE - Emergent - 2025-10-21 [19:09:09-EST] */
+/* END OF CODE - Emergent - 2025-10-22 [10:12:07-EST] */
