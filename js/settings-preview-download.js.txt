@@ -1,4 +1,4 @@
-/* START OF CODE - Emergent - 2025-10-22 [13:34:01-EST] File: js/settings-preview-download.js.txt */
+/* START OF CODE - Emergent - 2025-10-22 [13:55:22-EST] File: js/settings-preview-download.js.txt */
 
  /**
  * Settings + Preview + Download Section - PRODUCTION VERSION
@@ -1217,4 +1217,4 @@ function simpleDownload(viewType) {
 }
 
 
-/* END OF CODE - Emergent - 2025-10-22 [13:34:01-EST] */
+/* END OF CODE - Emergent - 2025-10-22 [13:55:22-EST] */
