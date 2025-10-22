@@ -1,4 +1,4 @@
-/* START OF CODE - Emergent - 2025-10-22 [14:49:55-EST] File: js/settings-preview-download.js.txt */
+/* START OF CODE - Emergent - 2025-10-22 [15:00:22-EST] File: js/settings-preview-download.js.txt */
 
  /**
  * Settings + Preview + Download Section - PRODUCTION VERSION
@@ -832,18 +832,24 @@ function viewCombined(isLandscape) {
             
             applyPreviewDisplayConstraints(document.getElementById('zoom-slider')?.value || 100);
             
-            // CRITICAL: Set lastGeneratedView and enable ONLY the matching download button
-            if (isLandscape) {
-                lastGeneratedView = 'star-street-landscape';
-                console.log('✅ RENDERING COMPLETE - Set lastGeneratedView to: star-street-landscape');
-                enableDownloadButton('download-star-street-landscape-btn');
-            } else {
-                lastGeneratedView = 'star-street-portrait';
-                console.log('✅ RENDERING COMPLETE - Set lastGeneratedView to: star-street-portrait');
-                enableDownloadButton('download-star-street-portrait-btn');
-            }
-            
-            console.log('🔵 Combined view complete - ONLY matching download button ENABLED');
+            // CRITICAL FIX: Wait for canvas pixel buffer to fully commit before enabling download
+            // Use requestAnimationFrame to ensure browser completes rendering
+            requestAnimationFrame(() => {
+                console.log('✅ requestAnimationFrame fired - canvas rendering should be complete');
+                
+                // Set lastGeneratedView and enable ONLY the matching download button
+                if (isLandscape) {
+                    lastGeneratedView = 'star-street-landscape';
+                    console.log('✅ RENDERING COMPLETE - Set lastGeneratedView to: star-street-landscape');
+                    enableDownloadButton('download-star-street-landscape-btn');
+                } else {
+                    lastGeneratedView = 'star-street-portrait';
+                    console.log('✅ RENDERING COMPLETE - Set lastGeneratedView to: star-street-portrait');
+                    enableDownloadButton('download-star-street-portrait-btn');
+                }
+                
+                console.log('🔵 Combined view complete - Download button enabled AFTER pixel commit');
+            });
         })
         .catch(e => { 
             console.error('Combined view error:', e);
@@ -1214,4 +1220,4 @@ function simpleDownload(viewType) {
 }
 
 
-/* END OF CODE - Emergent - 2025-10-22 [14:49:55-EST] */
+/* END OF CODE - Emergent - 2025-10-22 [15:00:22-EST] */
