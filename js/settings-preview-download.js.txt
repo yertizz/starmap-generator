@@ -1,4 +1,4 @@
-/* START OF CODE - Emergent - 2025-10-22 [15:13:09-EST] File: js/settings-preview-download.js.txt */
+/* START OF CODE - Emergent - 2025-10-22 [15:25:37-EST] File: js/settings-preview-download.js.txt */
 
  /**
  * Settings + Preview + Download Section - PRODUCTION VERSION
@@ -832,23 +832,25 @@ function viewCombined(isLandscape) {
             
             applyPreviewDisplayConstraints(document.getElementById('zoom-slider')?.value || 100);
             
-            // CRITICAL FIX: Wait for canvas pixel buffer to fully commit before enabling download
-            // Use requestAnimationFrame to ensure browser completes rendering
+            // CRITICAL FIX: DOUBLE requestAnimationFrame to ensure GPU operations complete
+            // Single RAF is insufficient after complex composite operations (destination-out)
             requestAnimationFrame(() => {
-                console.log('✅ requestAnimationFrame fired - canvas rendering should be complete');
-                
-                // Set lastGeneratedView and enable ONLY the matching download button
-                if (isLandscape) {
-                    lastGeneratedView = 'star-street-landscape';
-                    console.log('✅ RENDERING COMPLETE - Set lastGeneratedView to: star-street-landscape');
-                    enableDownloadButton('download-star-street-landscape-btn');
-                } else {
-                    lastGeneratedView = 'star-street-portrait';
-                    console.log('✅ RENDERING COMPLETE - Set lastGeneratedView to: star-street-portrait');
-                    enableDownloadButton('download-star-street-portrait-btn');
-                }
-                
-                console.log('🔵 Combined view complete - Download button enabled AFTER pixel commit');
+                requestAnimationFrame(() => {
+                    console.log('✅ Double requestAnimationFrame fired - GPU operations complete');
+                    
+                    // Set lastGeneratedView and enable ONLY the matching download button
+                    if (isLandscape) {
+                        lastGeneratedView = 'star-street-landscape';
+                        console.log('✅ RENDERING COMPLETE - Set lastGeneratedView to: star-street-landscape');
+                        enableDownloadButton('download-star-street-landscape-btn');
+                    } else {
+                        lastGeneratedView = 'star-street-portrait';
+                        console.log('✅ RENDERING COMPLETE - Set lastGeneratedView to: star-street-portrait');
+                        enableDownloadButton('download-star-street-portrait-btn');
+                    }
+                    
+                    console.log('🔵 Combined view complete - Download enabled after pixel buffer sync');
+                });
             });
         })
         .catch(e => { 
@@ -1137,11 +1139,24 @@ function simpleDownload(viewType) {
     const isCombinedView = (viewType === 'star-street-landscape' || viewType === 'star-street-portrait');
     
     if (isCombinedView && format === 'png') {
-        console.log('🔵 Combined PNG download - creating opaque copy to fix alpha channel issue');
+        console.log('🔵 Combined PNG download - forcing pixel buffer sync');
         console.log('🔵 Source canvas dimensions:', canvas.width, 'x', canvas.height);
         
-        // CRITICAL FIX: Create temporary canvas WITHOUT alpha channel to fix premultiplied alpha issue
+        // CRITICAL FIX: Force pixel buffer sync by reading pixels before export
         try {
+            const ctx = canvas.getContext('2d');
+            
+            // Force GPU to commit pixel buffer by reading a small sample
+            const pixelSample = ctx.getImageData(0, 0, 1, 1);
+            console.log('✅ Forced pixel buffer read - GPU sync complete');
+            
+            // Validate canvas has content by checking center pixel
+            const centerX = Math.floor(canvas.width / 2);
+            const centerY = Math.floor(canvas.height / 2);
+            const centerPixel = ctx.getImageData(centerX, centerY, 1, 1);
+            console.log('🔍 Center pixel RGBA:', centerPixel.data[0], centerPixel.data[1], centerPixel.data[2], centerPixel.data[3]);
+            
+            // Create temporary opaque canvas for export
             const tempCanvas = document.createElement('canvas');
             tempCanvas.width = canvas.width;
             tempCanvas.height = canvas.height;
@@ -1149,7 +1164,7 @@ function simpleDownload(viewType) {
             
             console.log('✅ Created temporary opaque canvas');
             
-            // Fill with white background first (ensures opaque)
+            // Fill with white background first
             tempCtx.fillStyle = '#FFFFFF';
             tempCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
             
@@ -1236,4 +1251,4 @@ function simpleDownload(viewType) {
 }
 
 
-/* END OF CODE - Emergent - 2025-10-22 [15:13:09-EST] */
+/* END OF CODE - Emergent - 2025-10-22 [15:25:37-EST] */
