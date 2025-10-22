@@ -1,4 +1,4 @@
-/* START OF CODE - Emergent - 2025-10-22 [11:26:40-EST] File: js/settings-preview-download.js.txt */
+/* START OF CODE - Emergent - 2025-10-22 [12:19:36-EST] File: js/settings-preview-download.js.txt */
 
  /**
  * Settings + Preview + Download Section - PRODUCTION VERSION
@@ -1116,31 +1116,42 @@ function simpleDownload(viewType) {
     
     if (isCombinedView && format === 'png') {
         console.log('🔵 Using toBlob() method for Combined view PNG...');
+        console.log('🔵 Canvas dimensions:', canvas.width, 'x', canvas.height);
+        console.log('🔵 Waiting 500ms to ensure canvas is fully rendered...');
         
-        canvas.toBlob(function(blob) {
-            if (!blob || blob.size < 1000) {
-                console.error('❌ toBlob() failed or returned small blob:', blob ? blob.size : 'null');
-                alert('❌ Download failed: Unable to export canvas.\n\nThe canvas may contain images that cannot be exported.\n\nPlease try JPG format instead.');
-                return;
-            }
-            
-            console.log('✅ Blob created successfully, size:', blob.size, 'bytes');
-            
-            const url = URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = filename;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            
-            setTimeout(() => URL.revokeObjectURL(url), 100);
-            
-            console.log('✅ DOWNLOAD SUCCESSFUL (via toBlob)');
-            console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
-            
-            alert(`✅ Download successful!\n\nFile: ${filename}`);
-        }, 'image/png');
+        // CRITICAL FIX: Wait for canvas to fully render before exporting
+        setTimeout(() => {
+            canvas.toBlob(function(blob) {
+                if (!blob) {
+                    console.error('❌ toBlob() returned null - canvas is tainted');
+                    alert('❌ Download failed: Canvas is tainted by cross-origin images.\n\nPlease try JPG format instead.');
+                    return;
+                }
+                
+                if (blob.size < 1000) {
+                    console.error('❌ toBlob() returned small blob:', blob.size, 'bytes');
+                    alert('❌ Download failed: Canvas appears to be blank.\n\nPlease regenerate the view and try again.');
+                    return;
+                }
+                
+                console.log('✅ Blob created successfully, size:', blob.size, 'bytes');
+                
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = filename;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                setTimeout(() => URL.revokeObjectURL(url), 100);
+                
+                console.log('✅ DOWNLOAD SUCCESSFUL (via toBlob)');
+                console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+                
+                alert(`✅ Download successful!\n\nFile: ${filename}`);
+            }, 'image/png');
+        }, 500);
         
         return; // Exit early for toBlob method
     }
@@ -1190,4 +1201,4 @@ function simpleDownload(viewType) {
 }
 
 
-/* END OF CODE - Emergent - 2025-10-22 [11:26:40-EST] */
+/* END OF CODE - Emergent - 2025-10-22 [12:19:36-EST] */
