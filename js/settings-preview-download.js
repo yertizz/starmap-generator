@@ -1,4 +1,4 @@
-/* START OF CODE - Emergent - 2025-10-22 [15:00:22-EST] File: js/settings-preview-download.js.txt */
+/* START OF CODE - Emergent - 2025-10-22 [15:13:09-EST] File: js/settings-preview-download.js.txt */
 
  /**
  * Settings + Preview + Download Section - PRODUCTION VERSION
@@ -1137,14 +1137,30 @@ function simpleDownload(viewType) {
     const isCombinedView = (viewType === 'star-street-landscape' || viewType === 'star-street-portrait');
     
     if (isCombinedView && format === 'png') {
-        console.log('🔵 Combined PNG download - using IMMEDIATE toDataURL to avoid race condition');
-        console.log('🔵 Canvas dimensions:', canvas.width, 'x', canvas.height);
+        console.log('🔵 Combined PNG download - creating opaque copy to fix alpha channel issue');
+        console.log('🔵 Source canvas dimensions:', canvas.width, 'x', canvas.height);
         
-        // CRITICAL FIX: Use toDataURL IMMEDIATELY to capture canvas before any clearing
-        // toBlob() is async and canvas can be cleared during the callback
+        // CRITICAL FIX: Create temporary canvas WITHOUT alpha channel to fix premultiplied alpha issue
         try {
-            const dataURL = canvas.toDataURL('image/png');
-            console.log('✅ Canvas captured via toDataURL');
+            const tempCanvas = document.createElement('canvas');
+            tempCanvas.width = canvas.width;
+            tempCanvas.height = canvas.height;
+            const tempCtx = tempCanvas.getContext('2d', { alpha: false, willReadFrequently: true });
+            
+            console.log('✅ Created temporary opaque canvas');
+            
+            // Fill with white background first (ensures opaque)
+            tempCtx.fillStyle = '#FFFFFF';
+            tempCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
+            
+            // Copy the source canvas content
+            tempCtx.drawImage(canvas, 0, 0);
+            
+            console.log('✅ Copied source canvas to opaque canvas');
+            
+            // Export from the opaque canvas
+            const dataURL = tempCanvas.toDataURL('image/png');
+            console.log('✅ Exported PNG from opaque canvas');
             console.log('   DataURL length:', dataURL.length);
             
             if (dataURL.length < 1000) {
@@ -1161,14 +1177,14 @@ function simpleDownload(viewType) {
             link.click();
             document.body.removeChild(link);
             
-            console.log('✅ DOWNLOAD SUCCESSFUL (via toDataURL - race condition avoided)');
+            console.log('✅ DOWNLOAD SUCCESSFUL (opaque canvas method - alpha issue fixed)');
             console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
             
             alert(`✅ Download successful!\n\nFile: ${filename}`);
             
         } catch (e) {
-            console.error('❌ Canvas is TAINTED - toDataURL() threw error:', e);
-            alert('❌ Download failed: Canvas is tainted by cross-origin images.\n\nThis is a CORS security issue. The Google Maps proxy may not be configured correctly.\n\nPlease try JPG format instead.');
+            console.error('❌ Export failed:', e);
+            alert('❌ Download failed: ' + e.message + '\n\nPlease try JPG format instead.');
             return;
         }
         
@@ -1220,4 +1236,4 @@ function simpleDownload(viewType) {
 }
 
 
-/* END OF CODE - Emergent - 2025-10-22 [15:00:22-EST] */
+/* END OF CODE - Emergent - 2025-10-22 [15:13:09-EST] */
