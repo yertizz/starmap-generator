@@ -1,4 +1,4 @@
-<!-- START OF CODE - Emergent - 2025-10-22 [10:12:07-EST] File: Star_Map_Generator.html | TIMESTAMP CONFIRMATION: 2025-10-22 10:12:07-EST -->
+<!-- START OF CODE - Emergent - 2025-10-22 [10:25:05-EST] File: Star_Map_Generator.html | TIMESTAMP CONFIRMATION: 2025-10-22 10:25:05-EST -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -662,6 +662,74 @@ input:checked + .time-toggle-slider:before {
         color: white;
     }
     /* --- End User Account Styles --- */
+
+    /* --- Custom Modal Styles - Added 2025-10-22 [10:25:05-EST] --- */
+    .custom-modal-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 10000;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .custom-modal-overlay.show {
+        display: flex;
+    }
+    
+    .custom-modal-content {
+        background: white;
+        border-radius: 8px;
+        padding: 30px;
+        max-width: 600px;
+        width: 90%;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        text-align: center;
+        position: relative;
+    }
+    
+    .custom-modal-icon {
+        font-size: 48px;
+        margin-bottom: 20px;
+    }
+    
+    .custom-modal-title {
+        font-size: 32px;
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 25px;
+        letter-spacing: 2px;
+    }
+    
+    .custom-modal-message {
+        font-size: 20px;
+        line-height: 1.8;
+        color: #333;
+        margin-bottom: 30px;
+        text-align: center;
+    }
+    
+    .custom-modal-button {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 15px 50px;
+        font-size: 24px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: background-color 0.3s;
+    }
+    
+    .custom-modal-button:hover {
+        background-color: #0056b3;
+    }
+    /* --- End Custom Modal Styles --- */
+
 /* END OF COMPLETE STYLE BLOCK - Cline - 2025-04-15 09:39 */
 </style>
 
@@ -1952,6 +2020,16 @@ window.initializeGoogleMapInternal = function(){
 <!-- PERFECT CIRCLE FIX - FINAL - AI ADDED 2025-10-15 -->
 <!-- <script src="js/perfect-circle-fix-final.js?v=1.0&cache=20251015c"></script> DISABLED - border masking now in settings-preview-download.js -->
 
+<!-- Custom Modal Dialog - Added 2025-10-22 [10:25:05-EST] -->
+<div id="customModalOverlay" class="custom-modal-overlay">
+    <div class="custom-modal-content">
+        <div class="custom-modal-icon" id="customModalIcon">⚠️</div>
+        <div class="custom-modal-title" id="customModalTitle">VIEW MISMATCH!</div>
+        <div class="custom-modal-message" id="customModalMessage"></div>
+        <button class="custom-modal-button" id="customModalButton">OK</button>
+    </div>
+</div>
+
 </body>
 </html>
-<!-- END OF CODE - Emergent - 2025-10-22 [10:12:07-EST] File: Star_Map_Generator.html -->
+<!-- END OF CODE - Emergent - 2025-10-22 [10:25:05-EST] File: Star_Map_Generator.html -->

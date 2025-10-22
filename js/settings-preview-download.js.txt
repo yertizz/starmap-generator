@@ -1,4 +1,4 @@
-/* START OF CODE - Emergent - 2025-10-22 [10:12:07-EST] File: js/settings-preview-download.js.txt */
+/* START OF CODE - Emergent - 2025-10-22 [10:25:05-EST] File: js/settings-preview-download.js.txt */
 
  /**
  * Settings + Preview + Download Section - PRODUCTION VERSION
@@ -14,7 +14,8 @@
  * - This prevents canvas tainting since images are now same-origin
  * - FIXED Combined Landscape/Portrait blank PNG by using same-origin proxy (no CORS issues)
  * - FIXED async rendering: Download buttons disabled until images fully loaded
- * - FIXED alert message format per user specification
+ * - IMPLEMENTED custom styled modal dialog per user mockup (replaces browser alert)
+ * - Custom modal with warning icon, styled heading, formatted message, and blue OK button
  * - COMPREHENSIVE alert system for user guidance
  * - PNG/JPG downloads fully working
  * - Renamed "Canvas Layout" to "Star Map+Text"
@@ -32,6 +33,44 @@ function getBackendUrl() {
     
     // For production on anythingpod.com, backend is at same domain
     return currentHost;
+}
+
+// Custom styled modal function - Added 2025-10-22 [10:25:05-EST]
+function showCustomModal(title, message, icon = '⚠️') {
+    const overlay = document.getElementById('customModalOverlay');
+    const titleEl = document.getElementById('customModalTitle');
+    const messageEl = document.getElementById('customModalMessage');
+    const iconEl = document.getElementById('customModalIcon');
+    const button = document.getElementById('customModalButton');
+    
+    if (!overlay) {
+        // Fallback to regular alert if modal not found
+        alert(message);
+        return;
+    }
+    
+    titleEl.textContent = title;
+    messageEl.innerHTML = message.replace(/\n/g, '<br>');
+    iconEl.textContent = icon;
+    
+    overlay.classList.add('show');
+    
+    // Close on button click
+    const closeModal = () => {
+        overlay.classList.remove('show');
+        button.removeEventListener('click', closeModal);
+        overlay.removeEventListener('click', overlayClick);
+    };
+    
+    // Close on overlay click
+    const overlayClick = (e) => {
+        if (e.target === overlay) {
+            closeModal();
+        }
+    };
+    
+    button.addEventListener('click', closeModal);
+    overlay.addEventListener('click', overlayClick);
 }
 
 // Track which view was last generated
@@ -1006,12 +1045,12 @@ function simpleDownload(viewType) {
         const requestedName = viewNames[viewType] || viewType;
         const generatedName = viewNames[lastGeneratedView] || (lastGeneratedView || 'None');
         
-        // FIXED: Alert message format as requested by user
-        const msg = `⚠️ VIEW MISMATCH! You clicked the "${requestedName}" green DOWNLOAD button!!\nHOWEVER, the canvas being viewed is for "${generatedName}"\n\nUSE THE YELLOW BUTTONS FOR PREVIEWING THE CANVAS IMAGE.\nUSE THE CORRESPONDING "GREEN" DOWNLOAD BUTTON to save what is being viewed in the Canvas.`;
+        // FIXED: Styled modal alert message per user mockup
+        const msg = `You clicked the "${requestedName}" green DOWNLOAD button!!\nHOWEVER, the canvas being viewed is for "${generatedName}"\n\nUSE THE YELLOW BUTTONS FOR PREVIEWING THE CANVAS IMAGE.\nUSE THE CORRESPONDING "GREEN" DOWNLOAD BUTTON to save what is being viewed in the Canvas.`;
         console.warn('❌ VIEW MISMATCH');
         console.warn('   Requested:', viewType);
         console.warn('   Generated:', lastGeneratedView);
-        alert(msg);
+        showCustomModal('VIEW MISMATCH!', msg, '⚠️');
         return;
     }
     
@@ -1119,4 +1158,4 @@ function simpleDownload(viewType) {
 }
 
 
-/* END OF CODE - Emergent - 2025-10-22 [10:12:07-EST] */
+/* END OF CODE - Emergent - 2025-10-22 [10:25:05-EST] */
