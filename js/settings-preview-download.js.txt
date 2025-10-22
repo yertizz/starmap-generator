@@ -1,4 +1,4 @@
-/* START OF CODE - Emergent - 2025-10-22 [12:19:36-EST] File: js/settings-preview-download.js.txt */
+/* START OF CODE - Emergent - 2025-10-22 [13:34:01-EST] File: js/settings-preview-download.js.txt */
 
  /**
  * Settings + Preview + Download Section - PRODUCTION VERSION
@@ -11,13 +11,14 @@
  * - IMPLEMENTED clean border masking from scratch (borders hidden in overlap area)
  * - Google Maps proxy (google_maps_proxy.php) serves images with CORS headers
  * - All view functions use proxy (working correctly - DO NOT MODIFY)
- * - FIXED async rendering: Download buttons disabled until images fully loaded
- * - CRITICAL FIX: Combined Landscape/Portrait downloads now use toBlob() method
+ * - CRITICAL NEW FEATURE: Smart download button enable/disable system
+ * - All download buttons disabled on page load
+ * - When yellow view button clicked, ALL download buttons disabled
+ * - When view rendering completes, ONLY matching download button enabled
+ * - No more view mismatch alerts - impossible to download wrong view
+ * - More intuitive user experience with visual feedback
+ * - CRITICAL FIX: Combined Landscape/Portrait downloads use toBlob() with 500ms delay
  * - toBlob() better handles canvas with proxy images to prevent blank PNGs
- * - FIXED alert message text and layout exactly per user specification
- * - IMPLEMENTED custom styled modal dialog matching user mockup
- * - Compact modal with warning icon and properly formatted 4-line message
- * - COMPREHENSIVE alert system for user guidance
  * - Renamed "Canvas Layout" to "Star Map+Text"
  */
 
@@ -199,11 +200,32 @@ function resetCanvasToUserDimensions() {
     return { width, height };
 }
 
+// Helper function to disable all download buttons
+function disableAllDownloadButtons() {
+    document.getElementById('download-star-map-btn').disabled = true;
+    document.getElementById('download-street-map-btn').disabled = true;
+    document.getElementById('download-star-map-canvas-btn').disabled = true;
+    document.getElementById('download-star-street-landscape-btn').disabled = true;
+    document.getElementById('download-star-street-portrait-btn').disabled = true;
+    console.log('🔵 All download buttons DISABLED');
+}
+
+// Helper function to enable only the specified download button
+function enableDownloadButton(buttonId) {
+    disableAllDownloadButtons(); // First disable all
+    document.getElementById(buttonId).disabled = false;
+    console.log('✅ Download button ENABLED:', buttonId);
+}
+
 /**
  * Initialize all buttons in the Settings + Preview + Download section
  */
 function initializeButtons() {
     console.log("Initializing Settings + Preview + Download buttons");
+    
+    // CRITICAL: Disable all download buttons on page load
+    disableAllDownloadButtons();
+    console.log('🔵 All download buttons initialized as DISABLED');
     
     // Settings buttons
     document.getElementById('loadSettingsBtn').addEventListener('click', function() {
@@ -250,6 +272,9 @@ function viewStarMap() {
         alert("Please enter valid coordinates or a location first.");
         return;
     }
+    
+    // CRITICAL: Disable all download buttons while rendering
+    disableAllDownloadButtons();
     
     lastGeneratedView = 'star-map'; // Track this view
     console.log("✅ Set lastGeneratedView to: star-map");
@@ -380,7 +405,8 @@ function viewStarMap() {
             
             // NO TEXT LAYERS - Star Map is bare image for design use
             
-            document.getElementById('download-star-map-btn').disabled = false;
+            // CRITICAL: Enable ONLY the Star Map download button
+            enableDownloadButton('download-star-map-btn');
             applyPreviewDisplayConstraints(document.getElementById('zoom-slider')?.value || 100);
             console.log("🔵 Star map rendered with PERFECT CIRCLE");
             URL.revokeObjectURL(starMapUrl);
@@ -419,7 +445,8 @@ function viewStarMap() {
             
             // NO TEXT LAYERS - Star Map is bare image for design use
             
-            document.getElementById('download-star-map-btn').disabled = false;
+            // CRITICAL: Enable ONLY the Star Map download button
+            enableDownloadButton('download-star-map-btn');
         } catch (e) {
             console.error('Fallback failed:', e);
             ctx.restore();
@@ -438,6 +465,9 @@ function viewStarMapOnCanvas() {
         alert("Please enter valid coordinates or a location first.");
         return;
     }
+    
+    // CRITICAL: Disable all download buttons while rendering
+    disableAllDownloadButtons();
     
     lastGeneratedView = 'star-map-canvas'; // Track this view
     console.log("✅ Set lastGeneratedView to: star-map-canvas");
@@ -560,7 +590,8 @@ function viewStarMapOnCanvas() {
             // CANVAS LAYOUT INCLUDES TEXT LAYERS
             renderTextLayers(ctx, centerX, centerY, radius, borderWidth);
             
-            document.getElementById('download-star-map-canvas-btn').disabled = false;
+            // CRITICAL: Enable ONLY the Star Map+Text download button
+            enableDownloadButton('download-star-map-canvas-btn');
             applyPreviewDisplayConstraints(document.getElementById('zoom-slider')?.value || 100);
             console.log("🔵 Canvas Layout rendered with text layers");
             URL.revokeObjectURL(starMapUrl);
@@ -570,7 +601,8 @@ function viewStarMapOnCanvas() {
             console.error("Failed to load star map image");
             ctx.restore();
             renderTextLayers(ctx, centerX, centerY, radius, borderWidth);
-            document.getElementById('download-star-map-canvas-btn').disabled = false;
+            // CRITICAL: Enable ONLY the Star Map+Text download button
+            enableDownloadButton('download-star-map-canvas-btn');
             alert("Failed to load star map image. Check your internet connection.");
         };
         
@@ -594,7 +626,8 @@ function viewStarMapOnCanvas() {
             }
             ctx.restore();
             renderTextLayers(ctx, centerX, centerY, radius, borderWidth);
-            document.getElementById('download-star-map-canvas-btn').disabled = false;
+            // CRITICAL: Enable ONLY the Star Map+Text download button
+            enableDownloadButton('download-star-map-canvas-btn');
         } catch (e) {
             console.error('Fallback failed:', e);
             ctx.restore();
@@ -680,10 +713,9 @@ function viewCombined(isLandscape) {
     console.log('🔵 View Combined clicked, landscape=', isLandscape);
     if (!validateCoordinates()) { alert('Please enter valid coordinates first.'); return; }
     
-    // FIXED: Disable download buttons immediately to prevent premature downloads
-    document.getElementById('download-star-street-landscape-btn').disabled = true;
-    document.getElementById('download-star-street-portrait-btn').disabled = true;
-    console.log('🔵 Download buttons DISABLED - rendering in progress...');
+    // CRITICAL: Disable ALL download buttons while rendering
+    disableAllDownloadButtons();
+    console.log('🔵 All download buttons DISABLED - rendering in progress...');
     
     const { width, height } = resetCanvasToUserDimensions();
     const canvas = document.getElementById('star-map-canvas');
@@ -800,25 +832,24 @@ function viewCombined(isLandscape) {
             
             applyPreviewDisplayConstraints(document.getElementById('zoom-slider')?.value || 100);
             
-            // FIXED: Set lastGeneratedView ONLY AFTER successful render
+            // CRITICAL: Set lastGeneratedView and enable ONLY the matching download button
             if (isLandscape) {
                 lastGeneratedView = 'star-street-landscape';
                 console.log('✅ RENDERING COMPLETE - Set lastGeneratedView to: star-street-landscape');
-                document.getElementById('download-star-street-landscape-btn').disabled = false;
+                enableDownloadButton('download-star-street-landscape-btn');
             } else {
                 lastGeneratedView = 'star-street-portrait';
                 console.log('✅ RENDERING COMPLETE - Set lastGeneratedView to: star-street-portrait');
-                document.getElementById('download-star-street-portrait-btn').disabled = false;
+                enableDownloadButton('download-star-street-portrait-btn');
             }
             
-            console.log('🔵 Combined view complete - download button ENABLED');
+            console.log('🔵 Combined view complete - ONLY matching download button ENABLED');
         })
         .catch(e => { 
             console.error('Combined view error:', e);
-            // Re-enable buttons even on error
-            document.getElementById('download-star-street-landscape-btn').disabled = false;
-            document.getElementById('download-star-street-portrait-btn').disabled = false;
-            alert('Failed to render combined view. Error: ' + e.message); 
+            // On error, keep all buttons disabled (user needs to regenerate)
+            console.log('❌ Error during rendering - all download buttons remain DISABLED');
+            alert('Failed to render combined view. Error: ' + e.message + '\n\nPlease try again.'); 
         });
 }
 
@@ -842,6 +873,9 @@ function viewStreetMap() {
         alert("Please enter valid coordinates or a location first.");
         return;
     }
+    
+    // CRITICAL: Disable all download buttons while rendering
+    disableAllDownloadButtons();
     
     lastGeneratedView = 'street-map'; // Track this view
     console.log("✅ Set lastGeneratedView to: street-map");
@@ -950,7 +984,8 @@ function viewStreetMap() {
         
         // NO TEXT LAYERS - Street Map is bare image for design use
         
-        document.getElementById('download-street-map-btn').disabled = false;
+        // CRITICAL: Enable ONLY the Street Map download button
+        enableDownloadButton('download-street-map-btn');
         applyPreviewDisplayConstraints(document.getElementById('zoom-slider')?.value || 100);
         console.log("🔵 Street map rendered with PERFECT CIRCLE");
     };
@@ -962,7 +997,8 @@ function viewStreetMap() {
         ctx.arc(centerX, centerY, radius, 0, Math.PI * 2, true);
         ctx.fillStyle = "#FFFFFF";
         ctx.fill();
-        document.getElementById('download-street-map-btn').disabled = false;
+        // CRITICAL: Enable ONLY the Street Map download button even on error
+        enableDownloadButton('download-street-map-btn');
         alert("Failed to load Google Maps image. Check your internet connection or backend proxy.");
     };
     
@@ -1028,29 +1064,9 @@ function simpleDownload(viewType) {
     
     console.log('✅ Canvas has content');
     
-    // Step 3: Check if the correct view was generated
-    if (lastGeneratedView !== viewType) {
-        const viewNames = {
-            'star-map': 'Star Map',
-            'street-map': 'Street Map',
-            'star-map-canvas': 'Star Map+Text',
-            'star-street-landscape': 'Combined Landscape',
-            'star-street-portrait': 'Combined Portrait'
-        };
-        
-        const requestedName = viewNames[viewType] || viewType;
-        const generatedName = viewNames[lastGeneratedView] || (lastGeneratedView || 'None');
-        
-        // FIXED: Styled modal alert message exactly per user specification
-        const msg = `VIEW MISMATCH! You clicked the "${requestedName}" green DOWNLOAD button!\nHOWEVER, the canvas being viewed is for "${generatedName}".\n\nUSE THE YELLOW BUTTONS FOR PREVIEWING THE CANVAS IMAGE.\nUSE THE CORRESPONDING "GREEN" DOWNLOAD BUTTON to save it.`;
-        console.warn('❌ VIEW MISMATCH');
-        console.warn('   Requested:', viewType);
-        console.warn('   Generated:', lastGeneratedView);
-        showCustomModal('', msg, '⚠️');
-        return;
-    }
-    
-    console.log('✅ View type matches');
+    // NOTE: View mismatch check removed - buttons are now disabled/enabled automatically
+    // Only the correct button for the current view will be enabled
+    console.log('✅ Download button enabled - view type:', viewType);
     
     // Step 4: Get download format
     const formatRadios = document.getElementsByName('image-format');
@@ -1201,4 +1217,4 @@ function simpleDownload(viewType) {
 }
 
 
-/* END OF CODE - Emergent - 2025-10-22 [12:19:36-EST] */
+/* END OF CODE - Emergent - 2025-10-22 [13:34:01-EST] */
