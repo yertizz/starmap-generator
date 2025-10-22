@@ -1,4 +1,4 @@
-/* START OF CODE - Emergent - 2025-10-22 [14:22:44-EST] File: js/settings-preview-download.js.txt */
+/* START OF CODE - Emergent - 2025-10-22 [14:49:55-EST] File: js/settings-preview-download.js.txt */
 
  /**
  * Settings + Preview + Download Section - PRODUCTION VERSION
@@ -1131,54 +1131,42 @@ function simpleDownload(viewType) {
     const isCombinedView = (viewType === 'star-street-landscape' || viewType === 'star-street-portrait');
     
     if (isCombinedView && format === 'png') {
-        console.log('🔵 Using toBlob() method for Combined view PNG...');
+        console.log('🔵 Combined PNG download - using IMMEDIATE toDataURL to avoid race condition');
         console.log('🔵 Canvas dimensions:', canvas.width, 'x', canvas.height);
         
-        // CRITICAL TEST: Check if canvas is tainted before attempting export
+        // CRITICAL FIX: Use toDataURL IMMEDIATELY to capture canvas before any clearing
+        // toBlob() is async and canvas can be cleared during the callback
         try {
-            const testData = canvas.toDataURL('image/png');
-            console.log('✅ Canvas is NOT tainted - toDataURL() succeeded');
-            console.log('   DataURL length:', testData.length);
+            const dataURL = canvas.toDataURL('image/png');
+            console.log('✅ Canvas captured via toDataURL');
+            console.log('   DataURL length:', dataURL.length);
             
-            if (testData.length < 1000) {
+            if (dataURL.length < 1000) {
                 console.error('❌ Canvas appears blank - dataURL too small');
                 alert('❌ Download failed: Canvas appears blank.\n\nPlease regenerate the view and try again.');
                 return;
             }
             
-            // Canvas is good, proceed with toBlob
-            canvas.toBlob(function(blob) {
-                if (!blob || blob.size < 1000) {
-                    console.error('❌ toBlob() failed or returned small blob:', blob ? blob.size : 'null');
-                    alert('❌ Download failed: Unable to export canvas.\n\nPlease try JPG format instead.');
-                    return;
-                }
-                
-                console.log('✅ Blob created successfully, size:', blob.size, 'bytes');
-                
-                const url = URL.createObjectURL(blob);
-                const link = document.createElement('a');
-                link.href = url;
-                link.download = filename;
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-                
-                setTimeout(() => URL.revokeObjectURL(url), 100);
-                
-                console.log('✅ DOWNLOAD SUCCESSFUL (via toBlob)');
-                console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
-                
-                alert(`✅ Download successful!\n\nFile: ${filename}`);
-            }, 'image/png');
+            // Create download link from dataURL
+            const link = document.createElement('a');
+            link.href = dataURL;
+            link.download = filename;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            console.log('✅ DOWNLOAD SUCCESSFUL (via toDataURL - race condition avoided)');
+            console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+            
+            alert(`✅ Download successful!\n\nFile: ${filename}`);
             
         } catch (e) {
             console.error('❌ Canvas is TAINTED - toDataURL() threw error:', e);
-            alert('❌ Download failed: Canvas is tainted by cross-origin images.\n\nThis is a CORS security issue. The Google Maps proxy may not be configured correctly.\n\nPlease contact support.');
+            alert('❌ Download failed: Canvas is tainted by cross-origin images.\n\nThis is a CORS security issue. The Google Maps proxy may not be configured correctly.\n\nPlease try JPG format instead.');
             return;
         }
         
-        return; // Exit early for toBlob method
+        return; // Exit early for Combined view
     }
     
     // Standard download using toDataURL for other views
@@ -1226,4 +1214,4 @@ function simpleDownload(viewType) {
 }
 
 
-/* END OF CODE - Emergent - 2025-10-22 [14:22:44-EST] */
+/* END OF CODE - Emergent - 2025-10-22 [14:49:55-EST] */
