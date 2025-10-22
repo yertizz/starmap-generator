@@ -1,4 +1,4 @@
-/* START OF CODE - Emergent - 2025-10-22 [15:25:37-EST] File: js/settings-preview-download.js.txt */
+/* START OF CODE - Emergent - 2025-10-22 [15:36:17-EST] File: js/settings-preview-download.js.txt */
 
  /**
  * Settings + Preview + Download Section - PRODUCTION VERSION
@@ -1168,10 +1168,13 @@ function simpleDownload(viewType) {
             tempCtx.fillStyle = '#FFFFFF';
             tempCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
             
-            // Copy the source canvas content
-            tempCtx.drawImage(canvas, 0, 0);
+            // CRITICAL FIX: Use getImageData/putImageData instead of drawImage to bypass clipping state
+            // drawImage() copies canvas WITH active clipping paths, causing blank exports
+            console.log('🔵 Using getImageData to bypass clipping state...');
+            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            tempCtx.putImageData(imageData, 0, 0);
             
-            console.log('✅ Copied source canvas to opaque canvas');
+            console.log('✅ Copied pixel data directly (bypassed clipping state)');
             
             // Export from the opaque canvas
             const dataURL = tempCanvas.toDataURL('image/png');
@@ -1251,4 +1254,4 @@ function simpleDownload(viewType) {
 }
 
 
-/* END OF CODE - Emergent - 2025-10-22 [15:25:37-EST] */
+/* END OF CODE - Emergent - 2025-10-22 [15:36:17-EST] */
