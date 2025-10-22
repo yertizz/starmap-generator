@@ -99,6 +99,24 @@
     background-color: #1f9d42;
 }
 
+/* Disabled button styling - Added 2025-10-22 [14:09:33-EST] */
+.action-button:disabled,
+.action-button[disabled] {
+    background-color: #cccccc !important;
+    color: #666666 !important;
+    cursor: not-allowed !important;
+    opacity: 0.6 !important;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+.action-button:disabled:hover,
+.action-button[disabled]:hover {
+    background-color: #cccccc !important;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .action-button {
