@@ -1,4 +1,4 @@
-/* START OF CODE - Emergent - 2025-10-22 [10:59:32-EST] File: js/settings-preview-download.js.txt */
+/* START OF CODE - Emergent - 2025-10-22 [11:26:40-EST] File: js/settings-preview-download.js.txt */
 
  /**
  * Settings + Preview + Download Section - PRODUCTION VERSION
@@ -12,11 +12,13 @@
  * - Google Maps proxy (google_maps_proxy.php) serves images with CORS headers
  * - All view functions use proxy (working correctly - DO NOT MODIFY)
  * - FIXED async rendering: Download buttons disabled until images fully loaded
+ * - CRITICAL FIX: Combined Landscape/Portrait downloads now use toBlob() method
+ * - toBlob() better handles canvas with proxy images to prevent blank PNGs
+ * - FIXED alert message text and layout exactly per user specification
  * - IMPLEMENTED custom styled modal dialog matching user mockup
- * - Compact modal with warning icon, styled heading, formatted message, and blue OK button
+ * - Compact modal with warning icon and properly formatted 4-line message
  * - COMPREHENSIVE alert system for user guidance
  * - Renamed "Canvas Layout" to "Star Map+Text"
- * - NOTE: All 5 YELLOW view buttons working - only 2 GREEN download buttons need fixing
  */
 
 // Helper function to get backend URL for production deployment
@@ -1039,12 +1041,12 @@ function simpleDownload(viewType) {
         const requestedName = viewNames[viewType] || viewType;
         const generatedName = viewNames[lastGeneratedView] || (lastGeneratedView || 'None');
         
-        // FIXED: Styled modal alert message per user mockup
-        const msg = `You clicked the "${requestedName}" green DOWNLOAD button!!\nHOWEVER, the canvas being viewed is for "${generatedName}"\n\nUSE THE YELLOW BUTTONS FOR PREVIEWING THE CANVAS IMAGE.\nUSE THE CORRESPONDING "GREEN" DOWNLOAD BUTTON to save what is being viewed in the Canvas.`;
+        // FIXED: Styled modal alert message exactly per user specification
+        const msg = `VIEW MISMATCH! You clicked the "${requestedName}" green DOWNLOAD button!\nHOWEVER, the canvas being viewed is for "${generatedName}".\n\nUSE THE YELLOW BUTTONS FOR PREVIEWING THE CANVAS IMAGE.\nUSE THE CORRESPONDING "GREEN" DOWNLOAD BUTTON to save it.`;
         console.warn('❌ VIEW MISMATCH');
         console.warn('   Requested:', viewType);
         console.warn('   Generated:', lastGeneratedView);
-        showCustomModal('VIEW MISMATCH!', msg, '⚠️');
+        showCustomModal('', msg, '⚠️');
         return;
     }
     
@@ -1106,9 +1108,44 @@ function simpleDownload(viewType) {
     
     // Step 7: Attempt download
     console.log('🔄 Attempting to generate download...');
+    console.log('   View type:', viewType);
+    console.log('   Format:', format);
     
-    // FIXED: Since we're using same-origin proxy, canvas should NOT be tainted
-    // Standard download using toDataURL should work for all views now
+    // CRITICAL FIX: Use toBlob() for Combined views to handle potential canvas tainting
+    const isCombinedView = (viewType === 'star-street-landscape' || viewType === 'star-street-portrait');
+    
+    if (isCombinedView && format === 'png') {
+        console.log('🔵 Using toBlob() method for Combined view PNG...');
+        
+        canvas.toBlob(function(blob) {
+            if (!blob || blob.size < 1000) {
+                console.error('❌ toBlob() failed or returned small blob:', blob ? blob.size : 'null');
+                alert('❌ Download failed: Unable to export canvas.\n\nThe canvas may contain images that cannot be exported.\n\nPlease try JPG format instead.');
+                return;
+            }
+            
+            console.log('✅ Blob created successfully, size:', blob.size, 'bytes');
+            
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = filename;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            setTimeout(() => URL.revokeObjectURL(url), 100);
+            
+            console.log('✅ DOWNLOAD SUCCESSFUL (via toBlob)');
+            console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+            
+            alert(`✅ Download successful!\n\nFile: ${filename}`);
+        }, 'image/png');
+        
+        return; // Exit early for toBlob method
+    }
+    
+    // Standard download using toDataURL for other views
     try {
         const link = document.createElement('a');
         
@@ -1121,6 +1158,7 @@ function simpleDownload(viewType) {
         // Check if dataURL is suspiciously small (indicates blank canvas)
         if (link.href.length < 1000) {
             console.warn('⚠️ DataURL suspiciously small - canvas may be blank or tainted');
+            console.warn('   DataURL length:', link.href.length);
         }
         
         link.download = filename;
@@ -1152,4 +1190,4 @@ function simpleDownload(viewType) {
 }
 
 
-/* END OF CODE - Emergent - 2025-10-22 [10:59:32-EST] */
+/* END OF CODE - Emergent - 2025-10-22 [11:26:40-EST] */
