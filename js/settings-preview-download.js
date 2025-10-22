@@ -1,4 +1,4 @@
-/* START OF CODE - Emergent - 2025-10-22 [15:36:17-EST] File: js/settings-preview-download.js.txt */
+/* START OF CODE - Emergent - 2025-10-22 [15:49:47-EST] File: js/settings-preview-download.js.txt */
 
  /**
  * Settings + Preview + Download Section - PRODUCTION VERSION
@@ -838,6 +838,12 @@ function viewCombined(isLandscape) {
                 requestAnimationFrame(() => {
                     console.log('✅ Double requestAnimationFrame fired - GPU operations complete');
                     
+                    // DIAGNOSTIC: Check if canvas has pixels RIGHT AFTER rendering
+                    const centerX = Math.floor(canvas.width / 2);
+                    const centerY = Math.floor(canvas.height / 2);
+                    const pixelCheck = ctx.getImageData(centerX, centerY, 1, 1);
+                    console.log('🔍 DIAGNOSTIC: Canvas pixels RIGHT AFTER rendering:', pixelCheck.data[0], pixelCheck.data[1], pixelCheck.data[2], pixelCheck.data[3]);
+                    
                     // Set lastGeneratedView and enable ONLY the matching download button
                     if (isLandscape) {
                         lastGeneratedView = 'star-street-landscape';
@@ -1254,4 +1260,4 @@ function simpleDownload(viewType) {
 }
 
 
-/* END OF CODE - Emergent - 2025-10-22 [15:36:17-EST] */
+/* END OF CODE - Emergent - 2025-10-22 [15:49:47-EST] */
