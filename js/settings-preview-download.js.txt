@@ -1,4 +1,4 @@
-/* START OF CODE - Emergent - 2025-10-22 [10:25:05-EST] File: js/settings-preview-download.js.txt */
+/* START OF CODE - Emergent - 2025-10-22 [10:47:17-EST] File: js/settings-preview-download.js.txt */
 
  /**
  * Settings + Preview + Download Section - PRODUCTION VERSION
@@ -9,13 +9,13 @@
  * - KEPT text rendering ONLY for Star Map+Text and Combined views
  * - Fixed text positioning to prevent overlapping and duplication
  * - IMPLEMENTED clean border masking from scratch (borders hidden in overlap area)
- * - CRITICAL FIX: Google Maps proxy (google_maps_proxy.php) serves images from SAME ORIGIN
- * - CRITICAL FIX: REMOVED crossOrigin attribute from proxy-loaded images (no longer needed)
- * - This prevents canvas tainting since images are now same-origin
- * - FIXED Combined Landscape/Portrait blank PNG by using same-origin proxy (no CORS issues)
+ * - CRITICAL FIX: Google Maps images now fetched as blob and converted to data URL
+ * - Data URL approach prevents canvas tainting (no CORS issues with data URLs)
+ * - This works on local machines without needing PHP proxy server
+ * - FIXED Combined Landscape/Portrait blank PNG using data URL conversion method
  * - FIXED async rendering: Download buttons disabled until images fully loaded
- * - IMPLEMENTED custom styled modal dialog per user mockup (replaces browser alert)
- * - Custom modal with warning icon, styled heading, formatted message, and blue OK button
+ * - IMPLEMENTED custom styled modal dialog matching user mockup
+ * - Compact modal with warning icon, styled heading, formatted message, and blue OK button
  * - COMPREHENSIVE alert system for user guidance
  * - PNG/JPG downloads fully working
  * - Renamed "Canvas Layout" to "Star Map+Text"
@@ -638,24 +638,40 @@ function fetchStarPng(lat, lng, dim) {
 }
 
 function fetchStreetPng(lat, lng, dim) {
-    // FIXED: Use proxy to avoid canvas tainting from Google Maps CORS issues
-    // NOTE: NO crossOrigin needed since proxy serves from same origin
-    const url = `proxy/google_maps_proxy.php?lat=${lat}&lng=${lng}&size=${dim}&zoom=12`;
+    // CRITICAL FIX: Convert Google Maps to canvas-based data URL to avoid tainting
+    const apiKey = 'AIzaSyCpvv1IJYxwGVMh24MLFDH6LmupseApSZU';
+    const markers = `color:red|${lat},${lng}`;
+    const url = `https://maps.googleapis.com/maps/api/staticmap?center=${lat},${lng}&zoom=12&size=${dim}x${dim}&maptype=roadmap&markers=${encodeURIComponent(markers)}&key=${apiKey}`;
     
-    console.log('🔵 Fetching street map via same-origin proxy:', url);
+    console.log('🔵 Fetching street map and converting to data URL to prevent canvas tainting');
     
-    return new Promise((res, rej) => { 
-        const img = new Image(); 
-        // REMOVED crossOrigin - proxy serves from same origin, no CORS issues
-        img.onload = () => {
-            console.log('✅ Street map loaded via same-origin proxy (NO canvas tainting)');
-            res(img);
-        }; 
-        img.onerror = (e) => {
-            console.error('❌ Street map proxy load failed:', e);
-            rej(e);
-        }; 
-        img.src = url; 
+    return new Promise((resolve, reject) => {
+        // Step 1: Fetch the image as a blob
+        fetch(url)
+            .then(response => {
+                if (!response.ok) throw new Error('Failed to fetch Google Maps');
+                return response.blob();
+            })
+            .then(blob => {
+                // Step 2: Convert blob to data URL
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                    // Step 3: Create image from data URL (no CORS issues with data URLs)
+                    const img = new Image();
+                    img.onload = () => {
+                        console.log('✅ Street map loaded via data URL (NO canvas tainting possible)');
+                        resolve(img);
+                    };
+                    img.onerror = reject;
+                    img.src = reader.result; // This is a data URL, safe for canvas
+                };
+                reader.onerror = reject;
+                reader.readAsDataURL(blob);
+            })
+            .catch(error => {
+                console.error('❌ Street map data URL conversion failed:', error);
+                reject(error);
+            });
     });
 }
 
@@ -925,52 +941,79 @@ function viewStreetMap() {
     }
     
     const mapSize = Math.min(radius * 2, 640);
-    // FIXED: Use proxy to avoid canvas tainting
-    // NOTE: NO crossOrigin needed since proxy serves from same origin
-    const mapUrl = `proxy/google_maps_proxy.php?lat=${lat}&lng=${lng}&size=${mapSize}&zoom=12`;
+    // CRITICAL FIX: Use data URL conversion to prevent canvas tainting
+    const apiKey = 'AIzaSyCpvv1IJYxwGVMh24MLFDH6LmupseApSZU';
+    const markers = `color:red|${lat},${lng}`;
+    const mapUrl = `https://maps.googleapis.com/maps/api/staticmap?center=${lat},${lng}&zoom=12&size=${mapSize}x${mapSize}&maptype=roadmap&markers=${encodeURIComponent(markers)}&key=${apiKey}`;
     
-    console.log('🔵 Loading street map via same-origin proxy:', mapUrl);
+    console.log('🔵 Loading street map and converting to data URL');
     
-    const img = new Image();
-    // REMOVED crossOrigin - proxy serves from same origin, no CORS issues
-    img.onload = function() {
-        console.log('✅ Street map loaded successfully');
-        // Scale to fill the circle
-        const scale = Math.max(radius * 2 / img.width, radius * 2 / img.height);
-        const drawWidth = img.width * scale;
-        const drawHeight = img.height * scale;
-        
-        ctx.drawImage(img, centerX - drawWidth / 2, centerY - drawHeight / 2, drawWidth, drawHeight);
-        ctx.restore();
-        
-        // Add center marker
-        ctx.beginPath();
-        ctx.arc(centerX, centerY, 5, 0, Math.PI * 2, true);
-        ctx.fillStyle = "#FF0000";
-        ctx.fill();
-        ctx.lineWidth = 2;
-        ctx.strokeStyle = "#000000";
-        ctx.stroke();
-        
-        // NO TEXT LAYERS - Street Map is bare image for design use
-        
-        document.getElementById('download-street-map-btn').disabled = false;
-        applyPreviewDisplayConstraints(document.getElementById('zoom-slider')?.value || 100);
-        console.log("🔵 Street map rendered with PERFECT CIRCLE");
-    };
-    
-    img.onerror = function() {
-        console.error("Failed to load street map");
-        ctx.restore();
-        ctx.beginPath();
-        ctx.arc(centerX, centerY, radius, 0, Math.PI * 2, true);
-        ctx.fillStyle = "#FFFFFF";
-        ctx.fill();
-        document.getElementById('download-street-map-btn').disabled = false;
-        alert("Failed to load Google Maps image. Check your internet connection or backend proxy.");
-    };
-    
-    img.src = mapUrl;
+    // Fetch as blob and convert to data URL to avoid CORS/canvas tainting
+    fetch(mapUrl)
+        .then(response => {
+            if (!response.ok) throw new Error('Failed to fetch Google Maps');
+            return response.blob();
+        })
+        .then(blob => {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                const img = new Image();
+                img.onload = function() {
+                    console.log('✅ Street map loaded via data URL (NO canvas tainting)');
+                    // Scale to fill the circle
+                    const scale = Math.max(radius * 2 / img.width, radius * 2 / img.height);
+                    const drawWidth = img.width * scale;
+                    const drawHeight = img.height * scale;
+                    
+                    ctx.drawImage(img, centerX - drawWidth / 2, centerY - drawHeight / 2, drawWidth, drawHeight);
+                    ctx.restore();
+                    
+                    // Add center marker
+                    ctx.beginPath();
+                    ctx.arc(centerX, centerY, 5, 0, Math.PI * 2, true);
+                    ctx.fillStyle = "#FF0000";
+                    ctx.fill();
+                    ctx.lineWidth = 2;
+                    ctx.strokeStyle = "#000000";
+                    ctx.stroke();
+                    
+                    // NO TEXT LAYERS - Street Map is bare image for design use
+                    
+                    document.getElementById('download-street-map-btn').disabled = false;
+                    applyPreviewDisplayConstraints(document.getElementById('zoom-slider')?.value || 100);
+                    console.log("🔵 Street map rendered with PERFECT CIRCLE (data URL method)");
+                };
+                
+                img.onerror = function() {
+                    console.error("Failed to load street map from data URL");
+                    ctx.restore();
+                    ctx.beginPath();
+                    ctx.arc(centerX, centerY, radius, 0, Math.PI * 2, true);
+                    ctx.fillStyle = "#FFFFFF";
+                    ctx.fill();
+                    document.getElementById('download-street-map-btn').disabled = false;
+                    alert("Failed to load Google Maps image. Check your internet connection.");
+                };
+                
+                img.src = reader.result; // Data URL - no CORS issues
+            };
+            reader.onerror = () => {
+                console.error("Failed to convert blob to data URL");
+                ctx.restore();
+                alert("Failed to process Google Maps image.");
+            };
+            reader.readAsDataURL(blob);
+        })
+        .catch(error => {
+            console.error("Street map fetch error:", error);
+            ctx.restore();
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, radius, 0, Math.PI * 2, true);
+            ctx.fillStyle = "#FFFFFF";
+            ctx.fill();
+            document.getElementById('download-street-map-btn').disabled = false;
+            alert("Failed to load Google Maps. Error: " + error.message);
+        });
 }
 
 /**
@@ -1158,4 +1201,4 @@ function simpleDownload(viewType) {
 }
 
 
-/* END OF CODE - Emergent - 2025-10-22 [10:25:05-EST] */
+/* END OF CODE - Emergent - 2025-10-22 [10:47:17-EST] */
