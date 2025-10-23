@@ -1,4 +1,4 @@
-/* START OF CODE - Emergent - 2025-10-22 [14:14:04-EST] File: css/settings-preview-download.css */
+/* START OF CODE - Emergent - 2025-10-23 [07:28:24-EST] File: css/settings-preview-download.css */
 
 /* Settings + Preview + Download Section Styles */
 .settings-preview-download-section {
@@ -65,56 +65,76 @@
 }
 
 .action-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+    filter: brightness(1.1);
 }
 
 .action-button:active {
-    transform: translateY(0);
-    box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    transform: translateY(0) scale(0.98);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
-/* Button color variations */
+/* Button color variations - Enhanced 2025-10-23 [07:28:24-EST] */
 .settings-button {
     background-color: #1D99EF; /* Blue */
+    border: 2px solid transparent;
 }
 
 .settings-button:hover {
     background-color: #1a87d5;
+    border: 2px solid #0d6eaa;
 }
 
 .view-button {
     background-color: #FDCA0D; /* Golden */
+    border: 2px solid transparent;
 }
 
 .view-button:hover {
     background-color: #e3b60c;
+    border: 2px solid #c9a00a;
+    box-shadow: 0 6px 12px rgba(253, 202, 13, 0.4);
 }
 
 .download-button {
     background-color: #23B14B; /* Green */
+    border: 2px solid transparent;
 }
 
 .download-button:hover {
     background-color: #1f9d42;
+    border: 2px solid #198a38;
+    box-shadow: 0 6px 12px rgba(35, 177, 75, 0.4);
 }
 
-/* Disabled button styling - Added 2025-10-22 [14:09:33-EST] */
+/* Disabled button styling - Enhanced 2025-10-23 [07:28:24-EST] */
 .action-button:disabled,
 .action-button[disabled] {
-    background-color: #cccccc !important;
-    color: #666666 !important;
+    background-color: #d9d9d9 !important;
+    background-image: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 10px,
+        rgba(255, 255, 255, 0.3) 10px,
+        rgba(255, 255, 255, 0.3) 20px
+    ) !important;
+    color: #888888 !important;
     cursor: not-allowed !important;
-    opacity: 0.6 !important;
+    opacity: 0.5 !important;
     transform: none !important;
-    box-shadow: none !important;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.1) !important;
+    border: 2px solid #bbb !important;
+    filter: grayscale(100%) !important;
 }
 
 .action-button:disabled:hover,
 .action-button[disabled]:hover {
-    background-color: #cccccc !important;
+    background-color: #d9d9d9 !important;
     transform: none !important;
-    box-shadow: none !important;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.1) !important;
+    filter: grayscale(100%) !important;
+    border: 2px solid #bbb !important;
 }
 
 /* Responsive adjustments */
@@ -142,7 +162,7 @@
     }
 }
 
-/* END OF CODE - Emergent - 2025-10-22 [14:14:04-EST] File: css/settings-preview-download.css */
+/* END OF CODE - Emergent - 2025-10-23 [07:28:24-EST] File: css/settings-preview-download.css */
 /* Unify Circle Overlap slider visuals with Preview Zoom slider */
 #circle-overlap-percent {
   -webkit-appearance: none;
