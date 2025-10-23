@@ -1,4 +1,4 @@
-/* START OF CODE - Emergent - 2025-10-22 [15:49:47-EST] File: js/settings-preview-download.js.txt */
+/* START OF CODE - Emergent - 2025-10-23 [06:29:30-EST] File: js/settings-preview-download.js.txt */
 
  /**
  * Settings + Preview + Download Section - PRODUCTION VERSION
@@ -76,6 +76,11 @@ function showCustomModal(title, message, icon = '⚠️') {
 
 // Track which view was last generated
 let lastGeneratedView = null;
+
+// CRITICAL FIX: Store canvas pixel data immediately after rendering to prevent loss
+let storedCanvasData = null;
+let storedCanvasWidth = 0;
+let storedCanvasHeight = 0;
 
 // Wait for DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', function() {
@@ -838,11 +843,17 @@ function viewCombined(isLandscape) {
                 requestAnimationFrame(() => {
                     console.log('✅ Double requestAnimationFrame fired - GPU operations complete');
                     
-                    // DIAGNOSTIC: Check if canvas has pixels RIGHT AFTER rendering
+                    // CRITICAL FIX: Capture and store canvas pixels IMMEDIATELY after rendering
+                    console.log('🔵 Capturing canvas pixel data for safe storage...');
+                    storedCanvasData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                    storedCanvasWidth = canvas.width;
+                    storedCanvasHeight = canvas.height;
+                    
                     const centerX = Math.floor(canvas.width / 2);
                     const centerY = Math.floor(canvas.height / 2);
-                    const pixelCheck = ctx.getImageData(centerX, centerY, 1, 1);
-                    console.log('🔍 DIAGNOSTIC: Canvas pixels RIGHT AFTER rendering:', pixelCheck.data[0], pixelCheck.data[1], pixelCheck.data[2], pixelCheck.data[3]);
+                    const centerPixel = storedCanvasData.data[(centerY * canvas.width + centerX) * 4];
+                    console.log('✅ Canvas pixel data STORED - center pixel:', centerPixel, storedCanvasData.data[(centerY * canvas.width + centerX) * 4 + 1], storedCanvasData.data[(centerY * canvas.width + centerX) * 4 + 2], storedCanvasData.data[(centerY * canvas.width + centerX) * 4 + 3]);
+                    console.log('   Stored data size:', storedCanvasData.data.length, 'bytes');
                     
                     // Set lastGeneratedView and enable ONLY the matching download button
                     if (isLandscape) {
@@ -1145,22 +1156,25 @@ function simpleDownload(viewType) {
     const isCombinedView = (viewType === 'star-street-landscape' || viewType === 'star-street-portrait');
     
     if (isCombinedView && format === 'png') {
-        console.log('🔵 Combined PNG download - forcing pixel buffer sync');
-        console.log('🔵 Source canvas dimensions:', canvas.width, 'x', canvas.height);
+        console.log('🔵 Combined PNG download - using STORED pixel data');
+        console.log('🔵 Canvas dimensions:', canvas.width, 'x', canvas.height);
         
-        // CRITICAL FIX: Force pixel buffer sync by reading pixels before export
+        // CRITICAL FIX: Use stored pixel data instead of reading from potentially cleared canvas
         try {
-            const ctx = canvas.getContext('2d');
+            if (!storedCanvasData || storedCanvasWidth !== canvas.width || storedCanvasHeight !== canvas.height) {
+                console.error('❌ No stored canvas data available or dimensions mismatch!');
+                alert('❌ Download failed: Canvas data not available.\n\nPlease regenerate the view and try again immediately after rendering completes.');
+                return;
+            }
             
-            // Force GPU to commit pixel buffer by reading a small sample
-            const pixelSample = ctx.getImageData(0, 0, 1, 1);
-            console.log('✅ Forced pixel buffer read - GPU sync complete');
+            console.log('✅ Using stored canvas data from rendering');
+            console.log('   Stored dimensions:', storedCanvasWidth, 'x', storedCanvasHeight);
             
-            // Validate canvas has content by checking center pixel
-            const centerX = Math.floor(canvas.width / 2);
-            const centerY = Math.floor(canvas.height / 2);
-            const centerPixel = ctx.getImageData(centerX, centerY, 1, 1);
-            console.log('🔍 Center pixel RGBA:', centerPixel.data[0], centerPixel.data[1], centerPixel.data[2], centerPixel.data[3]);
+            // Validate stored data by checking center pixel
+            const centerX = Math.floor(storedCanvasWidth / 2);
+            const centerY = Math.floor(storedCanvasHeight / 2);
+            const centerIdx = (centerY * storedCanvasWidth + centerX) * 4;
+            console.log('🔍 Stored center pixel RGBA:', storedCanvasData.data[centerIdx], storedCanvasData.data[centerIdx + 1], storedCanvasData.data[centerIdx + 2], storedCanvasData.data[centerIdx + 3]);
             
             // Create temporary opaque canvas for export
             const tempCanvas = document.createElement('canvas');
@@ -1174,13 +1188,11 @@ function simpleDownload(viewType) {
             tempCtx.fillStyle = '#FFFFFF';
             tempCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
             
-            // CRITICAL FIX: Use getImageData/putImageData instead of drawImage to bypass clipping state
-            // drawImage() copies canvas WITH active clipping paths, causing blank exports
-            console.log('🔵 Using getImageData to bypass clipping state...');
-            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-            tempCtx.putImageData(imageData, 0, 0);
+            // CRITICAL FIX: Use STORED pixel data instead of reading from canvas
+            console.log('🔵 Using stored pixel data for export...');
+            tempCtx.putImageData(storedCanvasData, 0, 0);
             
-            console.log('✅ Copied pixel data directly (bypassed clipping state)');
+            console.log('✅ Stored pixel data written to export canvas');
             
             // Export from the opaque canvas
             const dataURL = tempCanvas.toDataURL('image/png');
@@ -1260,4 +1272,4 @@ function simpleDownload(viewType) {
 }
 
 
-/* END OF CODE - Emergent - 2025-10-22 [15:49:47-EST] */
+/* END OF CODE - Emergent - 2025-10-23 [06:29:30-EST] */
