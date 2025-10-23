@@ -1,4 +1,4 @@
-/* START OF CODE - Emergent - 2025-10-23 [06:47:59-EST] File: js/settings-preview-download.js.txt */
+/* START OF CODE - Emergent - 2025-10-23 [07:19:53-EST] File: js/settings-preview-download.js.txt */
 
  /**
  * Settings + Preview + Download Section - PRODUCTION VERSION
@@ -205,6 +205,26 @@ function resetCanvasToUserDimensions() {
     return { width, height };
 }
 
+// Helper function to show progress indicator - Added 2025-10-23 [07:19:53-EST]
+function showProgressIndicator(message) {
+    const overlay = document.getElementById('progressOverlay');
+    const messageEl = document.getElementById('progressMessage');
+    if (overlay && messageEl) {
+        messageEl.textContent = message;
+        overlay.classList.add('show');
+        console.log('🔵 Progress indicator shown:', message);
+    }
+}
+
+// Helper function to hide progress indicator - Added 2025-10-23 [07:19:53-EST]
+function hideProgressIndicator() {
+    const overlay = document.getElementById('progressOverlay');
+    if (overlay) {
+        overlay.classList.remove('show');
+        console.log('✅ Progress indicator hidden');
+    }
+}
+
 // Helper function to disable all download buttons
 function disableAllDownloadButtons() {
     document.getElementById('download-star-map-btn').disabled = true;
@@ -219,6 +239,7 @@ function disableAllDownloadButtons() {
 function enableDownloadButton(buttonId) {
     disableAllDownloadButtons(); // First disable all
     document.getElementById(buttonId).disabled = false;
+    hideProgressIndicator(); // Hide progress when button is enabled
     console.log('✅ Download button ENABLED:', buttonId);
 }
 
@@ -277,6 +298,9 @@ function viewStarMap() {
         alert("Please enter valid coordinates or a location first.");
         return;
     }
+    
+    // Show progress indicator
+    showProgressIndicator('Generating Star Map...');
     
     // CRITICAL: Disable all download buttons while rendering
     disableAllDownloadButtons();
@@ -470,6 +494,9 @@ function viewStarMapOnCanvas() {
         alert("Please enter valid coordinates or a location first.");
         return;
     }
+    
+    // Show progress indicator
+    showProgressIndicator('Generating Star Map+Text...');
     
     // CRITICAL: Disable all download buttons while rendering
     disableAllDownloadButtons();
@@ -718,6 +745,13 @@ function viewCombined(isLandscape) {
     console.log('🔵 View Combined clicked, landscape=', isLandscape);
     if (!validateCoordinates()) { alert('Please enter valid coordinates first.'); return; }
     
+    // Show progress indicator with appropriate message
+    if (isLandscape) {
+        showProgressIndicator('Generating Combined-Landscape View...');
+    } else {
+        showProgressIndicator('Generating Combined-Portrait View...');
+    }
+    
     // CRITICAL: Disable ALL download buttons while rendering
     disableAllDownloadButtons();
     console.log('🔵 All download buttons DISABLED - rendering in progress...');
@@ -898,6 +932,9 @@ function viewStreetMap() {
         alert("Please enter valid coordinates or a location first.");
         return;
     }
+    
+    // Show progress indicator
+    showProgressIndicator('Generating Street Map...');
     
     // CRITICAL: Disable all download buttons while rendering
     disableAllDownloadButtons();
@@ -1277,4 +1314,4 @@ function simpleDownload(viewType) {
 }
 
 
-/* END OF CODE - Emergent - 2025-10-23 [06:47:59-EST] */
+/* END OF CODE - Emergent - 2025-10-23 [07:19:53-EST] */

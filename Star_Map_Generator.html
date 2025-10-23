@@ -1,4 +1,4 @@
-<!-- START OF CODE - Emergent - 2025-10-22 [14:35:34-EST] File: Star_Map_Generator.html | TIMESTAMP CONFIRMATION: 2025-10-22 14:35:34-EST -->
+<!-- START OF CODE - Emergent - 2025-10-23 [07:19:53-EST] File: Star_Map_Generator.html | TIMESTAMP CONFIRMATION: 2025-10-23 07:19:53-EST -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -732,6 +732,68 @@ input:checked + .time-toggle-slider:before {
         background-color: #0056b3;
     }
     /* --- End Custom Modal Styles --- */
+
+    /* --- Progress Indicator Styles - Added 2025-10-23 [07:19:53-EST] --- */
+    .progress-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        z-index: 9999;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .progress-overlay.show {
+        display: flex;
+    }
+    
+    .progress-container {
+        background: white;
+        border-radius: 8px;
+        padding: 30px 40px;
+        min-width: 400px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        text-align: center;
+    }
+    
+    .progress-message {
+        font-size: 18px;
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 20px;
+    }
+    
+    .progress-bar-container {
+        width: 100%;
+        height: 30px;
+        background-color: #e0e0e0;
+        border-radius: 15px;
+        overflow: hidden;
+        position: relative;
+    }
+    
+    .progress-bar {
+        height: 100%;
+        width: 40%;
+        background: linear-gradient(90deg, #4CAF50, #45a049);
+        border-radius: 15px;
+        animation: progressSlide 1.5s ease-in-out infinite;
+        position: relative;
+    }
+    
+    @keyframes progressSlide {
+        0% {
+            transform: translateX(-100%);
+        }
+        100% {
+            transform: translateX(250%);
+        }
+    }
+    /* --- End Progress Indicator Styles --- */
 
 /* END OF COMPLETE STYLE BLOCK - Cline - 2025-04-15 09:39 */
 </style>
@@ -2033,6 +2095,16 @@ window.initializeGoogleMapInternal = function(){
     </div>
 </div>
 
+<!-- Progress Indicator Overlay - Added 2025-10-23 [07:19:53-EST] -->
+<div id="progressOverlay" class="progress-overlay">
+    <div class="progress-container">
+        <div class="progress-message" id="progressMessage">Generating...</div>
+        <div class="progress-bar-container">
+            <div class="progress-bar"></div>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>
-<!-- END OF CODE - Emergent - 2025-10-22 [14:35:34-EST] File: Star_Map_Generator.html -->
+<!-- END OF CODE - Emergent - 2025-10-23 [07:19:53-EST] File: Star_Map_Generator.html -->
