@@ -1,4 +1,4 @@
-<!-- START OF CODE - Emergent - 2025-10-23 [07:19:53-EST] File: Star_Map_Generator.html | TIMESTAMP CONFIRMATION: 2025-10-23 07:19:53-EST -->
+<!-- START OF CODE - Emergent - 2025-10-23 [07:41:04-EST] File: Star_Map_Generator.html | TIMESTAMP CONFIRMATION: 2025-10-23 07:41:04-EST -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -795,6 +795,80 @@ input:checked + .time-toggle-slider:before {
     }
     /* --- End Progress Indicator Styles --- */
 
+    /* --- Mobile Block Overlay Styles - Added 2025-10-23 [07:41:04-EST] --- */
+    .mobile-block-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        z-index: 99999;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+    }
+    
+    .mobile-block-overlay.show {
+        display: flex;
+    }
+    
+    .mobile-block-container {
+        background: white;
+        border-radius: 16px;
+        padding: 40px 30px;
+        max-width: 500px;
+        width: 100%;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        text-align: center;
+        animation: slideInUp 0.5s ease-out;
+    }
+    
+    @keyframes slideInUp {
+        from {
+            opacity: 0;
+            transform: translateY(50px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .mobile-block-icon {
+        font-size: 80px;
+        margin-bottom: 20px;
+    }
+    
+    .mobile-block-title {
+        font-size: 32px;
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 20px;
+    }
+    
+    .mobile-block-message {
+        font-size: 18px;
+        line-height: 1.6;
+        color: #555;
+        margin-bottom: 15px;
+    }
+    
+    .mobile-block-submessage {
+        font-size: 16px;
+        line-height: 1.5;
+        color: #777;
+        margin-bottom: 25px;
+    }
+    
+    .mobile-block-footer {
+        font-size: 14px;
+        color: #999;
+        font-style: italic;
+    }
+    /* --- End Mobile Block Overlay Styles --- */
+
 /* END OF COMPLETE STYLE BLOCK - Cline - 2025-04-15 09:39 */
 </style>
 
@@ -861,6 +935,54 @@ input:checked + .time-toggle-slider:before {
 </style>
 </head>
 <body>
+
+<!-- Mobile Device Block Overlay - Added 2025-10-23 [07:41:04-EST] -->
+<div id="mobileBlockOverlay" class="mobile-block-overlay">
+    <div class="mobile-block-container">
+        <div class="mobile-block-icon">🖥️</div>
+        <h1 class="mobile-block-title">Desktop Required</h1>
+        <p class="mobile-block-message">
+            This Star Map Generator requires a desktop browser for optimal performance and functionality.
+        </p>
+        <p class="mobile-block-submessage">
+            Please visit this page on your computer to create custom star maps.
+        </p>
+        <div class="mobile-block-footer">
+            Thank you for your understanding!
+        </div>
+    </div>
+</div>
+
+<!-- Mobile Device Detection and Block - Added 2025-10-23 [07:41:04-EST] -->
+<script>
+(function() {
+    // Detect mobile devices
+    function isMobileDevice() {
+        const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+        
+        // Check for common mobile patterns
+        const mobileRegex = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini|mobile|tablet/i;
+        
+        // Check for touch capability and small screen
+        const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+        const isSmallScreen = window.innerWidth <= 1024; // Tablets and phones
+        
+        return mobileRegex.test(userAgent) || (isTouchDevice && isSmallScreen);
+    }
+    
+    // Show mobile block overlay if on mobile device
+    if (isMobileDevice()) {
+        console.log('Mobile device detected - showing desktop required message');
+        const overlay = document.getElementById('mobileBlockOverlay');
+        if (overlay) {
+            overlay.classList.add('show');
+            // Prevent scrolling on body
+            document.body.style.overflow = 'hidden';
+        }
+    }
+})();
+</script>
+
 <!-- Firebase SDK -->
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
@@ -2107,4 +2229,4 @@ window.initializeGoogleMapInternal = function(){
 
 </body>
 </html>
-<!-- END OF CODE - Emergent - 2025-10-23 [07:19:53-EST] File: Star_Map_Generator.html -->
+<!-- END OF CODE - Emergent - 2025-10-23 [07:41:04-EST] File: Star_Map_Generator.html -->
