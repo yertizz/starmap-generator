@@ -1,4 +1,4 @@
-<!-- START OF CODE - Emergent - 2025-10-23 [07:41:04-EST] File: Star_Map_Generator.html | TIMESTAMP CONFIRMATION: 2025-10-23 07:41:04-EST -->
+<!-- START OF CODE - Emergent - 2025-10-23 [07:49:50-EST] File: Star_Map_Generator.html | TIMESTAMP CONFIRMATION: 2025-10-23 07:49:50-EST -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -795,7 +795,7 @@ input:checked + .time-toggle-slider:before {
     }
     /* --- End Progress Indicator Styles --- */
 
-    /* --- Mobile Block Overlay Styles - Added 2025-10-23 [07:41:04-EST] --- */
+    /* --- Mobile Block Overlay Styles - Updated 2025-10-23 [07:49:50-EST] --- */
     .mobile-block-overlay {
         display: none;
         position: fixed;
@@ -803,11 +803,42 @@ input:checked + .time-toggle-slider:before {
         left: 0;
         width: 100%;
         height: 100%;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: #0a0e27;
         z-index: 99999;
         justify-content: center;
         align-items: center;
-        padding: 20px;
+        padding: 15px;
+        overflow: hidden;
+    }
+    
+    /* Twinkling stars background for mobile overlay */
+    .mobile-block-overlay::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 1px;
+        height: 1px;
+        background: white;
+        box-shadow: 
+            50px 100px white, 150px 75px white, 250px 150px white, 350px 50px white, 450px 125px white,
+            100px 200px white, 200px 175px white, 300px 225px white, 400px 190px white, 500px 210px white,
+            75px 300px white, 175px 275px white, 275px 325px white, 375px 290px white, 475px 310px white,
+            125px 25px white, 225px 40px white, 325px 60px white, 425px 35px white, 525px 45px white,
+            25px 50px white, 90px 90px white, 160px 125px white, 240px 100px white, 310px 140px white,
+            60px 175px white, 140px 210px white, 210px 240px white, 290px 190px white, 360px 225px white,
+            40px 250px white, 110px 290px white, 190px 310px white, 260px 275px white, 340px 300px white,
+            80px 350px white, 170px 375px white, 230px 360px white, 320px 390px white, 390px 360px white,
+            550px 75px white, 600px 150px white, 650px 100px white, 700px 175px white, 750px 125px white,
+            575px 225px white, 625px 260px white, 675px 240px white, 725px 290px white, 775px 260px white,
+            45px 325px white, 95px 360px white, 145px 340px white, 195px 375px white, 245px 350px white,
+            35px 150px white, 65px 225px white, 120px 260px white, 205px 290px white, 265px 310px white,
+            405px 100px white, 455px 140px white, 505px 160px white, 555px 130px white, 605px 190px white,
+            435px 260px white, 485px 290px white, 535px 310px white, 585px 280px white, 635px 300px white,
+            800px 50px white, 850px 100px white, 900px 75px white, 950px 125px white, 1000px 90px white,
+            810px 175px white, 860px 200px white, 910px 190px white, 960px 210px white, 1010px 180px white;
+        z-index: 0;
+        animation: twinkle1 4s ease-in-out infinite;
     }
     
     .mobile-block-overlay.show {
@@ -815,20 +846,24 @@ input:checked + .time-toggle-slider:before {
     }
     
     .mobile-block-container {
-        background: white;
-        border-radius: 16px;
-        padding: 40px 30px;
-        max-width: 500px;
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 20px;
+        padding: 60px 45px;
+        max-width: 90%;
         width: 100%;
-        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        max-height: 90vh;
+        overflow-y: auto;
+        box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5);
         text-align: center;
-        animation: slideInUp 0.5s ease-out;
+        animation: slideInUp 0.6s ease-out;
+        position: relative;
+        z-index: 1;
     }
     
     @keyframes slideInUp {
         from {
             opacity: 0;
-            transform: translateY(50px);
+            transform: translateY(80px);
         }
         to {
             opacity: 1;
@@ -837,34 +872,38 @@ input:checked + .time-toggle-slider:before {
     }
     
     .mobile-block-icon {
-        font-size: 80px;
-        margin-bottom: 20px;
+        font-size: 120px;
+        margin-bottom: 30px;
+        display: block;
     }
     
     .mobile-block-title {
-        font-size: 32px;
+        font-size: 48px;
         font-weight: bold;
-        color: #333;
-        margin-bottom: 20px;
+        color: #0a0e27;
+        margin-bottom: 30px;
+        line-height: 1.2;
     }
     
     .mobile-block-message {
-        font-size: 18px;
-        line-height: 1.6;
-        color: #555;
-        margin-bottom: 15px;
+        font-size: 27px;
+        line-height: 1.8;
+        color: #333;
+        margin-bottom: 25px;
+        padding: 0 10px;
     }
     
     .mobile-block-submessage {
-        font-size: 16px;
-        line-height: 1.5;
-        color: #777;
-        margin-bottom: 25px;
+        font-size: 24px;
+        line-height: 1.7;
+        color: #555;
+        margin-bottom: 35px;
+        padding: 0 10px;
     }
     
     .mobile-block-footer {
-        font-size: 14px;
-        color: #999;
+        font-size: 21px;
+        color: #777;
         font-style: italic;
     }
     /* --- End Mobile Block Overlay Styles --- */
@@ -936,19 +975,19 @@ input:checked + .time-toggle-slider:before {
 </head>
 <body>
 
-<!-- Mobile Device Block Overlay - Added 2025-10-23 [07:41:04-EST] -->
+<!-- Mobile Device Block Overlay - Updated 2025-10-23 [07:49:50-EST] -->
 <div id="mobileBlockOverlay" class="mobile-block-overlay">
     <div class="mobile-block-container">
         <div class="mobile-block-icon">🖥️</div>
         <h1 class="mobile-block-title">Desktop Required</h1>
         <p class="mobile-block-message">
-            This Star Map Generator requires a desktop browser for optimal performance and functionality.
+            This Star Map Generator requires a desktop browser.
         </p>
         <p class="mobile-block-submessage">
-            Please visit this page on your computer to create custom star maps.
+            Please visit on your computer to create custom star maps.
         </p>
         <div class="mobile-block-footer">
-            Thank you for your understanding!
+            Thank you!
         </div>
     </div>
 </div>
@@ -2229,4 +2268,4 @@ window.initializeGoogleMapInternal = function(){
 
 </body>
 </html>
-<!-- END OF CODE - Emergent - 2025-10-23 [07:41:04-EST] File: Star_Map_Generator.html -->
+<!-- END OF CODE - Emergent - 2025-10-23 [07:49:50-EST] File: Star_Map_Generator.html -->
