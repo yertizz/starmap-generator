@@ -1,4 +1,4 @@
-/* START OF CODE - Emergent - 2025-10-23 [06:29:30-EST] File: js/settings-preview-download.js.txt */
+/* START OF CODE - Emergent - 2025-10-23 [06:47:59-EST] File: js/settings-preview-download.js.txt */
 
  /**
  * Settings + Preview + Download Section - PRODUCTION VERSION
@@ -1213,6 +1213,11 @@ function simpleDownload(viewType) {
             link.click();
             document.body.removeChild(link);
             
+            // CRITICAL FIX: Restore canvas from stored data to keep it visible after download
+            const ctx = canvas.getContext('2d');
+            ctx.putImageData(storedCanvasData, 0, 0);
+            console.log('✅ Canvas restored from stored data - remains visible after download');
+            
             console.log('✅ DOWNLOAD SUCCESSFUL (opaque canvas method - alpha issue fixed)');
             console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
             
@@ -1272,4 +1277,4 @@ function simpleDownload(viewType) {
 }
 
 
-/* END OF CODE - Emergent - 2025-10-23 [06:29:30-EST] */
+/* END OF CODE - Emergent - 2025-10-23 [06:47:59-EST] */
