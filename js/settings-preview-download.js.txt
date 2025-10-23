@@ -285,6 +285,46 @@ function initializeButtons() {
     document.getElementById('download-star-map-canvas-btn').addEventListener('click', downloadStarMapWithCanvas);
     document.getElementById('download-star-street-landscape-btn').addEventListener('click', downloadStarStreetLandscape);
     document.getElementById('download-star-street-portrait-btn').addEventListener('click', downloadStarStreetPortrait);
+    
+    // Image format radio buttons - show/hide JPG quality selector
+    const pngFormatRadio = document.getElementById('png-format');
+    const jpgFormatRadio = document.getElementById('jpg-format');
+    const svgFormatRadio = document.getElementById('svg-format');
+    const pdfFormatRadio = document.getElementById('pdf-format');
+    const jpgQualityDropdown = document.getElementById('jpg-quality');
+    const transparencyCheckbox = document.getElementById('png-transparency');
+    
+    function updateFormatControls() {
+        if (jpgFormatRadio.checked) {
+            // Show JPG quality dropdown
+            jpgQualityDropdown.style.display = 'inline-block';
+            // Disable transparency (only PNG supports it)
+            if (transparencyCheckbox) {
+                transparencyCheckbox.disabled = true;
+                transparencyCheckbox.checked = false;
+                const label = document.querySelector('label[for="png-transparency"]');
+                if (label) label.classList.add('disabled-option');
+            }
+        } else {
+            // Hide JPG quality dropdown
+            jpgQualityDropdown.style.display = 'none';
+            // Enable transparency for PNG
+            if (pngFormatRadio.checked && transparencyCheckbox) {
+                transparencyCheckbox.disabled = false;
+                const label = document.querySelector('label[for="png-transparency"]');
+                if (label) label.classList.remove('disabled-option');
+            }
+        }
+    }
+    
+    // Add event listeners to all format radio buttons
+    if (pngFormatRadio) pngFormatRadio.addEventListener('change', updateFormatControls);
+    if (jpgFormatRadio) jpgFormatRadio.addEventListener('change', updateFormatControls);
+    if (svgFormatRadio) svgFormatRadio.addEventListener('change', updateFormatControls);
+    if (pdfFormatRadio) pdfFormatRadio.addEventListener('change', updateFormatControls);
+    
+    // Initialize on page load
+    updateFormatControls();
 }
 
 /**
@@ -1192,8 +1232,8 @@ function simpleDownload(viewType) {
     // CRITICAL FIX: Use toBlob() for Combined views to handle potential canvas tainting
     const isCombinedView = (viewType === 'star-street-landscape' || viewType === 'star-street-portrait');
     
-    if (isCombinedView && format === 'png') {
-        console.log('🔵 Combined PNG download - using STORED pixel data');
+    if (isCombinedView && (format === 'png' || format === 'jpg' || format === 'jpeg')) {
+        console.log(`🔵 Combined ${format.toUpperCase()} download - using STORED pixel data`);
         console.log('🔵 Canvas dimensions:', canvas.width, 'x', canvas.height);
         
         // CRITICAL FIX: Use stored pixel data instead of reading from potentially cleared canvas
@@ -1232,8 +1272,18 @@ function simpleDownload(viewType) {
             console.log('✅ Stored pixel data written to export canvas');
             
             // Export from the opaque canvas
-            const dataURL = tempCanvas.toDataURL('image/png');
-            console.log('✅ Exported PNG from opaque canvas');
+            let dataURL;
+            if (format === 'png') {
+                dataURL = tempCanvas.toDataURL('image/png');
+                console.log('✅ Exported PNG from opaque canvas');
+            } else {
+                // Get JPG quality from dropdown (default 90%)
+                const qualityDropdown = document.getElementById('jpg-quality');
+                const quality = qualityDropdown ? parseFloat(qualityDropdown.value) : 0.90;
+                console.log('   JPG Quality selected:', (quality * 100) + '%');
+                dataURL = tempCanvas.toDataURL('image/jpeg', quality);
+                console.log('✅ Exported JPG from opaque canvas');
+            }
             console.log('   DataURL length:', dataURL.length);
             
             if (dataURL.length < 1000) {
@@ -1276,7 +1326,11 @@ function simpleDownload(viewType) {
         if (format === 'png') {
             link.href = canvas.toDataURL('image/png');
         } else {
-            link.href = canvas.toDataURL('image/jpeg', 0.95);
+            // Get JPG quality from dropdown (default 90%)
+            const qualityDropdown = document.getElementById('jpg-quality');
+            const quality = qualityDropdown ? parseFloat(qualityDropdown.value) : 0.90;
+            console.log('   JPG Quality selected:', (quality * 100) + '%');
+            link.href = canvas.toDataURL('image/jpeg', quality);
         }
         
         // Check if dataURL is suspiciously small (indicates blank canvas)
@@ -1314,4 +1368,5 @@ function simpleDownload(viewType) {
 }
 
 
-/* END OF CODE - Emergent - 2025-10-23 [07:19:53-EST] */
+/* UPDATED: Added JPG quality selector (60-100%) with show/hide logic - Emergent - 2025-10-23 [16:18:26-EST] */
+/* END OF CODE - Emergent - 2025-10-23 [16:18:26-EST] */

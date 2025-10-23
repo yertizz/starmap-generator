@@ -1,4 +1,4 @@
-<!-- START OF CODE - Emergent - 2025-10-23 [07:49:50-EST] File: Star_Map_Generator.html | TIMESTAMP CONFIRMATION: 2025-10-23 07:49:50-EST -->
+<!-- START OF CODE - Emergent - 2025-10-23 [16:18:26-EST] File: Star_Map_Generator.html | TIMESTAMP CONFIRMATION: 2025-10-23 16:18:26-EST -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -2004,10 +2004,17 @@ document.addEventListener('DOMContentLoaded', function() {
     
     <!-- Image Format Options -->
 <div class="settings-row" style="margin-top: 15px; border-top: 1px solid #ddd; padding-top: 15px; display: flex; align-items: center; justify-content: center; gap: 20px;">
-    <span style="font-weight: 600;">Image Format:</span>
+    <span style="font-weight: 600;">Image Type:</span>
     <input type="radio" name="image-format" value="png" id="png-format" checked> <label for="png-format" style="margin-right: 5px;">PNG</label>
     <input type="checkbox" id="png-transparency"> <label for="png-transparency" style="margin-right: 20px;">Transparency</label>
-    <input type="radio" name="image-format" value="jpg" id="jpg-format"> <label for="jpg-format" style="margin-right: 20px;">JPG</label>
+    <input type="radio" name="image-format" value="jpg" id="jpg-format"> <label for="jpg-format" style="margin-right: 5px;">JPG</label>
+    <select id="jpg-quality" style="width: 70px; height: 28px; padding: 2px 5px; margin-right: 15px; display: none;">
+        <option value="0.60">60%</option>
+        <option value="0.70">70%</option>
+        <option value="0.80">80%</option>
+        <option value="0.90" selected>90%</option>
+        <option value="1.00">100%</option>
+    </select>
     <input type="radio" name="image-format" value="svg" id="svg-format"> <label for="svg-format" style="margin-right: 20px;">SVG</label>
     <input type="radio" name="image-format" value="pdf" id="pdf-format"> <label for="pdf-format">PDF</label>
 </div>
@@ -2268,4 +2275,5 @@ window.initializeGoogleMapInternal = function(){
 
 </body>
 </html>
-<!-- END OF CODE - Emergent - 2025-10-23 [07:49:50-EST] File: Star_Map_Generator.html -->
+<!-- UPDATED: Added JPG quality selector dropdown (60-100%, default 90%) - Emergent - 2025-10-23 [16:18:26-EST] -->
+<!-- END OF CODE - Emergent - 2025-10-23 [16:18:26-EST] File: Star_Map_Generator.html -->
