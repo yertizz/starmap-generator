@@ -1,4 +1,4 @@
-/* START OF CODE - Emergent - 2025-10-24 [15:35:04-EST] File: css/master-override.css */
+/* START OF CODE - Emergent - 2025-10-24 [15:44:28-EST] File: css/master-override.css */
 
 /**
  * Master Override CSS for Star Map Generator
@@ -240,6 +240,23 @@ input[name="image-format"][value="png"]:checked ~ #png-transparency {
     flex-wrap: nowrap !important;
     gap: 8px !important;
     contain: layout style !important; /* Stabilize browser rendering */
+}
+
+/* CRITICAL FIX: Disable CSS content injection from container-reorganization.css */
+.settings-preview-download-section label[for="png-transparency"]::before {
+    content: none !important;
+}
+
+.settings-preview-download-section label[for="png-transparency"] {
+    font-size: 14px !important; /* Restore normal font size (was font-size: 0) */
+}
+
+#image-format-row-v2 label[for="png-transparency"]::before {
+    content: none !important;
+}
+
+#image-format-row-v2 label[for="png-transparency"] {
+    font-size: 14px !important;
 }
 
 /* CRITICAL FIX: Override problematic .settings-row > * rules for image format row */
@@ -816,5 +833,5 @@ flex: 0 0 90px !important;
 .fas-down-icon { display: none !important; }
 #zip-code + .fas-down-icon { display: none !important; }
 
-/* UPDATED: Removed duplicate .settings-row rule causing rendering corruption - Emergent - 2025-10-24 [15:35:04-EST] */
-/* END OF CODE - Emergent - 2025-10-24 [15:35:04-EST] File: css/master-override.css */
+/* UPDATED: Disabled CSS content injection for transparency label - Emergent - 2025-10-24 [15:44:28-EST] */
+/* END OF CODE - Emergent - 2025-10-24 [15:44:28-EST] File: css/master-override.css */
