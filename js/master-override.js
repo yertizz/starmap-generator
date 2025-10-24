@@ -13,8 +13,8 @@
 document.addEventListener('DOMContentLoaded', function() {
     console.log("Initializing Master Override JS");
     
-    // Fix the PNG transparency checkbox logic
-    fixPNGTransparencyLogic();
+    // DISABLED - Conflicts with new JPG quality selector implementation
+    // fixPNGTransparencyLogic();
     
     // Fix the time display in the star map canvas
     fixTimeDisplay();
