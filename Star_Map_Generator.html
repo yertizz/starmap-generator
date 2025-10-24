@@ -1,4 +1,4 @@
-<!-- START OF CODE - Emergent - 2025-10-24 [10:46:49-EST] File: Star_Map_Generator.html | TIMESTAMP CONFIRMATION: 2025-10-24 10:46:49-EST -->
+<!-- START OF CODE - Emergent - 2025-10-24 [10:59:15-EST] File: Star_Map_Generator.html | TIMESTAMP CONFIRMATION: 2025-10-24 10:59:15-EST -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -2008,13 +2008,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     <!-- PNG Option -->
     <input type="radio" name="image-format" value="png" id="png-format" checked style="margin: 0;">
-    <label for="png-format" style="margin: 0 5px 0 3px;">PNG</label>
+    <label for="png-format" style="margin: 0 15px 0 3px;">PNG</label>
     
-    <!-- Transparency Checkbox (for PNG/SVG/PDF) -->
-    <input type="checkbox" id="png-transparency" style="margin: 0;">
-    <label for="png-transparency" style="margin: 0 15px 0 3px;">Transparency</label>
-    
-    <!-- JPG Option with Quality Selector -->
+    <!-- JPG Option with Quality Selector RIGHT AFTER -->
     <input type="radio" name="image-format" value="jpg" id="jpg-format" style="margin: 0;">
     <label for="jpg-format" style="margin: 0 5px 0 3px;">JPG</label>
     <select id="jpg-quality" style="width: 70px; height: 24px; padding: 2px 5px; margin: 0 15px 0 0; display: none !important; font-size: 13px; line-height: 24px;">
@@ -2031,7 +2027,11 @@ document.addEventListener('DOMContentLoaded', function() {
     
     <!-- PDF Option -->
     <input type="radio" name="image-format" value="pdf" id="pdf-format" style="margin: 0;">
-    <label for="pdf-format" style="margin: 0 0 0 3px;">PDF</label>
+    <label for="pdf-format" style="margin: 0 15px 0 3px;">PDF</label>
+    
+    <!-- Transparency Checkbox (works for PNG/SVG/PDF, NOT JPG) -->
+    <input type="checkbox" id="png-transparency" style="margin: 0;">
+    <label for="png-transparency" style="margin: 0 0 0 3px;">Transparency</label>
 </div>
     
 <!-- ADDED ZOOM SLIDER FUNCTION (AFTER IMAGE FORMAT) -->
@@ -2290,5 +2290,5 @@ window.initializeGoogleMapInternal = function(){
 
 </body>
 </html>
-<!-- UPDATED: Added !important to JPG quality dropdown display style - Emergent - 2025-10-24 [10:46:49-EST] -->
-<!-- END OF CODE - Emergent - 2025-10-24 [10:46:49-EST] File: Star_Map_Generator.html -->
+<!-- UPDATED: FIXED layout order & transparency for PNG/SVG/PDF - Emergent - 2025-10-24 [10:59:15-EST] -->
+<!-- END OF CODE - Emergent - 2025-10-24 [10:59:15-EST] File: Star_Map_Generator.html -->

@@ -1,4 +1,4 @@
-/* START OF CODE - Emergent - 2025-10-24 [10:46:49-EST] File: js/settings-preview-download.js */
+/* START OF CODE - Emergent - 2025-10-24 [10:59:15-EST] File: js/settings-preview-download.js */
 
  /**
  * Settings + Preview + Download Section - PRODUCTION VERSION
@@ -321,20 +321,18 @@ function initializeButtons() {
             }
             console.log('   ❌ Transparency disabled for JPG');
         } else {
-            // Hide JPG quality dropdown for all other formats
+            // Hide JPG quality dropdown for PNG/SVG/PDF
             jpgQualityDropdown.style.setProperty('display', 'none', 'important');
             console.log('   ✅ JPG quality dropdown hidden');
             
-            // Enable transparency for PNG, SVG, and PDF
-            if (selectedFormat === 'png' || selectedFormat === 'svg' || selectedFormat === 'pdf') {
-                transparencyCheckbox.disabled = false;
-                const label = document.querySelector('label[for="png-transparency"]');
-                if (label) {
-                    label.style.opacity = '1';
-                    label.style.cursor = 'pointer';
-                }
-                console.log('   ✅ Transparency enabled for', selectedFormat.toUpperCase());
+            // Enable transparency for PNG, SVG, and PDF (all support transparency)
+            transparencyCheckbox.disabled = false;
+            const label = document.querySelector('label[for="png-transparency"]');
+            if (label) {
+                label.style.opacity = '1';
+                label.style.cursor = 'pointer';
             }
+            console.log('   ✅ Transparency enabled for', selectedFormat.toUpperCase());
         }
     }
     
@@ -1404,5 +1402,5 @@ function simpleDownload(viewType) {
 }
 
 
-/* UPDATED: Added !important flag to display styles to prevent override - Emergent - 2025-10-24 [10:46:49-EST] */
-/* END OF CODE - Emergent - 2025-10-24 [10:46:49-EST] */
+/* UPDATED: FIXED layout order - JPG dropdown after JPG label, transparency at end works for PNG/SVG/PDF - Emergent - 2025-10-24 [10:59:15-EST] */
+/* END OF CODE - Emergent - 2025-10-24 [10:59:15-EST] */
