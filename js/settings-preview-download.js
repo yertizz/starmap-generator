@@ -1,4 +1,4 @@
-/* START OF CODE - Emergent - 2025-10-24 [10:33:03-EST] File: js/settings-preview-download.js */
+/* START OF CODE - Emergent - 2025-10-24 [10:46:49-EST] File: js/settings-preview-download.js */
 
  /**
  * Settings + Preview + Download Section - PRODUCTION VERSION
@@ -308,7 +308,7 @@ function initializeButtons() {
         
         if (selectedFormat === 'jpg') {
             // Show JPG quality dropdown
-            jpgQualityDropdown.style.display = 'inline-block';
+            jpgQualityDropdown.style.setProperty('display', 'inline-block', 'important');
             console.log('   ✅ JPG quality dropdown shown');
             
             // Disable transparency (JPG doesn't support it)
@@ -322,7 +322,7 @@ function initializeButtons() {
             console.log('   ❌ Transparency disabled for JPG');
         } else {
             // Hide JPG quality dropdown for all other formats
-            jpgQualityDropdown.style.display = 'none';
+            jpgQualityDropdown.style.setProperty('display', 'none', 'important');
             console.log('   ✅ JPG quality dropdown hidden');
             
             // Enable transparency for PNG, SVG, and PDF
@@ -1404,5 +1404,5 @@ function simpleDownload(viewType) {
 }
 
 
-/* UPDATED: Fixed JPG quality dropdown visibility logic & transparency for PNG/SVG/PDF - Emergent - 2025-10-24 [10:33:03-EST] */
-/* END OF CODE - Emergent - 2025-10-24 [10:33:03-EST] */
+/* UPDATED: Added !important flag to display styles to prevent override - Emergent - 2025-10-24 [10:46:49-EST] */
+/* END OF CODE - Emergent - 2025-10-24 [10:46:49-EST] */
