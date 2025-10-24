@@ -1,4 +1,4 @@
-/* START OF CODE - Emergent - 2025-10-24 [11:13:03-EST] File: js/settings-preview-download.js */
+/* START OF CODE - Emergent - 2025-10-24 [11:52:48-EST] File: js/settings-preview-download.js */
 
  /**
  * Settings + Preview + Download Section - PRODUCTION VERSION
@@ -295,11 +295,20 @@ function initializeButtons() {
     const transparencyContainer = document.getElementById('transparency-container');
     const transparencyCheckbox = document.getElementById('png-transparency');
     
+    // HIDE TEST MARKER - proves JavaScript loaded
+    const testMarker = document.getElementById('js-test-marker');
+    if (testMarker) {
+        testMarker.style.display = 'none';
+        console.log('✅ JavaScript LOADED - Test marker hidden');
+    }
+    
     function updateFormatControls() {
         console.log('🔄 updateFormatControls called');
         
         if (!jpgQualityDropdown || !transparencyContainer) {
             console.warn('⚠️ Required elements not found');
+            console.log('   jpgQualityDropdown:', jpgQualityDropdown);
+            console.log('   transparencyContainer:', transparencyContainer);
             return;
         }
         
@@ -1398,5 +1407,5 @@ function simpleDownload(viewType) {
 }
 
 
-/* UPDATED: Transparency HIDDEN for JPG (not disabled), narrowed dropdown to 50px - Emergent - 2025-10-24 [11:13:03-EST] */
-/* END OF CODE - Emergent - 2025-10-24 [11:13:03-EST] */
+/* UPDATED: Added visible test marker hiding & enhanced console logging - Emergent - 2025-10-24 [11:52:48-EST] */
+/* END OF CODE - Emergent - 2025-10-24 [11:52:48-EST] */
