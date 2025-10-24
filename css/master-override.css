@@ -1,4 +1,4 @@
-/* START OF CODE - Emergent - 2025-10-24 [15:44:28-EST] File: css/master-override.css */
+/* START OF CODE - Emergent - 2025-10-24 [15:57:27-EST] File: css/master-override.css */
 
 /**
  * Master Override CSS for Star Map Generator
@@ -275,6 +275,9 @@ input[name="image-format"][value="png"]:checked ~ #png-transparency {
 #image-format-row-v2 > select#jpg-quality {
     display: inline-block !important;
     text-align: left !important;
+    width: 42px !important;
+    min-width: 42px !important;
+    max-width: 42px !important;
 }
 
 #image-format-row-v2 > span {
@@ -833,5 +836,5 @@ flex: 0 0 90px !important;
 .fas-down-icon { display: none !important; }
 #zip-code + .fas-down-icon { display: none !important; }
 
-/* UPDATED: Disabled CSS content injection for transparency label - Emergent - 2025-10-24 [15:44:28-EST] */
-/* END OF CODE - Emergent - 2025-10-24 [15:44:28-EST] File: css/master-override.css */
+/* UPDATED: Force JPG quality dropdown to 42px width - Emergent - 2025-10-24 [15:57:27-EST] */
+/* END OF CODE - Emergent - 2025-10-24 [15:57:27-EST] File: css/master-override.css */
