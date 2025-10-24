@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JPG Quality Selector Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 2px solid #1D99EF;
+            padding-bottom: 10px;
+        }
+        .settings-row {
+            margin-top: 15px;
+            border-top: 1px solid #ddd;
+            padding-top: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: nowrap;
+        }
+        .status {
+            margin-top: 30px;
+            padding: 15px;
+            background: #e8f4f8;
+            border-left: 4px solid #1D99EF;
+            border-radius: 4px;
+        }
+        .status h3 {
+            margin-top: 0;
+            color: #1D99EF;
+        }
+        .status-item {
+            margin: 8px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+        .disabled-label {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🧪 JPG Quality Selector Test</h1>
+        <p><strong>Test Objectives:</strong></p>
+        <ol>
+            <li>JPG quality dropdown should ONLY show when JPG is selected</li>
+            <li>Transparency checkbox should be enabled for PNG/SVG/PDF (disabled for JPG)</li>
+            <li>All controls should be perfectly aligned in one horizontal row</li>
+        </ol>
+
+        <!-- Image Format Options - EXACT COPY FROM MAIN FILE -->
+        <div class="settings-row">
+            <span style="font-weight: 600; margin-right: 5px;">Image Type:</span>
+            
+            <!-- PNG Option -->
+            <input type="radio" name="image-format" value="png" id="png-format" checked style="margin: 0;">
+            <label for="png-format" style="margin: 0 5px 0 3px;">PNG</label>
+            
+            <!-- Transparency Checkbox (for PNG/SVG/PDF) -->
+            <input type="checkbox" id="png-transparency" style="margin: 0;">
+            <label for="png-transparency" id="transparency-label" style="margin: 0 15px 0 3px;">Transparency</label>
+            
+            <!-- JPG Option with Quality Selector -->
+            <input type="radio" name="image-format" value="jpg" id="jpg-format" style="margin: 0;">
+            <label for="jpg-format" style="margin: 0 5px 0 3px;">JPG</label>
+            <select id="jpg-quality" style="width: 70px; height: 24px; padding: 2px 5px; margin: 0 15px 0 0; display: none; font-size: 13px; line-height: 24px;">
+                <option value="0.60">60%</option>
+                <option value="0.70">70%</option>
+                <option value="0.80">80%</option>
+                <option value="0.90" selected>90%</option>
+                <option value="1.00">100%</option>
+            </select>
+            
+            <!-- SVG Option -->
+            <input type="radio" name="image-format" value="svg" id="svg-format" style="margin: 0;">
+            <label for="svg-format" style="margin: 0 15px 0 3px;">SVG</label>
+            
+            <!-- PDF Option -->
+            <input type="radio" name="image-format" value="pdf" id="pdf-format" style="margin: 0;">
+            <label for="pdf-format" style="margin: 0 0 0 3px;">PDF</label>
+        </div>
+
+        <!-- Status Display -->
+        <div class="status">
+            <h3>Live Status</h3>
+            <div class="status-item">Selected Format: <strong id="status-format">PNG</strong></div>
+            <div class="status-item">JPG Quality Dropdown Display: <strong id="status-dropdown">none</strong></div>
+            <div class="status-item">Transparency Checkbox Enabled: <strong id="status-transparency">true</strong></div>
+            <div class="status-item">JPG Quality Value: <strong id="status-quality">90%</strong></div>
+        </div>
+    </div>
+
+    <script>
+        // EXACT COPY OF JAVASCRIPT LOGIC FROM settings-preview-download.js
+        function initializeFormatControls() {
+            console.log('🔄 Initializing format controls');
+            
+            const pngFormatRadio = document.getElementById('png-format');
+            const jpgFormatRadio = document.getElementById('jpg-format');
+            const svgFormatRadio = document.getElementById('svg-format');
+            const pdfFormatRadio = document.getElementById('pdf-format');
+            const jpgQualityDropdown = document.getElementById('jpg-quality');
+            const transparencyCheckbox = document.getElementById('png-transparency');
+            const transparencyLabel = document.getElementById('transparency-label');
+            
+            // Status display elements
+            const statusFormat = document.getElementById('status-format');
+            const statusDropdown = document.getElementById('status-dropdown');
+            const statusTransparency = document.getElementById('status-transparency');
+            const statusQuality = document.getElementById('status-quality');
+            
+            function updateFormatControls() {
+                console.log('🔄 updateFormatControls called');
+                
+                if (!jpgQualityDropdown || !transparencyCheckbox) {
+                    console.warn('⚠️ Required elements not found');
+                    return;
+                }
+                
+                // Get currently selected format
+                const selectedFormat = document.querySelector('input[name="image-format"]:checked')?.value;
+                console.log('   Selected format:', selectedFormat);
+                
+                // Update status display
+                statusFormat.textContent = selectedFormat ? selectedFormat.toUpperCase() : 'NONE';
+                
+                if (selectedFormat === 'jpg') {
+                    // Show JPG quality dropdown
+                    jpgQualityDropdown.style.display = 'inline-block';
+                    console.log('   ✅ JPG quality dropdown shown');
+                    
+                    // Disable transparency (JPG doesn't support it)
+                    transparencyCheckbox.disabled = true;
+                    transparencyCheckbox.checked = false;
+                    transparencyLabel.style.opacity = '0.5';
+                    transparencyLabel.style.cursor = 'not-allowed';
+                    transparencyLabel.classList.add('disabled-label');
+                    console.log('   ❌ Transparency disabled for JPG');
+                    
+                    // Update status
+                    statusTransparency.textContent = 'false (disabled for JPG)';
+                    statusTransparency.style.color = '#d32f2f';
+                } else {
+                    // Hide JPG quality dropdown for all other formats
+                    jpgQualityDropdown.style.display = 'none';
+                    console.log('   ✅ JPG quality dropdown hidden');
+                    
+                    // Enable transparency for PNG, SVG, and PDF
+                    if (selectedFormat === 'png' || selectedFormat === 'svg' || selectedFormat === 'pdf') {
+                        transparencyCheckbox.disabled = false;
+                        transparencyLabel.style.opacity = '1';
+                        transparencyLabel.style.cursor = 'pointer';
+                        transparencyLabel.classList.remove('disabled-label');
+                        console.log('   ✅ Transparency enabled for', selectedFormat.toUpperCase());
+                        
+                        // Update status
+                        statusTransparency.textContent = 'true';
+                        statusTransparency.style.color = '#388e3c';
+                    }
+                }
+                
+                // Update status display
+                const dropdownDisplay = window.getComputedStyle(jpgQualityDropdown).display;
+                statusDropdown.textContent = dropdownDisplay;
+                statusDropdown.style.color = dropdownDisplay === 'none' ? '#d32f2f' : '#388e3c';
+                
+                const qualityValue = jpgQualityDropdown.value;
+                statusQuality.textContent = (parseFloat(qualityValue) * 100) + '%';
+            }
+            
+            // Update status when quality changes
+            jpgQualityDropdown.addEventListener('change', () => {
+                const qualityValue = jpgQualityDropdown.value;
+                statusQuality.textContent = (parseFloat(qualityValue) * 100) + '%';
+                console.log('   🔄 Quality changed to:', statusQuality.textContent);
+            });
+            
+            // Add event listeners to all format radio buttons
+            if (pngFormatRadio) {
+                pngFormatRadio.addEventListener('change', updateFormatControls);
+                console.log('✅ PNG format listener attached');
+            }
+            if (jpgFormatRadio) {
+                jpgFormatRadio.addEventListener('change', updateFormatControls);
+                console.log('✅ JPG format listener attached');
+            }
+            if (svgFormatRadio) {
+                svgFormatRadio.addEventListener('change', updateFormatControls);
+                console.log('✅ SVG format listener attached');
+            }
+            if (pdfFormatRadio) {
+                pdfFormatRadio.addEventListener('change', updateFormatControls);
+                console.log('✅ PDF format listener attached');
+            }
+            
+            // Initialize on page load - run after a small delay to ensure DOM is ready
+            setTimeout(() => {
+                console.log('🔄 Initial format controls update');
+                updateFormatControls();
+            }, 100);
+        }
+        
+        // Initialize when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initializeFormatControls);
+        } else {
+            initializeFormatControls();
+        }
+    </script>
+</body>
+</html>

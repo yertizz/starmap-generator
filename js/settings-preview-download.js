@@ -1,4 +1,4 @@
-/* START OF CODE - Emergent - 2025-10-24 [10:14:31-EST] File: js/settings-preview-download.js */
+/* START OF CODE - Emergent - 2025-10-24 [10:33:03-EST] File: js/settings-preview-download.js */
 
  /**
  * Settings + Preview + Download Section - PRODUCTION VERSION
@@ -1404,5 +1404,5 @@ function simpleDownload(viewType) {
 }
 
 
-/* UPDATED: Fixed JPG quality dropdown visibility logic & transparency for PNG/SVG/PDF - Emergent - 2025-10-24 [10:14:31-EST] */
-/* END OF CODE - Emergent - 2025-10-24 [10:14:31-EST] */
+/* UPDATED: Fixed JPG quality dropdown visibility logic & transparency for PNG/SVG/PDF - Emergent - 2025-10-24 [10:33:03-EST] */
+/* END OF CODE - Emergent - 2025-10-24 [10:33:03-EST] */
