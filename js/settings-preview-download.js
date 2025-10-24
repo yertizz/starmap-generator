@@ -1,4 +1,4 @@
-/* START OF CODE - Emergent - 2025-10-23 [16:18:26-EST] File: js/settings-preview-download.js.txt */
+/* START OF CODE - Emergent - 2025-10-24 [10:14:31-EST] File: js/settings-preview-download.js */
 
  /**
  * Settings + Preview + Download Section - PRODUCTION VERSION
@@ -295,36 +295,72 @@ function initializeButtons() {
     const transparencyCheckbox = document.getElementById('png-transparency');
     
     function updateFormatControls() {
-        if (jpgFormatRadio.checked) {
+        console.log('🔄 updateFormatControls called');
+        
+        if (!jpgQualityDropdown || !transparencyCheckbox) {
+            console.warn('⚠️ Required elements not found');
+            return;
+        }
+        
+        // Get currently selected format
+        const selectedFormat = document.querySelector('input[name="image-format"]:checked')?.value;
+        console.log('   Selected format:', selectedFormat);
+        
+        if (selectedFormat === 'jpg') {
             // Show JPG quality dropdown
             jpgQualityDropdown.style.display = 'inline-block';
-            // Disable transparency (only PNG supports it)
-            if (transparencyCheckbox) {
-                transparencyCheckbox.disabled = true;
-                transparencyCheckbox.checked = false;
-                const label = document.querySelector('label[for="png-transparency"]');
-                if (label) label.classList.add('disabled-option');
+            console.log('   ✅ JPG quality dropdown shown');
+            
+            // Disable transparency (JPG doesn't support it)
+            transparencyCheckbox.disabled = true;
+            transparencyCheckbox.checked = false;
+            const label = document.querySelector('label[for="png-transparency"]');
+            if (label) {
+                label.style.opacity = '0.5';
+                label.style.cursor = 'not-allowed';
             }
+            console.log('   ❌ Transparency disabled for JPG');
         } else {
-            // Hide JPG quality dropdown
+            // Hide JPG quality dropdown for all other formats
             jpgQualityDropdown.style.display = 'none';
-            // Enable transparency for PNG
-            if (pngFormatRadio.checked && transparencyCheckbox) {
+            console.log('   ✅ JPG quality dropdown hidden');
+            
+            // Enable transparency for PNG, SVG, and PDF
+            if (selectedFormat === 'png' || selectedFormat === 'svg' || selectedFormat === 'pdf') {
                 transparencyCheckbox.disabled = false;
                 const label = document.querySelector('label[for="png-transparency"]');
-                if (label) label.classList.remove('disabled-option');
+                if (label) {
+                    label.style.opacity = '1';
+                    label.style.cursor = 'pointer';
+                }
+                console.log('   ✅ Transparency enabled for', selectedFormat.toUpperCase());
             }
         }
     }
     
     // Add event listeners to all format radio buttons
-    if (pngFormatRadio) pngFormatRadio.addEventListener('change', updateFormatControls);
-    if (jpgFormatRadio) jpgFormatRadio.addEventListener('change', updateFormatControls);
-    if (svgFormatRadio) svgFormatRadio.addEventListener('change', updateFormatControls);
-    if (pdfFormatRadio) pdfFormatRadio.addEventListener('change', updateFormatControls);
+    if (pngFormatRadio) {
+        pngFormatRadio.addEventListener('change', updateFormatControls);
+        console.log('✅ PNG format listener attached');
+    }
+    if (jpgFormatRadio) {
+        jpgFormatRadio.addEventListener('change', updateFormatControls);
+        console.log('✅ JPG format listener attached');
+    }
+    if (svgFormatRadio) {
+        svgFormatRadio.addEventListener('change', updateFormatControls);
+        console.log('✅ SVG format listener attached');
+    }
+    if (pdfFormatRadio) {
+        pdfFormatRadio.addEventListener('change', updateFormatControls);
+        console.log('✅ PDF format listener attached');
+    }
     
-    // Initialize on page load
-    updateFormatControls();
+    // Initialize on page load - run after a small delay to ensure DOM is ready
+    setTimeout(() => {
+        console.log('🔄 Initial format controls update');
+        updateFormatControls();
+    }, 100);
 }
 
 /**
@@ -1368,5 +1404,5 @@ function simpleDownload(viewType) {
 }
 
 
-/* UPDATED: Added JPG quality selector (60-100%) with show/hide logic - Emergent - 2025-10-23 [16:18:26-EST] */
-/* END OF CODE - Emergent - 2025-10-23 [16:18:26-EST] */
+/* UPDATED: Fixed JPG quality dropdown visibility logic & transparency for PNG/SVG/PDF - Emergent - 2025-10-24 [10:14:31-EST] */
+/* END OF CODE - Emergent - 2025-10-24 [10:14:31-EST] */

@@ -1,4 +1,4 @@
-<!-- START OF CODE - Emergent - 2025-10-23 [16:38:20-EST] File: Star_Map_Generator.html | TIMESTAMP CONFIRMATION: 2025-10-23 16:38:20-EST -->
+<!-- START OF CODE - Emergent - 2025-10-24 [10:14:31-EST] File: Star_Map_Generator.html | TIMESTAMP CONFIRMATION: 2025-10-24 10:14:31-EST -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -2003,25 +2003,35 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
     
     <!-- Image Format Options -->
-<div class="settings-row" style="margin-top: 15px; border-top: 1px solid #ddd; padding-top: 15px; display: flex; align-items: center; justify-content: center; gap: 10px;">
-    <span style="font-weight: 600; margin-right: 10px;">Image Type:</span>
-    <input type="radio" name="image-format" value="png" id="png-format" checked style="margin: 0; vertical-align: middle;">
-    <label for="png-format" style="margin: 0 15px 0 3px; vertical-align: middle;">PNG</label>
-    <input type="checkbox" id="png-transparency" style="margin: 0; vertical-align: middle;">
-    <label for="png-transparency" style="margin: 0 15px 0 3px; vertical-align: middle;">Transparency</label>
-    <input type="radio" name="image-format" value="jpg" id="jpg-format" style="margin: 0; vertical-align: middle;">
-    <label for="jpg-format" style="margin: 0 3px 0 3px; vertical-align: middle;">JPG</label>
-    <select id="jpg-quality" style="width: 65px; height: 26px; padding: 2px 4px; margin: 0 15px 0 0; display: none; vertical-align: middle; font-size: 13px;">
+<div class="settings-row" style="margin-top: 15px; border-top: 1px solid #ddd; padding-top: 15px; display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: nowrap;">
+    <span style="font-weight: 600; margin-right: 5px;">Image Type:</span>
+    
+    <!-- PNG Option -->
+    <input type="radio" name="image-format" value="png" id="png-format" checked style="margin: 0;">
+    <label for="png-format" style="margin: 0 5px 0 3px;">PNG</label>
+    
+    <!-- Transparency Checkbox (for PNG/SVG/PDF) -->
+    <input type="checkbox" id="png-transparency" style="margin: 0;">
+    <label for="png-transparency" style="margin: 0 15px 0 3px;">Transparency</label>
+    
+    <!-- JPG Option with Quality Selector -->
+    <input type="radio" name="image-format" value="jpg" id="jpg-format" style="margin: 0;">
+    <label for="jpg-format" style="margin: 0 5px 0 3px;">JPG</label>
+    <select id="jpg-quality" style="width: 70px; height: 24px; padding: 2px 5px; margin: 0 15px 0 0; display: none; font-size: 13px; line-height: 24px;">
         <option value="0.60">60%</option>
         <option value="0.70">70%</option>
         <option value="0.80">80%</option>
         <option value="0.90" selected>90%</option>
         <option value="1.00">100%</option>
     </select>
-    <input type="radio" name="image-format" value="svg" id="svg-format" style="margin: 0; vertical-align: middle;">
-    <label for="svg-format" style="margin: 0 15px 0 3px; vertical-align: middle;">SVG</label>
-    <input type="radio" name="image-format" value="pdf" id="pdf-format" style="margin: 0; vertical-align: middle;">
-    <label for="pdf-format" style="margin: 0 0 0 3px; vertical-align: middle;">PDF</label>
+    
+    <!-- SVG Option -->
+    <input type="radio" name="image-format" value="svg" id="svg-format" style="margin: 0;">
+    <label for="svg-format" style="margin: 0 15px 0 3px;">SVG</label>
+    
+    <!-- PDF Option -->
+    <input type="radio" name="image-format" value="pdf" id="pdf-format" style="margin: 0;">
+    <label for="pdf-format" style="margin: 0 0 0 3px;">PDF</label>
 </div>
     
 <!-- ADDED ZOOM SLIDER FUNCTION (AFTER IMAGE FORMAT) -->
@@ -2280,5 +2290,5 @@ window.initializeGoogleMapInternal = function(){
 
 </body>
 </html>
-<!-- UPDATED: Fixed single-row layout & vertical alignment for Image Type controls - Emergent - 2025-10-23 [16:38:20-EST] -->
-<!-- END OF CODE - Emergent - 2025-10-23 [16:38:20-EST] File: Star_Map_Generator.html -->
+<!-- UPDATED: Fixed JPG quality dropdown visibility & perfect vertical alignment - Emergent - 2025-10-24 [10:14:31-EST] -->
+<!-- END OF CODE - Emergent - 2025-10-24 [10:14:31-EST] File: Star_Map_Generator.html -->
