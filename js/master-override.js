@@ -1,4 +1,4 @@
-/* START OF CODE - Emergent - 2025-10-24 [11:28:21-EST] File: js/master-override.js */
+/* START OF CODE - Emergent - 2025-10-24 [12:13:12-EST] File: js/master-override.js */
 
 /**
  * Master Override JavaScript for Star Map Generator
@@ -88,8 +88,10 @@ function setDefaultTimeAndHandleToggle() {
 /**
  * Fix the PNG transparency checkbox logic - ULTRA AGGRESSIVE FIX
  */
+/* DISABLED - Conflicts with JPG quality selector implementation
 function fixPNGTransparencyLogic() {
     console.log("ULTRA AGGRESSIVE FIX for PNG transparency logic");
+*/
     
     // Get all image format radio buttons and the transparency checkbox
     const pngRadio = document.querySelector('input[name="image-format"][value="png"]');
@@ -334,6 +336,7 @@ function fixPNGTransparencyLogic() {
         clearInterval(intervalId);
     };
 }
+END OF DISABLED FUNCTION */
 
 /**
  * Fix the time display in the star map canvas
@@ -550,5 +553,5 @@ function fixSettingsSaveLoad() {
     }
 }
 
-/* UPDATED: Disabled fixPNGTransparencyLogic() - conflicts with JPG quality selector - Emergent - 2025-10-24 [11:28:21-EST] */
-/* END OF CODE - Emergent - 2025-10-24 [11:28:21-EST] File: js/master-override.js */
+/* UPDATED: COMPLETELY disabled fixPNGTransparencyLogic() function with block comment - Emergent - 2025-10-24 [12:13:12-EST] */
+/* END OF CODE - Emergent - 2025-10-24 [12:13:12-EST] File: js/master-override.js */
