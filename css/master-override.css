@@ -1,4 +1,4 @@
-/* START OF CODE - Emergent - 2025-10-24 [16:14:49-EST] File: css/master-override.css */
+/* START OF CODE - Emergent - 2025-10-24 [16:22:11-EST] File: css/master-override.css */
 
 /**
  * Master Override CSS for Star Map Generator
@@ -259,24 +259,14 @@ input[name="image-format"][value="png"]:checked ~ #png-transparency {
     font-size: 14px !important;
 }
 
-/* CRITICAL FIX: Override problematic .settings-row > * rules for image format row */
-/* HIGHEST SPECIFICITY to override ui-adjustments.css line 119 */
-#image-format-row-v2.settings-row > * {
-    display: initial !important;
-    text-align: initial !important;
-    vertical-align: middle !important;
-}
-
-#image-format-row-v2 > * {
-    display: initial !important;
-    text-align: initial !important;
-    vertical-align: middle !important;
-}
-
-#image-format-row-v2 > input[type="radio"],
-#image-format-row-v2 > input[type="checkbox"] {
+/* CRITICAL FIX: Surgical rules ONLY for specific elements - no blanket display:initial */
+#image-format-row-v2 > input[type="radio"] {
     display: inline-block !important;
     margin: 0 !important;
+}
+
+#image-format-row-v2 > label {
+    display: inline-block !important;
 }
 
 #image-format-row-v2 > select#jpg-quality {
@@ -287,7 +277,7 @@ input[name="image-format"][value="png"]:checked ~ #png-transparency {
     max-width: 42px !important;
 }
 
-#image-format-row-v2 > span {
+#image-format-row-v2 > span#transparency-container {
     display: inline-flex !important;
     align-items: center !important;
 }
@@ -843,5 +833,5 @@ flex: 0 0 90px !important;
 .fas-down-icon { display: none !important; }
 #zip-code + .fas-down-icon { display: none !important; }
 
-/* UPDATED: Added highest specificity rule to override ui-adjustments.css conflict - Emergent - 2025-10-24 [16:14:49-EST] */
-/* END OF CODE - Emergent - 2025-10-24 [16:14:49-EST] File: css/master-override.css */
+/* UPDATED: Removed overly broad display:initial rules, replaced with surgical element-specific rules - Emergent - 2025-10-24 [16:22:11-EST] */
+/* END OF CODE - Emergent - 2025-10-24 [16:22:11-EST] File: css/master-override.css */
