@@ -235,6 +235,12 @@ input[name="image-format"][value="png"]:checked ~ #png-transparency {
     width: 100% !important;
 }
 
+/* EXCEPTION: Image Format row must stay in single line */
+#image-format-row-v2 {
+    flex-wrap: nowrap !important;
+    gap: 8px !important;
+}
+
 .settings-row > * {
     display: inline-block !important;
     text-align: center !important;
