@@ -1,4 +1,4 @@
-/* START OF CODE - Emergent - 2025-10-24 [11:52:48-EST] File: js/settings-preview-download.js */
+/* START OF CODE - Emergent - 2025-10-24 [12:06:06-EST] File: js/settings-preview-download.js */
 
  /**
  * Settings + Preview + Download Section - PRODUCTION VERSION
@@ -82,10 +82,24 @@ let storedCanvasData = null;
 let storedCanvasWidth = 0;
 let storedCanvasHeight = 0;
 
-// Wait for DOM to be fully loaded
-document.addEventListener('DOMContentLoaded', function() {
-    initializeButtons();
-});
+// IMMEDIATE EXECUTION - Run as soon as script loads
+// This ensures the format controls are initialized even if DOM is already loaded
+(function() {
+    console.log('🔥 IMMEDIATE EXECUTION - Script loaded at:', new Date().toISOString());
+    
+    // If DOM already loaded, run immediately
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('📄 DOMContentLoaded event fired');
+            initializeButtons();
+        });
+    } else {
+        // DOM already loaded, run now
+        console.log('✅ DOM already ready, running immediately');
+        initializeButtons();
+    }
+})();
+
 
 // --- FIXED: Display sizing helper that maintains aspect ratio ---
 function applyPreviewDisplayConstraints(zoomPercent) {
@@ -1407,5 +1421,5 @@ function simpleDownload(viewType) {
 }
 
 
-/* UPDATED: Added visible test marker hiding & enhanced console logging - Emergent - 2025-10-24 [11:52:48-EST] */
-/* END OF CODE - Emergent - 2025-10-24 [11:52:48-EST] */
+/* UPDATED: Changed to IMMEDIATE execution instead of DOMContentLoaded - Emergent - 2025-10-24 [12:06:06-EST] */
+/* END OF CODE - Emergent - 2025-10-24 [12:06:06-EST] */
