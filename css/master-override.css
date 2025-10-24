@@ -1,4 +1,4 @@
-/* START OF CODE - Emergent - 2025-10-24 [15:24:20-EST] File: css/master-override.css */
+/* START OF CODE - Emergent - 2025-10-24 [15:35:04-EST] File: css/master-override.css */
 
 /**
  * Master Override CSS for Star Map Generator
@@ -239,6 +239,7 @@ input[name="image-format"][value="png"]:checked ~ #png-transparency {
 #image-format-row-v2 {
     flex-wrap: nowrap !important;
     gap: 8px !important;
+    contain: layout style !important; /* Stabilize browser rendering */
 }
 
 /* CRITICAL FIX: Override problematic .settings-row > * rules for image format row */
@@ -254,8 +255,9 @@ input[name="image-format"][value="png"]:checked ~ #png-transparency {
     margin: 0 !important;
 }
 
-#image-format-row-v2 > select {
+#image-format-row-v2 > select#jpg-quality {
     display: inline-block !important;
+    text-align: left !important;
 }
 
 #image-format-row-v2 > span {
@@ -263,10 +265,7 @@ input[name="image-format"][value="png"]:checked ~ #png-transparency {
     align-items: center !important;
 }
 
-.settings-row > * {
-    display: inline-block !important;
-    text-align: center !important;
-}
+/* REMOVED DUPLICATE: .settings-row > * rule was here causing rendering corruption */
 
 .radio-group {
     display: flex !important;
@@ -817,5 +816,5 @@ flex: 0 0 90px !important;
 .fas-down-icon { display: none !important; }
 #zip-code + .fas-down-icon { display: none !important; }
 
-/* UPDATED: Fixed CSS child element conflicts for image-format-row-v2 - Emergent - 2025-10-24 [15:24:20-EST] */
-/* END OF CODE - Emergent - 2025-10-24 [15:24:20-EST] File: css/master-override.css */
+/* UPDATED: Removed duplicate .settings-row rule causing rendering corruption - Emergent - 2025-10-24 [15:35:04-EST] */
+/* END OF CODE - Emergent - 2025-10-24 [15:35:04-EST] File: css/master-override.css */
