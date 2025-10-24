@@ -1,4 +1,4 @@
-/* START OF CODE - Emergent - 2025-10-24 [15:57:27-EST] File: css/master-override.css */
+/* START OF CODE - Emergent - 2025-10-24 [16:14:49-EST] File: css/master-override.css */
 
 /**
  * Master Override CSS for Star Map Generator
@@ -260,6 +260,13 @@ input[name="image-format"][value="png"]:checked ~ #png-transparency {
 }
 
 /* CRITICAL FIX: Override problematic .settings-row > * rules for image format row */
+/* HIGHEST SPECIFICITY to override ui-adjustments.css line 119 */
+#image-format-row-v2.settings-row > * {
+    display: initial !important;
+    text-align: initial !important;
+    vertical-align: middle !important;
+}
+
 #image-format-row-v2 > * {
     display: initial !important;
     text-align: initial !important;
@@ -836,5 +843,5 @@ flex: 0 0 90px !important;
 .fas-down-icon { display: none !important; }
 #zip-code + .fas-down-icon { display: none !important; }
 
-/* UPDATED: Force JPG quality dropdown to 42px width - Emergent - 2025-10-24 [15:57:27-EST] */
-/* END OF CODE - Emergent - 2025-10-24 [15:57:27-EST] File: css/master-override.css */
+/* UPDATED: Added highest specificity rule to override ui-adjustments.css conflict - Emergent - 2025-10-24 [16:14:49-EST] */
+/* END OF CODE - Emergent - 2025-10-24 [16:14:49-EST] File: css/master-override.css */
