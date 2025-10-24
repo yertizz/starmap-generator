@@ -1,4 +1,4 @@
-/* START OF CODE - CODEX - 2025-09-07 14:36:00 File: css/master-override.css */
+/* START OF CODE - Emergent - 2025-10-24 [15:16:23-EST] File: css/master-override.css */
 
 /**
  * Master Override CSS for Star Map Generator
@@ -795,4 +795,5 @@ flex: 0 0 90px !important;
 .fas-down-icon { display: none !important; }
 #zip-code + .fas-down-icon { display: none !important; }
 
-/* END OF CODE - CODEX - 2025-09-07 14:36:00 File: css/master-override.css */
+/* UPDATED: Fixed flex-wrap conflict for image-format-row-v2 - Emergent - 2025-10-24 [15:16:23-EST] */
+/* END OF CODE - Emergent - 2025-10-24 [15:16:23-EST] File: css/master-override.css */
