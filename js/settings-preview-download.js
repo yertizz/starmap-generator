@@ -1,4 +1,4 @@
-/* START OF CODE - Emergent - 2025-10-24 [10:59:15-EST] File: js/settings-preview-download.js */
+/* START OF CODE - Emergent - 2025-10-24 [11:13:03-EST] File: js/settings-preview-download.js */
 
  /**
  * Settings + Preview + Download Section - PRODUCTION VERSION
@@ -292,12 +292,13 @@ function initializeButtons() {
     const svgFormatRadio = document.getElementById('svg-format');
     const pdfFormatRadio = document.getElementById('pdf-format');
     const jpgQualityDropdown = document.getElementById('jpg-quality');
+    const transparencyContainer = document.getElementById('transparency-container');
     const transparencyCheckbox = document.getElementById('png-transparency');
     
     function updateFormatControls() {
         console.log('🔄 updateFormatControls called');
         
-        if (!jpgQualityDropdown || !transparencyCheckbox) {
+        if (!jpgQualityDropdown || !transparencyContainer) {
             console.warn('⚠️ Required elements not found');
             return;
         }
@@ -311,28 +312,23 @@ function initializeButtons() {
             jpgQualityDropdown.style.setProperty('display', 'inline-block', 'important');
             console.log('   ✅ JPG quality dropdown shown');
             
-            // Disable transparency (JPG doesn't support it)
-            transparencyCheckbox.disabled = true;
-            transparencyCheckbox.checked = false;
-            const label = document.querySelector('label[for="png-transparency"]');
-            if (label) {
-                label.style.opacity = '0.5';
-                label.style.cursor = 'not-allowed';
+            // HIDE transparency completely for JPG (not just disable)
+            transparencyContainer.style.display = 'none';
+            if (transparencyCheckbox) {
+                transparencyCheckbox.checked = false;
             }
-            console.log('   ❌ Transparency disabled for JPG');
+            console.log('   ❌ Transparency HIDDEN for JPG');
         } else {
             // Hide JPG quality dropdown for PNG/SVG/PDF
             jpgQualityDropdown.style.setProperty('display', 'none', 'important');
             console.log('   ✅ JPG quality dropdown hidden');
             
-            // Enable transparency for PNG, SVG, and PDF (all support transparency)
-            transparencyCheckbox.disabled = false;
-            const label = document.querySelector('label[for="png-transparency"]');
-            if (label) {
-                label.style.opacity = '1';
-                label.style.cursor = 'pointer';
+            // SHOW and enable transparency for PNG, SVG, and PDF
+            transparencyContainer.style.display = 'inline-flex';
+            if (transparencyCheckbox) {
+                transparencyCheckbox.disabled = false;
             }
-            console.log('   ✅ Transparency enabled for', selectedFormat.toUpperCase());
+            console.log('   ✅ Transparency SHOWN for', selectedFormat.toUpperCase());
         }
     }
     
@@ -1402,5 +1398,5 @@ function simpleDownload(viewType) {
 }
 
 
-/* UPDATED: FIXED layout order - JPG dropdown after JPG label, transparency at end works for PNG/SVG/PDF - Emergent - 2025-10-24 [10:59:15-EST] */
-/* END OF CODE - Emergent - 2025-10-24 [10:59:15-EST] */
+/* UPDATED: Transparency HIDDEN for JPG (not disabled), narrowed dropdown to 50px - Emergent - 2025-10-24 [11:13:03-EST] */
+/* END OF CODE - Emergent - 2025-10-24 [11:13:03-EST] */

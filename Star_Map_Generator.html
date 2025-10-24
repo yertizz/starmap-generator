@@ -1,4 +1,4 @@
-<!-- START OF CODE - Emergent - 2025-10-24 [10:59:15-EST] File: Star_Map_Generator.html | TIMESTAMP CONFIRMATION: 2025-10-24 10:59:15-EST -->
+<!-- START OF CODE - Emergent - 2025-10-24 [11:13:03-EST] File: Star_Map_Generator.html | TIMESTAMP CONFIRMATION: 2025-10-24 11:13:03-EST -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -2013,7 +2013,7 @@ document.addEventListener('DOMContentLoaded', function() {
     <!-- JPG Option with Quality Selector RIGHT AFTER -->
     <input type="radio" name="image-format" value="jpg" id="jpg-format" style="margin: 0;">
     <label for="jpg-format" style="margin: 0 5px 0 3px;">JPG</label>
-    <select id="jpg-quality" style="width: 70px; height: 24px; padding: 2px 5px; margin: 0 15px 0 0; display: none !important; font-size: 13px; line-height: 24px;">
+    <select id="jpg-quality" style="width: 50px; height: 22px; padding: 1px 2px; margin: 0 15px 0 0; display: none !important; font-size: 12px;">
         <option value="0.60">60%</option>
         <option value="0.70">70%</option>
         <option value="0.80">80%</option>
@@ -2029,9 +2029,11 @@ document.addEventListener('DOMContentLoaded', function() {
     <input type="radio" name="image-format" value="pdf" id="pdf-format" style="margin: 0;">
     <label for="pdf-format" style="margin: 0 15px 0 3px;">PDF</label>
     
-    <!-- Transparency Checkbox (works for PNG/SVG/PDF, NOT JPG) -->
-    <input type="checkbox" id="png-transparency" style="margin: 0;">
-    <label for="png-transparency" style="margin: 0 0 0 3px;">Transparency</label>
+    <!-- Transparency Checkbox (HIDDEN for JPG, visible for PNG/SVG/PDF) -->
+    <span id="transparency-container" style="display: inline-flex; align-items: center; gap: 3px;">
+        <input type="checkbox" id="png-transparency" style="margin: 0;">
+        <label for="png-transparency" style="margin: 0;">Transparency</label>
+    </span>
 </div>
     
 <!-- ADDED ZOOM SLIDER FUNCTION (AFTER IMAGE FORMAT) -->
@@ -2290,5 +2292,5 @@ window.initializeGoogleMapInternal = function(){
 
 </body>
 </html>
-<!-- UPDATED: FIXED layout order & transparency for PNG/SVG/PDF - Emergent - 2025-10-24 [10:59:15-EST] -->
-<!-- END OF CODE - Emergent - 2025-10-24 [10:59:15-EST] File: Star_Map_Generator.html -->
+<!-- UPDATED: Narrowed dropdown (50px), transparency HIDDEN for JPG, shown for PNG/SVG/PDF - Emergent - 2025-10-24 [11:13:03-EST] -->
+<!-- END OF CODE - Emergent - 2025-10-24 [11:13:03-EST] File: Star_Map_Generator.html -->
