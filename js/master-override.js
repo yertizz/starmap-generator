@@ -1,4 +1,4 @@
-/* START OF CODE - Cline - 2025-05-14 00:38:00 File: js/master-override.js */
+/* START OF CODE - Emergent - 2025-10-24 [11:28:21-EST] File: js/master-override.js */
 
 /**
  * Master Override JavaScript for Star Map Generator
@@ -550,4 +550,5 @@ function fixSettingsSaveLoad() {
     }
 }
 
-/* END OF CODE - Cline - 2025-05-14 00:38:00 File: js/master-override.js */
+/* UPDATED: Disabled fixPNGTransparencyLogic() - conflicts with JPG quality selector - Emergent - 2025-10-24 [11:28:21-EST] */
+/* END OF CODE - Emergent - 2025-10-24 [11:28:21-EST] File: js/master-override.js */
