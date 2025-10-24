@@ -1,0 +1,66 @@
+================================================================================
+JPG QUALITY SELECTOR - FINAL DOWNLOAD INSTRUCTIONS
+Created: 2025-10-24 11:39:09-EST
+================================================================================
+
+FILES TO DOWNLOAD FROM GITHUB:
+------------------------------
+
+1. Star_Map_Generator.html
+   - Timestamp: 2025-10-24 [11:13:03-EST]
+   - Location: /Star_Map_Generator.html
+   - Upload to: Your server root starmap directory
+   
+2. js/settings-preview-download.js.txt
+   - Timestamp: 2025-10-24 [11:13:03-EST]
+   - Location: /js/settings-preview-download.js.txt
+   - RENAME to: settings-preview-download.js (remove .txt extension)
+   - Upload to: Your server /js/ directory
+   
+3. js/master-override.js
+   - Timestamp: 2025-10-24 [11:28:21-EST]
+   - Location: /js/master-override.js
+   - Upload to: Your server /js/ directory
+
+================================================================================
+WHAT THE LAYOUT SHOULD LOOK LIKE:
+================================================================================
+
+Image Type: ⚪ PNG ⚪ JPG [90%] ⚪ SVG ⚪ PDF ☐ Transparency
+
+When JPG is selected:
+Image Type: ⚪ PNG ⚪ JPG [90%] ⚪ SVG ⚪ PDF
+(Transparency checkbox completely hidden)
+
+When PNG/SVG/PDF is selected:
+Image Type: ⚪ PNG ⚪ JPG ⚪ SVG ⚪ PDF ☐ Transparency
+(JPG dropdown hidden, transparency checkbox visible)
+
+================================================================================
+KEY FEATURES:
+================================================================================
+
+✓ Label says "Transparency" (NOT "PNG Only" or "Transparency PNG Only")
+✓ JPG dropdown is 50px wide (narrow, won't cause wrapping)
+✓ Transparency HIDDEN when JPG selected (not just disabled)
+✓ Transparency VISIBLE for PNG, SVG, and PDF
+✓ All controls in ONE horizontal row
+
+================================================================================
+TROUBLESHOOTING:
+================================================================================
+
+If you still see "Transparency PNG Only":
+1. Clear ALL browser cache (not just hard refresh)
+2. Close and reopen your browser
+3. Try a different browser to test
+4. Verify file timestamps in your editor match above
+5. Check your server uploaded the files correctly
+
+If dropdown still too wide:
+- Verify the HTML has: style="width: 50px; height: 22px"
+
+If transparency still on separate line:
+- Verify you uploaded Star_Map_Generator.html with correct timestamp
+
+================================================================================
