@@ -1,4 +1,4 @@
-<!-- START OF CODE - Emergent - 2025-10-24 [12:19:22-EST] File: Star_Map_Generator.html | TIMESTAMP CONFIRMATION: 2025-10-24 12:19:22-EST -->
+<!-- START OF CODE - Emergent - 2025-10-24 [14:57:40-EST] File: Star_Map_Generator.html | TIMESTAMP CONFIRMATION: 2025-10-24 14:57:40-EST -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -2002,13 +2002,13 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
     </div>
     
-    <!-- *** TEST MARKER VERSION: EEE-2025-10-24-12:19 *** -->
+    <!-- *** TEST MARKER VERSION: FFF-2025-10-24-14:57 *** -->
     <div id="js-test-marker" style="background: yellow; padding: 10px; text-align: center; font-weight: bold; color: red;">
         ⚠️ SCRIPT NOT LOADED YET - If you see this, JavaScript hasn't run! ⚠️
     </div>
     
     <!-- Image Format Options -->
-<div class="settings-row" style="margin-top: 15px; border-top: 1px solid #ddd; padding-top: 15px; display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: nowrap;">
+<div class="settings-row" id="image-format-row-v2" style="margin-top: 15px; border-top: 1px solid #ddd; padding-top: 15px; display: flex !important; align-items: center !important; justify-content: center; gap: 8px; flex-wrap: nowrap !important;">
     <span style="font-weight: 600; margin-right: 5px;">Image Type:</span>
     
     <!-- PNG Option -->
@@ -2018,7 +2018,7 @@ document.addEventListener('DOMContentLoaded', function() {
     <!-- JPG Option with Quality Selector RIGHT AFTER -->
     <input type="radio" name="image-format" value="jpg" id="jpg-format" style="margin: 0;">
     <label for="jpg-format" style="margin: 0 5px 0 3px;">JPG</label>
-    <select id="jpg-quality" style="width: 50px; height: 22px; padding: 1px 2px; margin: 0 15px 0 0; display: none !important; font-size: 12px;">
+    <select id="jpg-quality" class="jpg-quality-v2" style="width: 50px; height: 22px; padding: 1px 2px; margin: 0 15px 0 0; display: none !important; font-size: 12px;">
         <option value="0.60">60%</option>
         <option value="0.70">70%</option>
         <option value="0.80">80%</option>
@@ -2035,7 +2035,7 @@ document.addEventListener('DOMContentLoaded', function() {
     <label for="pdf-format" style="margin: 0 15px 0 3px;">PDF</label>
     
     <!-- Transparency Checkbox (HIDDEN for JPG, visible for PNG/SVG/PDF) -->
-    <span id="transparency-container" style="display: inline-flex; align-items: center; gap: 3px;">
+    <span id="transparency-container" class="transparency-v2" style="display: inline-flex !important; align-items: center; gap: 3px;">
         <input type="checkbox" id="png-transparency" style="margin: 0;">
         <label for="png-transparency" style="margin: 0;">Transparency</label>
     </span>
@@ -2297,5 +2297,5 @@ window.initializeGoogleMapInternal = function(){
 
 </body>
 </html>
-<!-- UPDATED: Cache-busting v2.0-20251024 for master-override.js and v4.0 for settings script - Emergent - 2025-10-24 [12:19:22-EST] -->
-<!-- END OF CODE - Emergent - 2025-10-24 [12:19:22-EST] File: Star_Map_Generator.html -->
+<!-- UPDATED: Added !important flags and unique IDs/classes to force override - marker FFF-2025-10-24-14:57 - Emergent - 2025-10-24 [14:57:40-EST] -->
+<!-- END OF CODE - Emergent - 2025-10-24 [14:57:40-EST] File: Star_Map_Generator.html -->
